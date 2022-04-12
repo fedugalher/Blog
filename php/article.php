@@ -9,7 +9,9 @@ class Article extends Database{
    public $category;
    public $image;
    public $video;
-   public $date;   
+   public $date;  
+   public $isSucces;
+   public $arrayPrueba = [1,2,3,4,5,6];
 
    // public function __construct($title, $body, $category){
    //    $this->title = $title;
@@ -28,6 +30,8 @@ class Article extends Database{
       $this->video = $video; 
       date_default_timezone_set('America/Chihuahua');
       $this->date = date('Y-m-d H:i:s');
+
+      // echo json_encode($this->arrayPrueba);
       
    }
 
@@ -88,14 +92,24 @@ class Article extends Database{
 
    public function create(){
       $nextId = $this->last()['id']+1;
-      $this->image = $this->image != '' ? "{$nextId}-$image" : "no-image.png";
-      $this->video = $this->video != '' ? "{$nextId}-$video" : null;
+      $this->image = $this->image != '' ? "article-$nextId.jpg" : "no-image.png";
+      $this->video = $this->video != '' ? "{$this->video}" : null;
 
       $query = "INSERT INTO `articles` (`id`, `title`, `body`, `category`, `image`, `video`,`date`) 
          VALUES (NULL, '{$this->title}', '{$this->body}', '{$this->category}', '{$this->image}',  '{$this->video}', '{$this->date}')";
       $this->connect();
       $this->executeQuery($query, 'Articulo agregado correctamente', 'Error al agregar el articulo');
       $this->disconnect();
+
+      // echo json_encode($this->arrayPrueba);
+      if($this->message[3]['msgType'] == 'succes'){
+         return true;
+      }else{
+         return false;
+      }
+      
+
+     
    }
 
 
@@ -176,8 +190,9 @@ class Article extends Database{
 
 // Pruebas
 // $article = new Article();
+// $article->set(null, '$title', '$body', '$category', '$image', '$video');
 // echo $article->set('Publicación 1', 'Texto Publicación 1', 'gameplays', 'imagen.jpg', 'video.mp4');
-// $article->create();
+// echo $article->create();
 // $article->delete(4);
 // $article->update(3, 'Prueba update', 'prueba update body', 'prueba update category', date('Y-m-d H:i:s'));
 // $article->selectAll();

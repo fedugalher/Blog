@@ -55,9 +55,9 @@ class Database{
 
    public function executeQuery($query, $succes, $error){
       if($this->mysqli->query($query)){
-         echo $succes;
+         array_push($this->message, ['msg'=>$succes, 'msgType'=>'succes']);
       }else{
-         echo $error;
+         array_push($this->message, ['msg'=>$error, 'msgType'=>'error']);
       }
    }
 }

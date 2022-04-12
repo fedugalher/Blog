@@ -29,7 +29,7 @@ btnPublish.addEventListener('click', e =>{
 });
 
 let sendArticle = async (data) =>{   
-   const peticion = await fetch('./php/article_new.php', {
+   const peticion = await fetch('./php/articles_controller.php', {
       method: 'POST',
       body: data
    }); 
