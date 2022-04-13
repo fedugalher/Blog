@@ -29,65 +29,91 @@ switch ($method) {
    case 'new':
       setNew();
       break;
+   case 'edit':
+      echo $article->show($id);
+      break;
+   case 'update':
+      setUpdate();
+      break;
+   case 'delete':
+      echo $article->delete($id);
+      break;
    
    // default:
    //    echo $article->selectAll();
    //    break;
 }
 
-
-// if (isset($_GET['method'])) {
-//    $metodo = $_GET['method'];
-//    $article = new Article();
-
-//    if ($metodo === 'selectAll') {          
-//       echo $article->selectAll();     
-//    }
-//    elseif($metodo === 'show' && isset($_GET['id'])){
-//       $id = $_GET['id'];
-//       echo $article->show($id);
-//    }
-//    elseif($metodo === 'selectLimit' && isset($_GET['limit'])){
-//       $limit = $_GET['limit'];
-//       echo $article->selectLimit($limit);
-//    }   
-// }
-
-
 function setNew(){
    
-      $article = new Article();
-      $title = isset($_POST['title']) ? $_POST['title'] : 'No hay titulo';
-      $body = isset($_POST['body']) ? $_POST['body'] : 'No hay Texto';
-      $category = isset($_POST['category']) ? $_POST['category'] : 'No hay Categoria';
-      $image = isset($_FILES['image']['name']) ? $_FILES['image']['name'] : 'No hay Imagen';
-      $imageTmp = isset($_FILES['image']['tmp_name']) ? $_FILES['image']['tmp_name'] : 'No hay Imagen';
-      $imgPath = '../images/articles/';
-      $video = '';
+   $article = new Article();
+   $title = isset($_POST['title']) ? $_POST['title'] : 'No hay titulo';
+   $body = isset($_POST['body']) ? $_POST['body'] : 'No hay Texto';
+   $category = isset($_POST['category']) ? $_POST['category'] : 'No hay Categoria';
+   $image = isset($_FILES['image']['name']) ? $_FILES['image']['name'] : 'No hay Imagen';
+   $imageTmp = isset($_FILES['image']['tmp_name']) ? $_FILES['image']['tmp_name'] : 'No hay Imagen';
+   $imgPath = '../images/articles/';
+   $video = '';
+   $status = isset($_POST['status']) ? $_POST['status'] : 'unpublished';
 
-      $articleArray = [
-         'titulo' => $title,
-         'body' => $body,
-         'category' => $category,
-         'image' => $image,
-         'imageTmp' => $imageTmp,
-         'imgPath' => $imgPath,
-         'video' => $video
-      ];
+   $articleArray = [
+      'titulo' => $title,
+      'body' => $body,
+      'category' => $category,
+      'image' => $image,
+      'imageTmp' => $imageTmp,
+      'imgPath' => $imgPath,
+      'video' => $video,
+      'status' => $status
+   ];
 
-      $article->set(null, $title, $body, $category, $image, $video);
-      
-      if($article->create()){
-         if (move_uploaded_file($imageTmp, $imgPath.$article->image)) {
-            $articleArray['article-msg'] = 'Articulo guardado';
-         }else {
-            $articleArray['article-msg'] = 'Error al guardar aticulo';
-         }
-         echo json_encode($articleArray);
+   $article->set(null, $title, $body, $category, $image, $video, $status);
+   
+   if($article->create()){
+      if (move_uploaded_file($imageTmp, $imgPath.$article->image)) {
+         $articleArray['article-msg'] = 'Articulo guardado';
+      }else {
+         $articleArray['article-msg'] = 'Error al guardar aticulo';
       }
+      echo json_encode($articleArray);
+   }  
+}
 
-     
-  
+function setUpdate(){
+   
+   $article = new Article();
+   $id = isset($_POST['id']) ? $_POST['id'] : 0;
+   $title = isset($_POST['title']) ? $_POST['title'] : 'No hay titulo';
+   $body = isset($_POST['body']) ? $_POST['body'] : 'No hay Texto';
+   $category = isset($_POST['category']) ? $_POST['category'] : 'No hay Categoria';
+   $image = isset($_FILES['image']['name']) ? $_FILES['image']['name'] : '';
+   $imageTmp = isset($_FILES['image']['tmp_name']) ? $_FILES['image']['tmp_name'] : '';
+   $imgPath = '../images/articles/';
+   $video = '';
+   $status = isset($_POST['status']) ? $_POST['status'] : 'unpublished';
+
+   $articleArray = [
+      'id' => $id,
+      'titulo' => $title,
+      'body' => $body,
+      'category' => $category,
+      'image' => $image,
+      'imageTmp' => $imageTmp,
+      'imgPath' => $imgPath,
+      'video' => $video,
+      'status' => $status
+   ];
+
+   $article->set($id, $title, $body, $category, $image, $video, $status);
+   
+   if($article->update() && $image != ''){
+      if (move_uploaded_file($imageTmp, $imgPath.$article->image)) {
+         $articleArray['article-msg'] = 'Articulo guardado';
+      }else {
+         $articleArray['article-msg'] = 'Error al guardar aticulo';
+      }
+      echo json_encode($articleArray);
+   }  
 }
 
 

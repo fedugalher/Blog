@@ -9,6 +9,7 @@ class Article extends Database{
    public $category;
    public $image;
    public $video;
+   public $status;
    public $date;  
    public $isSucces;
    public $arrayPrueba = [1,2,3,4,5,6];
@@ -21,13 +22,14 @@ class Article extends Database{
    //    $this->date = date('Y-m-d H:i:s');
    // }
 
-   public function set($id, $title, $body, $category, $image, $video){   
-      $this->id = $id;   
+   public function set($id, $title, $body, $category, $image, $video, $status){   
+      $this->id = $id != null ? $id : null;   
       $this->title = $title;
       $this->body = $body;
       $this->category = $category;    
       $this->image = $image;
       $this->video = $video; 
+      $this->status = $status;
       date_default_timezone_set('America/Chihuahua');
       $this->date = date('Y-m-d H:i:s');
 
@@ -39,7 +41,7 @@ class Article extends Database{
    public function selectAll(){
       $data;
       $articleData = array();      
-      $query = "SELECT * FROM `articles`";
+      $query = "SELECT * FROM `articles` WHERE status = 'published'";
       
       $this->connect();
       $select = $this->mysqli->query($query);      
@@ -54,6 +56,7 @@ class Article extends Database{
             'category' => $row['category'], 
             'image' => $row['image'],
             'video' => $row['video'],
+            'status' => $row['status'],
             'date' => $row['date']
          ]);
 
@@ -82,6 +85,7 @@ class Article extends Database{
             'category' => $row['category'], 
             'image' => $row['image'],
             'video' => $row['video'],
+            'status' => $row['status'],
             'date' => $row['date']
          ];
 
@@ -95,8 +99,8 @@ class Article extends Database{
       $this->image = $this->image != '' ? "article-$nextId.jpg" : "no-image.png";
       $this->video = $this->video != '' ? "{$this->video}" : null;
 
-      $query = "INSERT INTO `articles` (`id`, `title`, `body`, `category`, `image`, `video`,`date`) 
-         VALUES (NULL, '{$this->title}', '{$this->body}', '{$this->category}', '{$this->image}',  '{$this->video}', '{$this->date}')";
+      $query = "INSERT INTO `articles` (`id`, `title`, `body`, `category`, `image`, `video`, `status`, `date`) 
+         VALUES (NULL, '{$this->title}', '{$this->body}', '{$this->category}', '{$this->image}',  '{$this->video}', '{$this->status}', '{$this->date}')";
       $this->connect();
       $this->executeQuery($query, 'Articulo agregado correctamente', 'Error al agregar el articulo');
       $this->disconnect();
@@ -106,10 +110,7 @@ class Article extends Database{
          return true;
       }else{
          return false;
-      }
-      
-
-     
+      }    
    }
 
 
@@ -119,29 +120,50 @@ class Article extends Database{
       $this->connect();
       $this->executeQuery($query, 'Articulo eliminado', 'No se puede eliminar el articulo');
       $this->disconnect();
+
+      return json_encode($this->message);
    }
 
    
 
-   public function update($id, $title, $body, $category, $image, $video, $date){
-      $query = "UPDATE `articles` SET 
-         `title` = '{$title}', 
-         `body` = '{$body}', 
-         `category` = '{$category}', 
-         `image` = '{$image}', 
-         `video` = '{$video}', 
-         `date` = '{$date}' 
-         WHERE `articles`.`id` = {$id}";
+   public function update(){
+     if($this->image != '' || $this->video != ''){
+         $this->image = $this->image != '' ? "article-{$this->id}.jpg" : "no-image.png";
+         $this->video = $this->video != '' ? "{$this->video}" : null;
+         $query = "UPDATE `articles` SET 
+         `title` = '{$this->title}', 
+         `body` = '{$this->body}', 
+         `category` = '{$this->category}', 
+         `image` = '{$this->image}', 
+         `video` = '{$this->video}',
+         `status` = '{$this->status}', 
+         `date` = '{$this->date}' 
+         WHERE `articles`.`id` = {$this->id}";
+     }else{
+         $query = "UPDATE `articles` SET 
+         `title` = '{$this->title}', 
+         `body` = '{$this->body}', 
+         `category` = '{$this->category}',      
+         `status` = '{$this->status}', 
+         `date` = '{$this->date}' 
+         WHERE `articles`.`id` = {$this->id}";
+     }     
        $this->connect();
        $this->executeQuery($query, 'Articulo actualizado', 'No se puede actualizar el articulo');
        $this->disconnect();
+
+       if($this->message[2]['msgType'] == 'succes'){
+         return true;
+      }else{
+         return false;
+      } 
    }
 
 
    //Funciones de ayuda
    public function last(){
       $articleData = array();
-      $query = "SELECT MAX(id) AS id, `title`, `body`, `category`, `image`, `video`, `date` FROM articles";
+      $query = "SELECT MAX(id) AS id, `title`, `body`, `category`, `image`, `video`, `status`, `date` FROM articles";
       $this->connect();
       $select = $this->mysqli->query($query);     
       $this->disconnect(); 
@@ -153,8 +175,9 @@ class Article extends Database{
             'title' => $row['title'], 
             'body' => $row['body'], 
             'category' => $row['category'], 
-            'image' => $row['category'],
-            'video' => $row['category'],
+            'image' => $row['image'],
+            'video' => $row['video'],
+            'status' => $row['status'],
             'date' => $row['date']
          ];
       }      
@@ -164,7 +187,7 @@ class Article extends Database{
    public function selectLimit($limit){
       $data = array();
       $articleData = array();
-      $query = "SELECT * FROM `articles` LIMIT $limit";
+      $query = "SELECT * FROM `articles` WHERE status = 'published' LIMIT $limit";
       $this->connect();
       $select = $this->mysqli->query($query);      
       $this->disconnect();
@@ -177,6 +200,7 @@ class Article extends Database{
             'category' => $row['category'], 
             'image' => $row['image'],
             'video' => $row['video'],
+            'status' => $row['status'],
             'date' => $row['date']
          ]);
       }

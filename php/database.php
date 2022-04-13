@@ -24,10 +24,10 @@ class Database{
    public function createDB($dbName){
       $this->mysqli = new mysqli("$this->host", "$this->user", "$this->password", "");
       if($this->mysqli->query("CREATE DATABASE IF NOT EXISTS {$dbName} CHARACTER SET utf8 COLLATE utf8_bin ")){
-         // echo "Se creo la base de datos {$dbName}";          
+         echo "Se creo la base de datos {$dbName}";          
       }
       else{
-         // echo 'Error al crear la base de datos';
+         echo 'Error al crear la base de datos';
       }
    }
 
@@ -41,6 +41,7 @@ class Database{
             `category` VARCHAR(1000) NOT NULL ,
             `image` VARCHAR(100) ,
             `video` VARCHAR(100) ,
+            `status` VARCHAR(20) DEFAULT 'unpublished',
             `date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP , 
             PRIMARY KEY (`id`)) ENGINE = InnoDB"
          )
@@ -49,8 +50,16 @@ class Database{
       }
       else{
          echo 'Error al crear la Tabla';
+      }   
+   }
+
+   public function dropTable($tableName){
+      if($this->mysqli->query("DROP TABLE `{$tableName}`")){
+         echo "Se eliminó la tabla {$tableName}";
       }
-   
+      else{
+         echo "Error al eliminar la tabla {$tableName}";
+      }   
    }
 
    public function executeQuery($query, $succes, $error){
@@ -66,6 +75,7 @@ class Database{
 // $mysqli->createDB('fedugalher_blog');
 // $mysqli->connect();
 // $mysqli->createTable('articles');
+// $mysqli->dropTable('articles');
 // $mysqli->disconnect();
 
 

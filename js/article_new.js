@@ -17,12 +17,14 @@ btnPublish.addEventListener('click', e =>{
    const body = document.getElementById('body').value;
    const category = document.getElementById('category').value;
    const image = document.getElementById('img-file');
+   const status = document.getElementById('status').value;
    const method = 'new';
 
    data.append('title', title);
    data.append('body', body);
    data.append('category', category);
    data.append('image', image.files[0]);
+   data.append('status', status);
    data.append('method', method);
 
    sendArticle(data); //llama a la funcion send article y le pasa los datos del formulario

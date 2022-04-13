@@ -60,7 +60,6 @@ article, aside{
   background-position: center;
   
 }
-
 .article-text{
   padding: 15px;
 }
@@ -73,7 +72,19 @@ article, aside{
   padding: 5px 10px;
   color: #9b9b9b;
 }
-
+.article-actions{
+  display: block;
+  text-align: right;
+}
+.article-actions a{
+  padding-right: 7px;
+}
+.edit-icon{
+  color: #016a9f;
+}
+.delete-icon{
+  color: #ad0000;
+}
 
 
 
