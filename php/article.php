@@ -41,7 +41,7 @@ class Article extends Database{
    public function selectAll(){
       $data;
       $articleData = array();      
-      $query = "SELECT * FROM `articles` WHERE status = 'published'";
+      $query = "SELECT * FROM `articles` WHERE status = 'published' ORDER BY category";
       
       $this->connect();
       $select = $this->mysqli->query($query);      
@@ -95,7 +95,7 @@ class Article extends Database{
 
 
    public function create(){
-      $nextId = $this->last()['id']+1;
+      $nextId = $this->nextId()['next_id'];
       $this->image = $this->image != '' ? "article-$nextId.jpg" : "no-image.png";
       $this->video = $this->video != '' ? "{$this->video}" : null;
 
@@ -120,6 +120,14 @@ class Article extends Database{
       $this->connect();
       $this->executeQuery($query, 'Articulo eliminado', 'No se puede eliminar el articulo');
       $this->disconnect();
+
+      if($this->message[1]['msgType'] == 'succes'){
+         if (unlink("../images/articles/article-{$id}.jpg")) {
+            array_push($this->message, ['msg'=>'Se eliminó la imagen del articulo', 'msgType'=>'succes']);
+         }else {
+            array_push($this->message, ['msg'=>'No se pudo eliminarla imagen del articulo', 'msgType'=>'error']);
+         }
+      }
 
       return json_encode($this->message);
    }
@@ -161,26 +169,20 @@ class Article extends Database{
 
 
    //Funciones de ayuda
-   public function last(){
+   public function nextId(){
       $articleData = array();
-      $query = "SELECT MAX(id) AS id, `title`, `body`, `category`, `image`, `video`, `status`, `date` FROM articles";
+      $query = "SELECT `AUTO_INCREMENT`
+                  FROM  INFORMATION_SCHEMA.TABLES
+                  WHERE TABLE_SCHEMA = 'fedugalher_blog'
+                  AND   TABLE_NAME   = 'articles'";
       $this->connect();
       $select = $this->mysqli->query($query);     
       $this->disconnect(); 
 
-      for ($rows = $select->num_rows - 1; $rows >= 0; $rows--) {
-         $row = $select->fetch_assoc();
-         $articleData = [
-            'id' => $row['id'], 
-            'title' => $row['title'], 
-            'body' => $row['body'], 
-            'category' => $row['category'], 
-            'image' => $row['image'],
-            'video' => $row['video'],
-            'status' => $row['status'],
-            'date' => $row['date']
-         ];
-      }      
+      while($row = $select->fetch_assoc()){
+         $articleData['next_id'] = $row['AUTO_INCREMENT'];
+      }
+
       return $articleData; //Retorna arreglo
    }
 

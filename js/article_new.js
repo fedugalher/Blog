@@ -17,7 +17,7 @@ btnPublish.addEventListener('click', e =>{
    const body = document.getElementById('body').value;
    const category = document.getElementById('category').value;
    const image = document.getElementById('img-file');
-   const status = document.getElementById('status').value;
+   const status = document.getElementById('status').checked;
    const method = 'new';
 
    data.append('title', title);
@@ -26,8 +26,8 @@ btnPublish.addEventListener('click', e =>{
    data.append('image', image.files[0]);
    data.append('status', status);
    data.append('method', method);
-
    sendArticle(data); //llama a la funcion send article y le pasa los datos del formulario
+   console.log(status)
 });
 
 let sendArticle = async (data) =>{   
@@ -40,22 +40,22 @@ let sendArticle = async (data) =>{
 }
 
 
-// Previsualizar imagen antes de subirla --Ya funciona
-// document.getElementById("img-file").onchange = function(e) {
-//    // Creamos el objeto de la clase FileReader
-//    let reader = new FileReader();
+//Previsualizar imagen antes de subirla --Ya funciona
+document.getElementById("img-file").onchange = function(e) {
+   // Creamos el objeto de la clase FileReader
+   let reader = new FileReader();
  
-//    // Leemos el archivo subido y se lo pasamos a nuestro fileReader
-//    reader.readAsDataURL(e.target.files[0]);
+   // Leemos el archivo subido y se lo pasamos a nuestro fileReader
+   reader.readAsDataURL(e.target.files[0]);
  
-//    // Le decimos que cuando este listo ejecute el código interno
-//    reader.onload = function(){
-//      let preview = document.querySelector('.article-img'),
-//              image = document.createElement('img');
+   // Le decimos que cuando este listo ejecute el código interno
+   reader.onload = function(){
+     let preview = document.querySelector('.article-img'),
+             image = document.createElement('img');
  
-//      image.src = reader.result;
+     image.src = reader.result;
  
-//      preview.innerHTML = '';
-//      preview.append(image);
-//    };
-//  }
+     preview.innerHTML = '';
+     preview.append(image);
+   };
+ }

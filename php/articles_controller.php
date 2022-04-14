@@ -8,6 +8,7 @@ $id = isset($_GET['id']) ? $_GET['id'] : 0;
 $limit = isset($_GET['limit']) ? $_GET['limit'] : 0;
 
 
+
 if(isset($_GET['method'])){
    $method = $_GET['method'];
 }elseif (isset($_POST['method'])) {
@@ -54,7 +55,7 @@ function setNew(){
    $imageTmp = isset($_FILES['image']['tmp_name']) ? $_FILES['image']['tmp_name'] : 'No hay Imagen';
    $imgPath = '../images/articles/';
    $video = '';
-   $status = isset($_POST['status']) ? $_POST['status'] : 'unpublished';
+   $status = isset($_POST['status']) &&  $_POST['status'] == 'true' ? 'published' : 'unpublished';
 
    $articleArray = [
       'titulo' => $title,
@@ -64,7 +65,8 @@ function setNew(){
       'imageTmp' => $imageTmp,
       'imgPath' => $imgPath,
       'video' => $video,
-      'status' => $status
+      'status' => $status,
+      'issetstatus' => $_POST['status'],
    ];
 
    $article->set(null, $title, $body, $category, $image, $video, $status);
@@ -90,7 +92,9 @@ function setUpdate(){
    $imageTmp = isset($_FILES['image']['tmp_name']) ? $_FILES['image']['tmp_name'] : '';
    $imgPath = '../images/articles/';
    $video = '';
-   $status = isset($_POST['status']) ? $_POST['status'] : 'unpublished';
+   $status = isset($_POST['status']) &&  $_POST['status'] == 'true' ? 'published' : 'unpublished';
+  
+   
 
    $articleArray = [
       'id' => $id,
@@ -101,17 +105,21 @@ function setUpdate(){
       'imageTmp' => $imageTmp,
       'imgPath' => $imgPath,
       'video' => $video,
-      'status' => $status
+      'status' => $status,
+      'issetstatus' => $_POST['status'],
    ];
 
    $article->set($id, $title, $body, $category, $image, $video, $status);
    
-   if($article->update() && $image != ''){
-      if (move_uploaded_file($imageTmp, $imgPath.$article->image)) {
-         $articleArray['article-msg'] = 'Articulo guardado';
-      }else {
-         $articleArray['article-msg'] = 'Error al guardar aticulo';
-      }
+   if($article->update()){
+      if ($image != '') {
+         if (move_uploaded_file($imageTmp, $imgPath.$article->image)) {
+            $articleArray['img-msg'] = 'Se actualizó la imagen';
+         }else {
+            $articleArray['img-msg'] = 'No se pudo actualizar la imagen';
+         }
+      }    
+      $articleArray['article-msg'] = 'Articulo guardado'; 
       echo json_encode($articleArray);
    }  
 }

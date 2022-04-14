@@ -10,6 +10,7 @@ const asideContainer = document.querySelector('.aside-container');
 const params = window.location.search;
 const urlParams = new URLSearchParams(params);
 const id = urlParams.get('id');
+console.log(id)
 
 //Funcion asincrona para obtener el articulo, pasando como parametros el metodo shoe y el id que seran consultados en el articles_controller.php
 let getArticle = async () =>{   
@@ -57,5 +58,9 @@ let formatDate = date =>{
    return fullDate;
 }
 
-getArticle();
+if(id){
+   getArticle();
+}
+
+
 getArticles();

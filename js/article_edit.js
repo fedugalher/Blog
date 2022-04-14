@@ -28,7 +28,7 @@ btnPublish.addEventListener('click', e =>{
    data.append('body', body.value);
    data.append('category', category.value);
    data.append('image', image.files[0]);
-   data.append('status', articleStatus.value);
+   data.append('status', articleStatus.checked);
    data.append('method', 'update');
    data.append('id', id);
 
@@ -45,7 +45,8 @@ const getArticle = async () =>{
    title.value = resultado.title;
    category.value = resultado.category;
    body.value = resultado.body;
-   articleStatus.checked = articleStatus.value === 'published' ? true : false;
+   articleStatus.checked = resultado.status === 'published' ? true : false;
+   console.log(resultado)
 }
 
 const sendArticle = async (data) =>{   
@@ -54,6 +55,8 @@ const sendArticle = async (data) =>{
       body: data
    }); 
    const resultado = await peticion.json();
-   console.log(resultado)
+   if(resultado['article-msg'] == 'Articulo guardado'){
+      location.href = 'index.html';
+   }
 }
 
