@@ -35,7 +35,7 @@ let getArticles = async () =>{
       const date = new Date(resultado.data[article].date); //para poder formatear la hora con la funcion formatDate()
           
       asideContainer.innerHTML += `
-         <div class="row aside-row">            
+         <div class="row aside-row" id="article-${resultado.data[article].id}">            
             <div class="col-lg-12 col-md-3 aside-img-box" id="article-img-${resultado.data[article].id}"></div>           
             <div class="col-lg-12 col-md-9 aside-text-box">
                <p>${resultado.data[article].body}</p>

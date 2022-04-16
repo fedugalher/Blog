@@ -27,9 +27,11 @@ let getArticles = async () =>{
             <div class="article-content" id="article-${resultado.data[article].id}">
                <div class="article-img" id="article-img-${resultado.data[article].id}"></div>
                <div class="article-text">
-                  <h5>${resultado.data[article].title}</h5>
-                  <p>${resultado.data[article].body.substring(0,99)}...</p>
-                  <a href="article.html?id=${resultado.data[article].id}" class="btn btn-primary">Ver más</a>                  
+                  <p>${resultado.data[article].body}</p>
+                  <span class="article-actions">
+                     <a href="article_edit.html?id=${resultado.data[article].id}" class="edit-icon"><i class="fa-solid fa-pen-to-square"></i></a>
+                     <a href="#" class="delete-icon"><i class="fa-solid fa-trash-can" id="delete-${resultado.data[article].id}"></i></a>
+                  </span>
                   <span class="article-date">${formatDate(date)}</span>
                </div>
             </div>
