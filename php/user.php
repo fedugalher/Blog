@@ -26,8 +26,8 @@
             `password` VARCHAR(100) NOT NULL , 
             `role` VARCHAR(20) NOT NULL DEFAULT 'usuario' , 
             `image` VARCHAR(100) NOT NULL DEFAULT 'no-image.png' , 
-            `reg_date` DATE NOT NULL DEFAULT CURRENT_TIMESTAMP , 
-            PRIMARY KEY (`id`)) ENGINE = InnoDB CHARSET=utf8 COLLATE utf8_bin";
+            `reg_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP , 
+            PRIMARY KEY (`id`)) ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin";
          
          $this->connect();
          if($this->mysqli->query($query)){
@@ -50,9 +50,13 @@
          } 
          $this->disconnect(); 
       }
+
+      public function create(){
+
+      }
    }
 
-   $user = new User();
-   $user->createTable();
+   // $user = new User();
+   // $user->createTable();
    
 ?>

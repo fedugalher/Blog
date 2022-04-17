@@ -50,13 +50,26 @@ class Article extends Database{
             `video` VARCHAR(100) ,
             `status` VARCHAR(20) DEFAULT 'unpublished',
             `date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP , 
-            PRIMARY KEY (`id`)) ENGINE = InnoDB"
+            `user_id` INT(11) NOT NULL ,
+            PRIMARY KEY (`id`)) ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin"
          )
       ){
          echo "Se creo la Tabla articles";
       }
       else{
          echo 'Error al crear la Tabla';
+      }   
+      $this->disconnect();
+   }
+
+   public function alterTable(){
+      $query = "ALTER TABLE `articles` ADD FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE ON UPDATE CASCADE";
+      $this->connect();
+      if($this->mysqli->query($query)){
+         echo "Se creo la relación de la tabla articles con users";
+      }
+      else{
+         echo 'Error al crear la relacion de la tabla articles con users';
       }   
       $this->disconnect();
    }
@@ -252,6 +265,8 @@ class Article extends Database{
 
 // Pruebas
 // $article = new Article();
+// $article->createTable();
+// $article->alterTable();
 // $article->set(null, '$title', '$body', '$category', '$image', '$video');
 // echo $article->set('Publicación 1', 'Texto Publicación 1', 'gameplays', 'imagen.jpg', 'video.mp4');
 // echo $article->create();
