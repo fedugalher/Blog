@@ -38,6 +38,42 @@ class Article extends Database{
    }
 
 
+   public function createTable(){
+      $this->connect();
+      if($this->mysqli->query(
+         "CREATE TABLE IF NOT EXISTS `articles` ( 
+            `id` INT(11) NOT NULL AUTO_INCREMENT , 
+            `title` VARCHAR(100) NOT NULL , 
+            `body` VARCHAR(1000) NOT NULL ,
+            `category` VARCHAR(1000) NOT NULL ,
+            `image` VARCHAR(100) ,
+            `video` VARCHAR(100) ,
+            `status` VARCHAR(20) DEFAULT 'unpublished',
+            `date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP , 
+            PRIMARY KEY (`id`)) ENGINE = InnoDB"
+         )
+      ){
+         echo "Se creo la Tabla articles";
+      }
+      else{
+         echo 'Error al crear la Tabla';
+      }   
+      $this->disconnect();
+   }
+
+
+   public function dropTable(){
+      $this->connect();
+      if($this->mysqli->query("DROP TABLE `articles`")){
+         echo "Se eliminó la tabla articles";
+      }
+      else{
+         echo "Error al eliminar la tabla articles";
+      }   
+      $this->disconnect();
+   }
+
+
    public function selectAll(){
       $data;
       $articleData = array();      

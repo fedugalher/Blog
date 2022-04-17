@@ -30,37 +30,7 @@ class Database{
          echo 'Error al crear la base de datos';
       }
    }
-
-   public function createTable($tableName){
-      //$mysqli = new mysqli("$this->host", "$this->user", "$this->password");
-      if($this->mysqli->query(
-         "CREATE TABLE IF NOT EXISTS `{$tableName}` ( 
-            `id` INT(11) NOT NULL AUTO_INCREMENT , 
-            `title` VARCHAR(100) NOT NULL , 
-            `body` VARCHAR(1000) NOT NULL ,
-            `category` VARCHAR(1000) NOT NULL ,
-            `image` VARCHAR(100) ,
-            `video` VARCHAR(100) ,
-            `status` VARCHAR(20) DEFAULT 'unpublished',
-            `date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP , 
-            PRIMARY KEY (`id`)) ENGINE = InnoDB"
-         )
-      ){
-         echo "Se creo la Tabla {$tableName}";
-      }
-      else{
-         echo 'Error al crear la Tabla';
-      }   
-   }
-
-   public function dropTable($tableName){
-      if($this->mysqli->query("DROP TABLE `{$tableName}`")){
-         echo "Se eliminó la tabla {$tableName}";
-      }
-      else{
-         echo "Error al eliminar la tabla {$tableName}";
-      }   
-   }
+  
 
    public function executeQuery($query, $succes, $error){
       if($this->mysqli->query($query)){
