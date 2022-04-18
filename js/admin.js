@@ -5,7 +5,7 @@ let articleRow = document.querySelector('.article-row');
 
 let getArticles = async () =>{
    
-   const peticion = await fetch('./php/articles_controller.php?method=selectAll'); 
+   const peticion = await fetch('./php/articles_controller.php?method=all'); 
    const resultado = await peticion.json();
    // console.log(resultado.data);
    // console.log(resultado.messages);   
@@ -27,7 +27,8 @@ let getArticles = async () =>{
             <div class="article-content" id="article-${resultado.data[article].id}">
                <div class="article-img" id="article-img-${resultado.data[article].id}"></div>
                <div class="article-text">
-                  <p>${resultado.data[article].body}</p>
+                  <h5>${resultado.data[article].title}</h5>
+                  <p>${resultado.data[article].body.substring(0,99)}...</p>
                   <span class="article-actions">
                      <a href="article_edit.html?id=${resultado.data[article].id}" class="edit-icon"><i class="fa-solid fa-pen-to-square"></i></a>
                      <a href="#" class="delete-icon"><i class="fa-solid fa-trash-can" id="delete-${resultado.data[article].id}"></i></a>

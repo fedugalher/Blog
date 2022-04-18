@@ -11,6 +11,7 @@ class Article extends Database{
    public $video;
    public $status;
    public $date;  
+   public $user_id;
    public $isSucces;
    public $arrayPrueba = [1,2,3,4,5,6];
 
@@ -22,7 +23,7 @@ class Article extends Database{
    //    $this->date = date('Y-m-d H:i:s');
    // }
 
-   public function set($id, $title, $body, $category, $image, $video, $status){   
+   public function set($id, $title, $body, $category, $image, $video, $status, $user_id){   
       $this->id = $id != null ? $id : null;   
       $this->title = $title;
       $this->body = $body;
@@ -32,6 +33,7 @@ class Article extends Database{
       $this->status = $status;
       date_default_timezone_set('America/Chihuahua');
       $this->date = date('Y-m-d H:i:s');
+      $this->user_id = $user_id;
 
       // echo json_encode($this->arrayPrueba);
       
@@ -120,6 +122,39 @@ class Article extends Database{
    }
 
 
+   public function all(){
+      $data;
+      $articleData = array();      
+      $query = "SELECT * FROM `articles` ORDER BY category";
+      
+      $this->connect();
+      $select = $this->mysqli->query($query);      
+      $this->disconnect();
+
+      for ($rows = $select->num_rows - 1; $rows >= 0; $rows--) {
+         $row = $select->fetch_assoc();
+         array_push($articleData,[
+            'id' => $row['id'], 
+            'title' => $row['title'], 
+            'body' => $row['body'], 
+            'category' => $row['category'], 
+            'image' => $row['image'],
+            'video' => $row['video'],
+            'status' => $row['status'],
+            'date' => $row['date']
+         ]);
+
+      }
+
+      $data = [
+         'data' => $articleData,
+         'messages' => $this->message
+      ];
+
+      return json_encode($data);     
+   }
+
+
    public function show($id){
       $query = "SELECT * FROM articles WHERE id = $id";
       $this->connect();
@@ -148,8 +183,8 @@ class Article extends Database{
       $this->image = $this->image != '' ? "article-$nextId.jpg" : "no-image.png";
       $this->video = $this->video != '' ? "{$this->video}" : null;
 
-      $query = "INSERT INTO `articles` (`id`, `title`, `body`, `category`, `image`, `video`, `status`, `date`) 
-         VALUES (NULL, '{$this->title}', '{$this->body}', '{$this->category}', '{$this->image}',  '{$this->video}', '{$this->status}', '{$this->date}')";
+      $query = "INSERT INTO `articles` (`id`, `title`, `body`, `category`, `image`, `video`, `status`, `date`, `user_id`) 
+         VALUES (NULL, '{$this->title}', '{$this->body}', '{$this->category}', '{$this->image}',  '{$this->video}', '{$this->status}', '{$this->date}', '{$this->user_id}')";
       $this->connect();
       $this->executeQuery($query, 'Articulo agregado correctamente', 'Error al agregar el articulo');
       $this->disconnect();
@@ -194,7 +229,8 @@ class Article extends Database{
          `image` = '{$this->image}', 
          `video` = '{$this->video}',
          `status` = '{$this->status}', 
-         `date` = '{$this->date}' 
+         `date` = '{$this->date}',
+         `user_id` = '{$this->user_id}'
          WHERE `articles`.`id` = {$this->id}";
      }else{
          $query = "UPDATE `articles` SET 
@@ -202,14 +238,15 @@ class Article extends Database{
          `body` = '{$this->body}', 
          `category` = '{$this->category}',      
          `status` = '{$this->status}', 
-         `date` = '{$this->date}' 
+         `date` = '{$this->date}',
+         `user_id` = '{$this->user_id}'
          WHERE `articles`.`id` = {$this->id}";
      }     
        $this->connect();
        $this->executeQuery($query, 'Articulo actualizado', 'No se puede actualizar el articulo');
        $this->disconnect();
-
-       if($this->message[2]['msgType'] == 'succes'){
+         
+      if($this->message[2]['msgType'] == 'succes'){
          return true;
       }else{
          return false;
@@ -252,7 +289,8 @@ class Article extends Database{
             'image' => $row['image'],
             'video' => $row['video'],
             'status' => $row['status'],
-            'date' => $row['date']
+            'date' => $row['date'],
+            'user_id' => $row['user_id'],
          ]);
       }
       $data = [

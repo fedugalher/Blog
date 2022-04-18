@@ -40,3 +40,9 @@
    border-radius: 50%;
    border: 1px solid #001f2e;
  }
+ article h3{
+    text-align: center;
+    font-family: 'Comfortaa', cursive;
+    margin-top: 30px;
+    margin-bottom: 30px;
+ }

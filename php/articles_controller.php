@@ -21,6 +21,9 @@ switch ($method) {
    case 'selectAll':
       echo $article->selectAll();
       break;
+   case 'all':
+      echo $article->all();
+      break;
    case 'show':
       echo $article->show($id);
       break;
@@ -56,6 +59,7 @@ function setNew(){
    $imgPath = '../images/articles/';
    $video = '';
    $status = isset($_POST['status']) &&  $_POST['status'] == 'true' ? 'published' : 'unpublished';
+   $user_id = isset($_POST['user_id']) ? $_POST['user_id'] : 0;
 
    $articleArray = [
       'titulo' => $title,
@@ -66,10 +70,10 @@ function setNew(){
       'imgPath' => $imgPath,
       'video' => $video,
       'status' => $status,
-      'issetstatus' => $_POST['status'],
+      'user_id' => $user_id,
    ];
 
-   $article->set(null, $title, $body, $category, $image, $video, $status);
+   $article->set(null, $title, $body, $category, $image, $video, $status, $user_id);
    
    if($article->create()){
       if (move_uploaded_file($imageTmp, $imgPath.$article->image)) {
@@ -93,8 +97,7 @@ function setUpdate(){
    $imgPath = '../images/articles/';
    $video = '';
    $status = isset($_POST['status']) &&  $_POST['status'] == 'true' ? 'published' : 'unpublished';
-  
-   
+   $user_id = isset($_POST['user_id']) ? $_POST['user_id'] : 0;   
 
    $articleArray = [
       'id' => $id,
@@ -106,10 +109,10 @@ function setUpdate(){
       'imgPath' => $imgPath,
       'video' => $video,
       'status' => $status,
-      'issetstatus' => $_POST['status'],
+      'user_id' => $user_id,
    ];
 
-   $article->set($id, $title, $body, $category, $image, $video, $status);
+   $article->set($id, $title, $body, $category, $image, $video, $status, $user_id);
    
    if($article->update()){
       if ($image != '') {
