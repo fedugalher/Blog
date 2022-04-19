@@ -3,6 +3,7 @@
 const btnDb = document.getElementById('btn-db');
 const btnUsers = document.getElementById('btn-users');
 const btnArticles = document.getElementById('btn-articles');
+const btnComments = document.getElementById('btn-comments');
 
 
 // Evento Click
@@ -21,6 +22,11 @@ btnArticles.addEventListener('click', e =>{
    articlesTable(); 
 });
 
+btnComments.addEventListener('click', e =>{
+   e.preventDefault(); //Evita que se recargue la pagina al dar click en el boton submit
+   commentsTable(); 
+});
+
 let createDb = async () =>{   
    const peticion = await fetch('./php/database_controller.php?method=createDB'); 
    const resultado = await peticion.json();
@@ -35,6 +41,12 @@ let usersTable = async () =>{
 
 let articlesTable = async () =>{   
    const peticion = await fetch('./php/articles_controller.php?method=articlesTable'); 
+   const resultado = await peticion.json();
+   console.log(resultado);
+}
+
+let commentsTable = async () =>{   
+   const peticion = await fetch('./php/comments_controller.php?method=commentsTable'); 
    const resultado = await peticion.json();
    console.log(resultado);
 }
