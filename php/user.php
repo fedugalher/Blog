@@ -23,7 +23,7 @@
          $query = "CREATE TABLE IF NOT EXISTS `fedugalher_blog`.`users` ( 
             `id` INT(11) NOT NULL AUTO_INCREMENT , 
             `username` VARCHAR(50) NOT NULL , 
-            `passwordUser` VARCHAR(100) NOT NULL , 
+            `password` VARCHAR(100) NOT NULL , 
             `role` VARCHAR(20) NOT NULL DEFAULT 'usuario' , 
             `image` VARCHAR(100) NOT NULL DEFAULT 'no-image.png' , 
             `reg_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP , 
@@ -31,11 +31,12 @@
          
          $this->connect();
          if($this->mysqli->query($query)){
-            echo "Se creó la Tabla users";
+            array_push($this->message, ['msg'=>"Se creó la tabla users", 'msgType'=>'succes']);
          }else{
-            echo "Error al crear la tabla users";
+            array_push($this->message, ['msg'=>"Error al crear la tabla users", 'msgType'=>'error']);
          }
          $this->disconnect();
+         echo json_encode($this->message);
       }
 
       public function dropTable(){

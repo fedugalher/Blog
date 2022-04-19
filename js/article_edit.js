@@ -29,7 +29,7 @@ btnPublish.addEventListener('click', e =>{
    data.append('category', category.value);
    data.append('image', image.files[0]);
    data.append('status', articleStatus.checked);
-   data.append('user_id', 6); //esto es temporal igual que en el metodo new
+   data.append('user_id', 1); //esto es temporal igual que en el metodo new
    data.append('method', 'update');
    data.append('id', id);
 

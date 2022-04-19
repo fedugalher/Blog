@@ -11,9 +11,9 @@ class Database{
    public function connect(){
       $this->mysqli = new mysqli("$this->host", "$this->user", "$this->password", "$this->dbName");
       if ($this->mysqli->connect_errno) {
-         echo "Fallo al conectar a MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
+         array_push($this->message, ['msg'=>"Falló la conexión a la base de datos {$this->dbName}", 'msgType'=>'error']);
       }
-        array_push($this->message, ['msg'=>"Conexión exitosa a la base de datos {$this->dbName}", 'msgType'=>'succes']);
+      array_push($this->message, ['msg'=>"Conexión exitosa a la base de datos {$this->dbName}", 'msgType'=>'succes']);
    }
 
    public function disconnect(){
@@ -24,10 +24,12 @@ class Database{
    public function createDB($dbName){
       $this->mysqli = new mysqli("$this->host", "$this->user", "$this->password", "");
       if($this->mysqli->query("CREATE DATABASE IF NOT EXISTS {$dbName} CHARACTER SET utf8 COLLATE utf8_bin ")){
-         echo "Se creo la base de datos {$dbName}";          
+         // echo "Se creo la base de datos {$dbName}";  
+         array_push($this->message, ['msg'=>"Se creó la base de datos {$this->dbName}", 'msgType'=>'succes']);        
       }
       else{
-         echo 'Error al crear la base de datos';
+         // echo 'Error al crear la base de datos';
+         array_push($this->message, ['msg'=>"Error al crear la base de datos {$this->dbName}", 'msgType'=>'error']);
       }
    }
   

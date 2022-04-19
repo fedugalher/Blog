@@ -18,6 +18,9 @@ if(isset($_GET['method'])){
 }
 
 switch ($method) {
+   case 'usersTable':
+      $user->createTable();
+      break;
    case 'selectAll':
       echo $user->selectAll();
       break;

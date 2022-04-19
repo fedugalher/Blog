@@ -18,6 +18,11 @@ if(isset($_GET['method'])){
 }
 
 switch ($method) {
+   case 'articlesTable':
+      $article->createTable();
+      $article->alterTable();
+      echo json_encode($article->message);
+      break;
    case 'selectAll':
       echo $article->selectAll();
       break;
