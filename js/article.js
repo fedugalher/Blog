@@ -1,5 +1,6 @@
 'use_strict';
 
+
 const articleTitle = document.getElementById('article-title');
 const articleText = document.querySelector('.article-text');
 const articleDate = document.querySelector('.article-date');
@@ -13,7 +14,7 @@ const id = urlParams.get('id');
 console.log(id)
 
 //Funcion asincrona para obtener el articulo, pasando como parametros el metodo shoe y el id que seran consultados en el articles_controller.php
-let getArticle = async () =>{   
+let getArticle = async (id) =>{   
    const peticion = await fetch(`./php/articles_controller.php?method=show&id=${id}`); 
    const resultado = await peticion.json();
    const date = new Date(resultado.date); //para poder formatear la hora con la funcion formatDate()
@@ -58,9 +59,12 @@ let formatDate = date =>{
    return fullDate;
 }
 
-if(id){
-   getArticle();
-}
+ 
+window.addEventListener('load', ()=>{
+   getArticle(id);
+   getArticles();
+ });
 
 
-getArticles();
+
+

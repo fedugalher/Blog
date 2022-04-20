@@ -5,13 +5,32 @@
 // const params = window.location.search;
 // const urlParams = new URLSearchParams(params);
 // const id = urlParams.get('id');
-console.log(id);
-const commentBtn = document.getElementById('comment-btn');
 
+
+const commentsContainer = document.querySelector('.form-coment-col');
+const commentBtn = document.getElementById('coment-btn');
+console.log(commentBtn)
+
+
+let articleComments = async () =>{   
+   const peticion = await fetch(`./php/comments_controller.php?method=selectAll&id=${id}`); 
+   const resultado = await peticion.json();
+   // console.log(resultado);
+   for (const comment in resultado.data) {
+      const date = new Date(resultado.data[comment].date);
+      commentsContainer.innerHTML+= `
+         <div class="col-lg-11 coment">
+            <p class="coment-name">${resultado.data[comment].name}</p>
+            <p>${resultado.data[comment].comment}</p>
+            <span class="article-date">${formatDate(date)}</span>
+         </div>
+      `;
+   }
+}
 
 commentBtn.addEventListener('click', e =>{
    e.preventDefault(); //Evita que se recargue la pagina al dar click en el boton submit
-  
+
    const data = new FormData();
    const commentName = document.getElementById('name').value;
    const commentText = document.getElementById('comment').value;
@@ -21,7 +40,7 @@ commentBtn.addEventListener('click', e =>{
    data.append('comment', commentText);
    data.append('method', method);
    data.append('article_id', id);
-   sendComment(data); 
+   sendComment(data);
 });
 
 let sendComment = async (data) =>{   
@@ -30,8 +49,13 @@ let sendComment = async (data) =>{
       body: data
    }); 
    const resultado = await peticion.json();
-   console.log(resultado)
-   // if(resultado['article-msg'] == 'Articulo guardado'){
-   //    location.href = 'index.html';
-   // }
+   console.log(resultado);
+   if(resultado['article-msg'] == 'Tu comentario ha sido enviado'){
+      // location.reload;
+      console.log('bien')
+      // articleComments();
+   }
 }
+
+
+

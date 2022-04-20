@@ -24,7 +24,7 @@ switch ($method) {
       echo json_encode($comment->message);
       break;
    case 'selectAll':
-      echo $comment->selectAll();
+      echo $comment->selectAll($id);
       break;   
    case 'show':
       echo $comment->show($id);
@@ -52,20 +52,24 @@ switch ($method) {
 
 function setNew(){
    
-   $myComment = new Comment();
+   $comment = new Comment();
    $name = isset($_POST['name']) ? $_POST['name'] : 'No hay nombre';
-   $comment = isset($_POST['comment']) ? $_POST['comment'] : 'No hay comentario';
+   $commentText = isset($_POST['comment']) ? $_POST['comment'] : 'No hay comentario';
    $article_id = isset($_POST['article_id']) ? $_POST['article_id'] : 0;
 
    $commentArray = [
       'name' => $name,
-      'comment' => $comment,
+      'comment' => $commentText,
       'article_id' => $article_id,
    ];
 
-   $myComment->set(null, $name, $comment, $article_id);
-   
-   $myComment->create();
+   $comment->set(null, $name, $commentText, $article_id);   
+   if($comment->create()){
+      $commentArray['article-msg'] = 'Tu comentario ha sido enviado';
+   }else {
+      $commentArray['article-msg'] = 'No se pudo enviar el comentario';
+   }
+  
    echo json_encode($commentArray);
     
 }
@@ -74,17 +78,16 @@ function setUpdate(){
    
    $comment = new Comment();
    $name = isset($_POST['name']) ? $_POST['name'] : 'No hay nombre';
-   $comment = isset($_POST['comment']) ? $_POST['comment'] : 'No hay comentario';
+   $commentText = isset($_POST['comment']) ? $_POST['comment'] : 'No hay comentario';
    $article_id = isset($_POST['article_id']) ? $_POST['article_id'] : 0;
 
    $commentArray = [
       'name' => $name,
-      'comment' => $comment,
+      'comment' => $commentText,
       'article_id' => $article_id,
    ];
 
-   $comment->set($id, $name, $comment, $article_id);
-   
+   $comment->set($id, $name, $commentText, $article_id);   
    $comment->update();
    echo json_encode($commentArray);
 }

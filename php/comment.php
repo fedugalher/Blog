@@ -83,10 +83,10 @@ class Comment extends Database{
    }
 
 
-   public function selectAll(){
+   public function selectAll($id){
       $data;
       $commentData = array();      
-      $query = "SELECT * FROM `comments`";
+      $query = "SELECT * FROM `comments` WHERE article_id = $id";
       
       $this->connect();
       $select = $this->mysqli->query($query);      
@@ -100,7 +100,6 @@ class Comment extends Database{
             'comment' => $row['comment'],
             'date' => $row['date'],
             'article_id' => $row['article_id'],
-
          ]);
 
       }

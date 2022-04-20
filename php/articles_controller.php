@@ -1,8 +1,10 @@
 <?php
 
 require('article.php');
+require('comment.php');
 
 $article = new Article();
+$comment = new Comment();
 
 $id = isset($_GET['id']) ? $_GET['id'] : 0;
 $limit = isset($_GET['limit']) ? $_GET['limit'] : 0;
