@@ -156,7 +156,7 @@ class Article extends Database{
 
 
    public function show($id){
-      $query = "SELECT * FROM articles WHERE id = $id";
+      $query = "SELECT * FROM articles WHERE id = $id";      
       $this->connect();
       $select = $this->mysqli->query($query);
       $this->disconnect();
@@ -170,10 +170,28 @@ class Article extends Database{
             'image' => $row['image'],
             'video' => $row['video'],
             'status' => $row['status'],
-            'date' => $row['date']
+            'date' => $row['date'],
+            'comments' => []
          ];
-
       }
+
+     
+      $query = "SELECT * FROM `comments` WHERE article_id = $id ORDER BY id DESC";
+      $this->connect();
+      $select = $this->mysqli->query($query);
+      $this->disconnect();
+      $commentsData = [];
+      while($row = $select->fetch_assoc()){
+         array_push($commentsData, [
+            'id' => $row['id'], 
+            'name' => $row['name'], 
+            'comment' => $row['comment'],
+            'date' => $row['date']
+         ]);
+         
+      }
+
+      $articleData['comments'] = $commentsData;
       return json_encode($articleData);      
    }
 
@@ -312,7 +330,7 @@ class Article extends Database{
 // $article->update(3, 'Prueba update', 'prueba update body', 'prueba update category', date('Y-m-d H:i:s'));
 // $article->selectAll();
 // $article->last()['id']; //ejemplo mostrar ultimo id
-// $article->show(10);
+// $article->show(1);
 // $article->selectLimit(10);
 
 ?>
