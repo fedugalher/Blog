@@ -24,12 +24,11 @@ let getArticles = async () =>{
      
       articleRow.innerHTML += `
          <div class="col-lg-4 col-md-6 article-col">
-            <div class="article-content" id="article-${resultado.data[article].id}">
+            <div class="article-content article-card" id="article-${resultado.data[article].id}">
                <div class="article-img" id="article-img-${resultado.data[article].id}"></div>
                <div class="article-text">
                   <h5>${resultado.data[article].title}</h5>
-                  <p>${resultado.data[article].body.substring(0,99)}...</p>
-                  <a href="article.html?id=${resultado.data[article].id}" class="btn btn-primary">Ver más</a>                  
+                  <p>${resultado.data[article].body.substring(0,99)}... <a href="article.html?id=${resultado.data[article].id}">Ver más</a></p>                                    
                   <span class="article-date">${formatDate(date)}</span>
                </div>
             </div>

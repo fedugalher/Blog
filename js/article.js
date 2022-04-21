@@ -15,6 +15,8 @@ const params = window.location.search;
 const urlParams = new URLSearchParams(params);
 const id = urlParams.get('id');
 
+
+
 window.addEventListener('load', ()=>{
    getArticles();
    getArticle();
@@ -70,10 +72,11 @@ let getArticles = async () =>{
       const date = new Date(resultado.data[article].date); //para poder formatear la hora con la funcion formatDate()
           
       asideContainer.innerHTML += `
-         <div class="row aside-row" id="article-${resultado.data[article].id}">            
+         <div class="row aside-row article-card" id="article-${resultado.data[article].id}">            
             <div class="col-lg-12 col-md-3 aside-img-box" id="article-img-${resultado.data[article].id}"></div>           
             <div class="col-lg-12 col-md-9 aside-text-box">
-               <p>${resultado.data[article].body.substring(0,99)}...</p>
+               <p>${resultado.data[article].body.substring(0,99)}... <a href="article.html?id=${resultado.data[article].id}">Ver más</a></p>
+               
                <span class="article-date">Publicado el ${formatDate(date)}</span>
             </div>             
          </div>

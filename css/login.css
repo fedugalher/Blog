@@ -1,0 +1,28 @@
+html body{
+   overflow-y: hidden;
+}
+.login-box {
+   border: 3px dotted #cbcbcb ;
+   border-radius: 10px;
+   margin-bottom: 10px;
+}
+.input-login{
+   display: block;
+   margin: 20px 0;
+   width: 100%;
+   border: 1px solid #d8d8d8;
+   border-radius: 5px;
+   height: 30px;
+}
+.input-login:focus{
+   outline: none;
+   box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);   
+}
+.login-form #login-btn{
+   background-color: #001f2e;
+   color: white;
+   border: none;
+}
+.login-form #login-btn:hover{
+   background-color: #003a58;
+ }
