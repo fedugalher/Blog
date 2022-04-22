@@ -1,6 +1,7 @@
 'use_strict';
 
 const btnSesion = document.getElementById('login-btn');
+const loginMsg = document.querySelector('.login-msg');
 
 btnSesion.addEventListener('click', e =>{
    e.preventDefault();
@@ -23,5 +24,12 @@ let startSesion = async (data) =>{
    }); 
    const resultado = await peticion.json();
    console.log(resultado['messages'][1].msgType)
+   if(resultado['messages'][1].msgType === 'succes'){
+      location.href = './admin.php';
+   }else{
+      loginMsg.textContent = 'Datos de usuario incorrectos';
+      loginMsg.classList.add('msg-error');
+
+   }
    
 }

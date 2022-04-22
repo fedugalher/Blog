@@ -7,8 +7,6 @@ let getArticles = async () =>{
    
    const peticion = await fetch('./php/articles_controller.php?method=selectAll'); 
    const resultado = await peticion.json();
-   // console.log(resultado.data);
-   // console.log(resultado.messages);   
    let currentCategory; //Para imprimir los titulos de la categoria
    let pastCategory = '';
    
@@ -44,9 +42,9 @@ let getArticles = async () =>{
 getArticles();
 
 let formatDate = date =>{
-   let day = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+   let day = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
    let month = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
-   let fullDate = `${day[date.getDay()]}, ${date.getDate()+1} de ${month[date.getMonth()]} de ${date.getFullYear()}`;
+   let fullDate = `${day[date.getDay()]}, ${date.getDate()} de ${month[date.getMonth()]} de ${date.getFullYear()}`;
    // console.log(fullDate);
    return fullDate;
 }

@@ -1,5 +1,5 @@
 html body{
-   overflow-y: hidden;
+   
    overflow-x: hidden;
 }
 .login-box {
@@ -26,4 +26,20 @@ html body{
 }
 .login-form #login-btn:hover{
    background-color: #003a58;
+ }
+ .login-img{
+    display: block;
+    text-align: center;
+    padding: 30px 0 10px 0;
+    font-size: 70px;
+    color:#001f2e;
+ }
+ .login-msg{
+    font-size: 14px;
+    text-align: center;
+    border-radius: 3px;
+ }
+ .msg-error{
+    color: #720d0d;
+    background-color: #ffbfbf;
  }

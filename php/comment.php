@@ -83,33 +83,23 @@ class Comment extends Database{
    }
 
 
-   public function selectAll($id){
-      $data;
-      $commentData = array();      
-      $query = "SELECT * FROM `comments` WHERE article_id = $id";
-      
+   public function selectAll($id){      
+      $query = "SELECT * FROM `comments` WHERE article_id = $id ORDER BY id DESC";
       $this->connect();
-      $select = $this->mysqli->query($query);      
+      $select = $this->mysqli->query($query);
       $this->disconnect();
-
-      for ($rows = $select->num_rows - 1; $rows >= 0; $rows--) {
-         $row = $select->fetch_assoc();
-         array_push($commentData,[
+      $commentsData = [];
+      while($row = $select->fetch_assoc()){
+         array_push($commentsData, [
             'id' => $row['id'], 
             'name' => $row['name'], 
             'comment' => $row['comment'],
-            'date' => $row['date'],
-            'article_id' => $row['article_id'],
+            'date' => $row['date']
          ]);
-
+         
       }
 
-      $data = [
-         'data' => $commentData,
-         'messages' => $this->message
-      ];
-
-      return json_encode($data);     
+      return json_encode($commentsData);     
    }
 
 

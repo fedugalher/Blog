@@ -1,3 +1,11 @@
+<?php
+	session_start();
+	if(!isset($_SESSION['started'])){
+		header('location: index.html');
+	}else{
+		$sessionStarted = true;
+	}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -59,8 +67,8 @@
 					<a href="admin.html" class="list-group-item list-group-item-action">Editar Artículo</a>
                <a href="users.html" class="list-group-item list-group-item-action">Usuarios</a>
 					<a href="database.html" class="list-group-item list-group-item-action">Base de datos</a>
-					<a href="login.html" class="list-group-item list-group-item-action">Login</a>
-               <a class="list-group-item list-group-item-action disabled">A disabled link item</a>
+					<a href="php/sesions_controller.php?method=sesionClose" id="sesionClose" class="list-group-item list-group-item-action">Cerrar Sesion</a>
+				   <a class="list-group-item list-group-item-action disabled">A disabled link item</a>
              </div>
             </aside>
          </div>

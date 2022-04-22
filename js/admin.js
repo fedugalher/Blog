@@ -1,8 +1,21 @@
 'use_strict';
 
 let articleRow = document.querySelector('.article-row');
+const sesionClose = document.getElementById('sesionClose');
 
 
+// Events
+window.addEventListener('load', ()=>{
+   getArticles();
+});
+
+sesionClose.addEventListener('click', e => {
+   e.preventDefault();
+   closeSession();
+});
+
+
+// Functions
 let getArticles = async () =>{
    
    const peticion = await fetch('./php/articles_controller.php?method=all'); 
@@ -47,12 +60,19 @@ let getArticles = async () =>{
    
 }
 
-getArticles();
-
 let formatDate = date =>{
    let day = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
    let month = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
    let fullDate = `${day[date.getDay()]}, ${date.getDate()+1} de ${month[date.getMonth()]} de ${date.getFullYear()}`;
    // console.log(fullDate);
    return fullDate;
+}
+
+let closeSession = async () =>{
+   const peticion = await fetch('./php/sesions_controller.php?method=closeSesion'); 
+   const resultado = await peticion.json();
+   
+   if (resultado[0].msgType === 'succes') {
+      location.reload();
+   }
 }
