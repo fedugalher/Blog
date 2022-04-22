@@ -5,7 +5,7 @@ let articleRow = document.querySelector('.article-row');
 
 let getArticles = async () =>{
    
-   const peticion = await fetch('./php/articles_controller.php?method=selectAll'); 
+   const peticion = await fetch('../php/articles_controller.php?method=selectAll'); 
    const resultado = await peticion.json();
    let currentCategory; //Para imprimir los titulos de la categoria
    let pastCategory = '';
@@ -26,7 +26,7 @@ let getArticles = async () =>{
                <div class="article-img" id="article-img-${resultado.data[article].id}"></div>
                <div class="article-text">
                   <h5>${resultado.data[article].title}</h5>
-                  <p>${resultado.data[article].body.substring(0,99)}... <a href="article.html?id=${resultado.data[article].id}">Ver más</a></p>                                    
+                  <p>${resultado.data[article].body.substring(0,99)}... <a href="article.php?id=${resultado.data[article].id}">Ver más</a></p>                                    
                   <span class="article-date">${formatDate(date)}</span>
                </div>
             </div>
@@ -34,7 +34,7 @@ let getArticles = async () =>{
       `;
       //Agregar imagen personalizada a cada articulo
       const articleImage = document.getElementById(`article-img-${resultado.data[article].id}`);
-      articleImage.style.backgroundImage = `url('./images/articles/${resultado.data[article].image}')`;
+      articleImage.style.backgroundImage = `url('../images/articles/${resultado.data[article].image}')`;
    }
    
 }

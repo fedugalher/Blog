@@ -18,7 +18,7 @@ sesionClose.addEventListener('click', e => {
 // Functions
 let getArticles = async () =>{
    
-   const peticion = await fetch('./php/articles_controller.php?method=all'); 
+   const peticion = await fetch('../php/articles_controller.php?method=all'); 
    const resultado = await peticion.json();
    // console.log(resultado.data);
    // console.log(resultado.messages);   
@@ -44,7 +44,7 @@ let getArticles = async () =>{
                   <p>${resultado.data[article].body.substring(0,99)}...</p>
                  
                   <span class="article-date">
-                     <a href="article_edit.html?id=${resultado.data[article].id}" class="edit-icon"><i class="fa-solid fa-pen-to-square"></i></a>
+                     <a href="article_edit.php?id=${resultado.data[article].id}" class="edit-icon"><i class="fa-solid fa-pen-to-square"></i></a>
                      <a href="#" class="delete-icon"><i class="fa-solid fa-trash-can" id="delete-${resultado.data[article].id}"></i></a>
                      <br>
                      ${formatDate(date)}
@@ -55,21 +55,21 @@ let getArticles = async () =>{
       `;
       //Agregar imagen personalizada a cada articulo
       const articleImage = document.getElementById(`article-img-${resultado.data[article].id}`);
-      articleImage.style.backgroundImage = `url('./images/articles/${resultado.data[article].image}')`;
+      articleImage.style.backgroundImage = `url('../images/articles/${resultado.data[article].image}')`;
    }
    
 }
 
 let formatDate = date =>{
-   let day = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+   let day = [ 'Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
    let month = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
-   let fullDate = `${day[date.getDay()]}, ${date.getDate()+1} de ${month[date.getMonth()]} de ${date.getFullYear()}`;
+   let fullDate = `${day[date.getDay()]}, ${date.getDate()} de ${month[date.getMonth()]} de ${date.getFullYear()}`;
    // console.log(fullDate);
    return fullDate;
 }
 
 let closeSession = async () =>{
-   const peticion = await fetch('./php/sesions_controller.php?method=closeSesion'); 
+   const peticion = await fetch('../php/sesions_controller.php?method=closeSesion'); 
    const resultado = await peticion.json();
    
    if (resultado[0].msgType === 'succes') {

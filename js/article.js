@@ -20,11 +20,11 @@ window.addEventListener('load', ()=>{
 
 //Funcion asincrona para obtener el articulo, pasando como parametros el metodo shoe y el id que seran consultados en el articles_controller.php
 let getArticle = async () =>{   
-   const peticion = await fetch(`./php/articles_controller.php?method=show&id=${id}`); 
+   const peticion = await fetch(`../php/articles_controller.php?method=show&id=${id}`); 
    const resultado = await peticion.json();
    const date = new Date(resultado.date); //para poder formatear la hora con la funcion formatDate()
 
-   articleImage.setAttribute('src', `images/articles/${resultado.image}`);
+   articleImage.setAttribute('src', `../images/articles/${resultado.image}`);
    articleTitle.textContent = resultado.title;
    articleText.textContent = resultado.body;
    articleDate.textContent = `Publicado el ${formatDate(date)}`;
@@ -32,7 +32,7 @@ let getArticle = async () =>{
 
 // Funcion para obtener todos los articulos y colocarlso en el aside
 let getArticles = async () =>{   
-   const peticion = await fetch('./php/articles_controller.php?method=selectLimit&limit=5'); 
+   const peticion = await fetch('../php/articles_controller.php?method=selectLimit&limit=5'); 
    const resultado = await peticion.json();
 
    for (const article in resultado.data) {
@@ -43,7 +43,7 @@ let getArticles = async () =>{
          <div class="row aside-row article-card" id="article-${resultado.data[article].id}">            
             <div class="col-lg-12 col-md-3 aside-img-box" id="article-img-${resultado.data[article].id}"></div>           
             <div class="col-lg-12 col-md-9 aside-text-box">
-               <p>${resultado.data[article].body.substring(0,99)}... <a href="article.html?id=${resultado.data[article].id}">Ver más</a></p>
+               <p>${resultado.data[article].body.substring(0,99)}... <a href="article.php?id=${resultado.data[article].id}">Ver más</a></p>
                
                <span class="article-date">Publicado el ${formatDate(date)}</span>
             </div>             
@@ -51,7 +51,7 @@ let getArticles = async () =>{
       `;
       //Agregar imagen personalizada a cada articulo
       const articleImage = document.getElementById(`article-img-${resultado.data[article].id}`);
-      articleImage.style.backgroundImage = `url('./images/articles/${resultado.data[article].image}')`;
+      articleImage.style.backgroundImage = `url('../images/articles/${resultado.data[article].image}')`;
    }   
 }
 

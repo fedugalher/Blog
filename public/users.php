@@ -1,3 +1,11 @@
+<?php
+	session_start();
+	if(!isset($_SESSION['started'])){
+		header('location: index.html');
+	}else{
+		$sessionStarted = true;
+	}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,31 +20,7 @@
 </head>
 <body>
   
-  <header>
-		<div class="container-header"></div>
-  	</header> 
-	  
-	<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
-		<div class="container-fluid">
-			<a class="navbar-brand" href="index.html">Fedugalher</a>
-			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarNavDropdown">
-			<ul class="navbar-nav">
-				<li class="nav-item">
-					<a class="nav-link active" aria-current="page" href="index.html#Gameplays-category">Gameplays</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="index.html#Noticias-category">Noticias</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="index.html#Recomendaciones-category">Recomendaciones</a>
-				</li>
-			</ul>
-			</div>
-		</div>
-	</nav>
+<?php require_once('templates/navbar.php') ?>
 
 	
 		<div class="row main-container">
@@ -129,22 +113,7 @@
 		</div>
 
 
-	<div class="row text-center">
-		<footer>      
-			<p>
-				<h3>Redes Sociales</h3>
-				<div class="social-content">
-				<a href="https://facebook.com/eduardo.galindoh" target="blank"><i class="fa-brands fa-facebook-f"></i></a>
-				<a href="https://instagram.com/fedugalher" target="blank"><i class="fa-brands fa-instagram"></i></a>
-				<a href="https://twitter.com/fedugalher" target="blank"><i class="fa-brands fa-twitter"></i></a>
-				</div>
-			</p>  
-			<br>
-			
-			<p>Felipe Eduardo Galindo Hernández</p>
-			<p>fedugalher@gmail.com</p>
-		</footer>
-	</div>
+		<?php require_once('templates/footer.php') ?>
   
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>

@@ -1,3 +1,12 @@
+<?php
+	session_start();
+	if(!isset($_SESSION['started'])){
+		header('location: index.html');
+	}else{
+		$sessionStarted = true;
+	}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,12 +51,11 @@
   <div class="row main-container">
       
       <div class="col-md-12 col-lg-8">
-        <article class="article-container">
-           
+        <article class="article-container">           
           
             <div class="row form-coment-row">
-               <div class="col-lg-12 form-coment-col">  
-                  <h3>Editar artículo</h3> 
+              <div class="col-lg-12 form-coment-col">  
+                  <h3>Agregar Publicación</h3> 
                   <hr>
                                   
                   <div class="article-img">
@@ -56,7 +64,7 @@
                      </div>                  
                      <p class="article-text"></p>
                      <span class="article-date" id="article-date">dd/mm/aaaa</span>
-                   </div>       
+                  </div>       
                   <form id="article-form" action="php/article_new.php" method="post" enctype="multipart/form-data">
                      <input id="img-file" class="article-input" type="file" name="image">
                      <input id="title" class="coment-input" type="text" placeholder="Título" name="title">
@@ -70,54 +78,30 @@
                      <input type="checkbox" name="status" id="status" value="published"> <label for="status">Publicar</label>
                      <input id="btn-publish" class="coment-input btn-send" type="submit" value="Publicar">
                   </form>
-               </div>                 
+              </div>                 
             </div>
 
             
           
         </article>
       </div> 
+
       
 
-       <!-- Aside -->
-       <div class="col-lg-4">
+      <!-- Aside -->
+      <div class="col-md-12 col-lg-3">
         <aside class="aside-container">
-        <h4>Menú</h4>
-        <hr>
-        
-        <div class="list-group">
-           <a href="article_new.html" class="list-group-item list-group-item-action active" aria-current="true">
-             Agregar Artículo
-           </a>
-           <a href="#" class="list-group-item list-group-item-action">A second link item</a>
-           <a href="#" class="list-group-item list-group-item-action">A third link item</a>
-           <a href="#" class="list-group-item list-group-item-action">A fourth link item</a>
-           <a class="list-group-item list-group-item-action disabled">A disabled link item</a>
-         </div>
+          <h4>Publicaciones anteriores</h4>
+          <hr>          
         </aside>
-     </div>
+      </div>
     
   </div>
 
-    <div class="row text-center">
-      <footer>      
-        <p>
-          <h3>Redes Sociales</h3>
-          <div class="social-content">
-            <a href="https://facebook.com/eduardo.galindoh" target="blank"><i class="fa-brands fa-facebook-f"></i></a>
-            <a href="https://instagram.com/fedugalher" target="blank"><i class="fa-brands fa-instagram"></i></a>
-            <a href="https://twitter.com/fedugalher" target="blank"><i class="fa-brands fa-twitter"></i></a>
-          </div>
-        </p>  
-        <br>
-        
-        <p>Felipe Eduardo Galindo Hernández</p>
-        <p>fedugalher@gmail.com</p>
-      </footer>
-    </div>
+  <?php require_once('templates/footer.php') ?>
 
-    
-    <script src="js/article_edit.js"></script> 
+    <!-- <script src="js/article.js"></script> -->
+    <script src="js/article_new.js"></script> 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>

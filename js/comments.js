@@ -22,7 +22,7 @@ commentBtn.addEventListener('click', e =>{
 });
 
 let sendComment = async (data) =>{   
-   const peticion = await fetch('./php/comments_controller.php', {
+   const peticion = await fetch('../php/comments_controller.php', {
       method: 'POST',
       body: data
    }); 
@@ -35,7 +35,7 @@ let sendComment = async (data) =>{
 }
 
 const getComments = async ()=>{
-   const peticion = await fetch(`./php/comments_controller.php?method=selectAll&id=${id}`); 
+   const peticion = await fetch(`../php/comments_controller.php?method=selectAll&id=${id}`); 
    const resultado = await peticion.json();
 
    commentsContainer.innerHTML = '';
