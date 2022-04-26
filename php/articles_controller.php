@@ -6,6 +6,7 @@ $article = new Article();
 
 $id = isset($_GET['id']) ? $_GET['id'] : 0;
 $limit = isset($_GET['limit']) ? $_GET['limit'] : 0;
+$category = isset($_GET['category']) ? $_GET['category'] : 'none';
 
 
 
@@ -25,6 +26,9 @@ switch ($method) {
       break;
    case 'selectAll':
       echo $article->selectAll();
+      break;
+   case 'selectCategory':
+      echo $article->selectCategory($category);
       break;
    case 'all':
       echo $article->all();

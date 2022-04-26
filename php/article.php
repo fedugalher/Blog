@@ -92,7 +92,40 @@ class Article extends Database{
    public function selectAll(){
       $data;
       $articleData = array();      
-      $query = "SELECT * FROM `articles` WHERE status = 'published' ORDER BY category";
+      $query = "SELECT * FROM `articles` WHERE status = 'published' ORDER BY category, date DESC";
+      
+      $this->connect();
+      $select = $this->mysqli->query($query);      
+      $this->disconnect();
+
+      for ($rows = $select->num_rows - 1; $rows >= 0; $rows--) {
+         $row = $select->fetch_assoc();
+         array_push($articleData,[
+            'id' => $row['id'], 
+            'title' => $row['title'], 
+            'body' => $row['body'], 
+            'category' => $row['category'], 
+            'image' => $row['image'],
+            'video' => $row['video'],
+            'status' => $row['status'],
+            'date' => $row['date']
+         ]);
+
+      }
+
+      $data = [
+         'data' => $articleData,
+         'messages' => $this->message
+      ];
+
+      return json_encode($data);     
+   }
+
+
+   public function selectCategory($category){
+      $data;
+      $articleData = array();      
+      $query = "SELECT * FROM `articles` WHERE status = 'published' AND category = '$category' ORDER BY date DESC";
       
       $this->connect();
       $select = $this->mysqli->query($query);      
@@ -173,25 +206,8 @@ class Article extends Database{
             'date' => $row['date'],
             'comments' => []
          ];
-      }
-
-     
-      $query = "SELECT * FROM `comments` WHERE article_id = $id ORDER BY id DESC";
-      $this->connect();
-      $select = $this->mysqli->query($query);
-      $this->disconnect();
-      $commentsData = [];
-      while($row = $select->fetch_assoc()){
-         array_push($commentsData, [
-            'id' => $row['id'], 
-            'name' => $row['name'], 
-            'comment' => $row['comment'],
-            'date' => $row['date']
-         ]);
-         
-      }
-
-      $articleData['comments'] = $commentsData;
+      }    
+      
       return json_encode($articleData);      
    }
 

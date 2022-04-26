@@ -3,7 +3,6 @@
 let articleRow = document.querySelector('.article-row');
 const sesionClose = document.getElementById('sesionClose');
 
-
 // Events
 window.addEventListener('load', ()=>{
    getArticles();

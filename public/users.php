@@ -1,7 +1,7 @@
 <?php
 	session_start();
 	if(!isset($_SESSION['started'])){
-		header('location: index.html');
+		header('location: index.php');
 	}else{
 		$sessionStarted = true;
 	}

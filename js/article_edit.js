@@ -1,5 +1,7 @@
 'use_strict';
 
+const sesionClose = document.getElementById('sesionClose');
+
 //Obtener parametros de la URL
 const params = window.location.search;
 const urlParams = new URLSearchParams(params);
@@ -21,6 +23,11 @@ window.onload = e =>{
    getArticle();   
 }
 
+sesionClose.addEventListener('click', e => {
+   e.preventDefault();
+   closeSession();
+});
+
 btnPublish.addEventListener('click', e =>{
    e.preventDefault();
 
@@ -37,10 +44,10 @@ btnPublish.addEventListener('click', e =>{
 });
 
 const getArticle = async () =>{   
-   const peticion = await fetch(`./php/articles_controller.php?method=edit&id=${id}`); 
+   const peticion = await fetch(`../php/articles_controller.php?method=edit&id=${id}`); 
    const resultado = await peticion.json(); 
    
-   articleImage.src = `./images/articles/${resultado.image}`; 
+   articleImage.src = `../images/articles/${resultado.image}`; 
    articleImg.innerHTML = '';
    articleImg.append(articleImage);
    title.value = resultado.title;
@@ -51,13 +58,22 @@ const getArticle = async () =>{
 }
 
 const sendArticle = async (data) =>{   
-   const peticion = await fetch('./php/articles_controller.php', {
+   const peticion = await fetch('../php/articles_controller.php', {
       method: 'POST',
       body: data
    }); 
    const resultado = await peticion.json();
    if(resultado['article-msg'] == 'Articulo guardado'){
-      location.href = 'index.html';
+      location.href = 'index.php';
+   }
+}
+
+let closeSession = async () =>{
+   const peticion = await fetch('../php/sesions_controller.php?method=closeSesion'); 
+   const resultado = await peticion.json();
+   
+   if (resultado[0].msgType === 'succes') {
+      location.reload();
    }
 }
 

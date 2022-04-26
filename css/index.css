@@ -54,7 +54,7 @@ article, aside{
 .article-img{
   width: 100%;
   height: 200px;
-  background-image: url('../images/no-image.png');
+  background-image: url('../images/articles/no-image.png');
   background-size: cover;  
   background-repeat: no-repeat;
   background-position: center;

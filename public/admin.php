@@ -1,7 +1,7 @@
 <?php
 	session_start();
 	if(!isset($_SESSION['started'])){
-		header('location: index.html');
+		header('location: index.php');
 	}else{
 		$sessionStarted = true;
 	}
@@ -30,24 +30,8 @@
 				</article>
 			</div>
 			
-         <!-- Aside -->
-         <div class="col-lg-4">
-            <aside class="aside-container">
-            <h4>Menú</h4>
-            <hr>
-            
-            <div class="list-group">
-               <a href="article_new.html" class="list-group-item list-group-item-action active" aria-current="true">
-                 Agregar Artículo
-               </a>
-					<a href="admin.html" class="list-group-item list-group-item-action">Editar Artículo</a>
-               <a href="users.html" class="list-group-item list-group-item-action">Usuarios</a>
-					<a href="database.html" class="list-group-item list-group-item-action">Base de datos</a>
-					<a href="php/sesions_controller.php?method=sesionClose" id="sesionClose" class="list-group-item list-group-item-action">Cerrar Sesion</a>
-				   <a class="list-group-item list-group-item-action disabled">A disabled link item</a>
-             </div>
-            </aside>
-         </div>
+         <?php require_once('templates/admin_menu.php'); ?>
+
 		</div>
 
 

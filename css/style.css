@@ -210,5 +210,21 @@ footer p{
 }
 
 
+/*------------------ Login ------------------*/
+
+.login{
+  display: block;
+  text-align: right;
+  padding-right: 30px;
+  color: #005076;
+}
+.login a{
+  color: #005076;
+  text-decoration: none;
+}
+.login a:hover{
+  color: #005076;
+}
+
 
 
