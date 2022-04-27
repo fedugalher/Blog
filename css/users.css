@@ -46,3 +46,13 @@
     margin-top: 30px;
     margin-bottom: 30px;
  }
+ .display-none{
+    display: none;
+ }
+
+
+
+.disabled input, select{
+   border: none;
+   background-color: #e9e9e9;
+ }

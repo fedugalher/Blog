@@ -109,7 +109,7 @@ function setUpdate(){
             $userArray['img-msg'] = 'No se pudo actualizar la imagen';
          }
       }    
-      $userArray['user-msg'] = 'Usuario Registrado'; 
+      $userArray['user-msg'] = 'Usuario actualizado'; 
       echo json_encode($userArray);
    }  
 }

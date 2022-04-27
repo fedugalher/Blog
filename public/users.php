@@ -12,8 +12,8 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/index.css">
-  <link rel="stylesheet" href="css/users.css">
+  <link rel="stylesheet" href="../css/index.css">
+  <link rel="stylesheet" href="../css/users.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">  
   <script src="https://kit.fontawesome.com/2c08c695f8.js" crossorigin="anonymous"></script>
   <title>Fedugalher Blog</title>
@@ -31,7 +31,7 @@
                   <h1>Usuarios</h1>
                   <hr>
 
-                  <div class="col-12 users-col">
+                  <div id="addUserBox" class="col-12 users-col">
 							<h3>Agregar Usuario</h3>
 							<form class="user-form" action="" method="post" enctype="multipart/form-data">
 								<input id="userImg" class="user-input" type="file" name="image">
@@ -45,7 +45,7 @@
 								 </select>                     
 								<input id="btn-user" class="user-input btn-send" type="submit" value="Guardar">
 							</form>
-						</div>
+						</div>						
 
 						<div class="col-12 users-col">
 							<h3>Usuarios Registrados</h3>
@@ -57,6 +57,7 @@
 									 <th scope="col">Imagen</th>
 									 <th scope="col">Usuario</th>
 									 <th scope="col">Rol</th>
+									 <th scope="col">Password</th>
 									 <th scope="col">Fecha de registro</th>
 									 <th scope="col">Acciones</th>
 								  </tr>
@@ -117,8 +118,9 @@
   
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-  <script src="js/users.js"></script>
-  <script src="js/user_new.js"></script>
+  <script src="../js/users.js"></script>
+  <script src="../js/user_new.js"></script>
+  <script src="../js/user_edit.js"></script>
   
 </body>
 </html>

@@ -108,7 +108,7 @@
       public function create(){
          $query = "INSERT INTO `users` 
             (`id`, `username`, `password`, `role`, `image`, `reg_date`) 
-            VALUES (NULL, '{$this->username}', '{$this->passwordUser}', '{$this->role}', '{$this->image}', '{$this->regDate}')";
+            VALUES (NULL, '{$this->username}', MD5('{$this->passwordUser}'), '{$this->role}', '{$this->image}', '{$this->regDate}')";
          
          $this->connect();
          $this->executeQuery($query, 'Usuario registrado correctamente', 'Error al registrar usuario');
@@ -120,6 +120,27 @@
             return false;
          }
 
+      }
+
+
+      public function update(){
+         $query = "UPDATE `users` SET 
+            `username` = '{$this->username}', 
+            `password` = '{$this->password}', 
+            `role` = '{$this->role}', 
+            `image` = '{$this->image}', 
+            WHERE id = {$this->id}";
+
+         $this->connect();
+         $this->executeQuery($query, 'Datos de usuario actualizados', 'No se puede actualizar el usuario');
+         $this->disconnect();
+         
+         if($this->message[1]['msgType'] == 'succes'){
+            return true;
+         }else{
+            return false;
+         }
+         
       }
    }
 

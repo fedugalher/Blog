@@ -14,11 +14,7 @@ window.addEventListener('load', e =>{
 
       //añadir la clase active al link seleccionado en el navbar
       const navLinks = document.getElementsByClassName('nav-link');
-      for (const link in navLinks) {
-         // console.log(navLinks[link].classList.contains('active'));
-         // if (navLinks[link].classList.contains('active')){
-         //    navLinks[link].classList.remove('active');
-         // } 
+      for (const link in navLinks) {        
          if (navLinks[link].textContent === category){
             navLinks[link].classList.add('active');
          }

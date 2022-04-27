@@ -14,7 +14,7 @@
 
       public function startSesion(){
          $userData = [];
-         $query = "SELECT * FROM users WHERE username = '{$this->username}' AND password = '{$this->userPassword}' AND role = 'admin'";
+         $query = "SELECT * FROM users WHERE username = '{$this->username}' AND password = MD5('{$this->userPassword}') AND role = 'admin'";
          $this->connect();
          $select = $this->mysqli->query($query);
          if(mysqli_num_rows($select) !== 0){

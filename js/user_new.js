@@ -35,13 +35,13 @@ btnUser.addEventListener('click', e =>{
 });
 
 let sendUser = async (data) =>{   
-   const peticion = await fetch('./php/users_controller.php', {
+   const peticion = await fetch('../php/users_controller.php', {
       method: 'POST',
       body: data
    }); 
    const resultado = await peticion.json();
    console.log(resultado)
    if(resultado['user-msg'] == 'Usuario Registrado'){
-      location.href = 'users.html';
+      location.href = 'users.php';
    }
 }
