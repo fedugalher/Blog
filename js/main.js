@@ -22,24 +22,6 @@ document.addEventListener('click', e =>{
    const categoryLink = element.classList.contains('nav-link') ? element.textContent : false;
    const homeLink = element.classList.contains('navbar-brand') ? 'home' : false;
 
-   // if(categoryLink != false || homeLink != false){
-   //    e.preventDefault();
-   //    const category = categoryLink != false ? categoryLink : homeLink;
-   //    if(category != 'home'){
-   //       if(currentURL == 'http://localhost/FedugalherBlog/public/index.php'){
-   //          getArticlesByCategory(category);
-   //       }else{
-   //          location.href = `../public/index.php?category=${category}`;
-   //       }
-   //    }else{
-   //       if(currentURL == 'http://localhost/FedugalherBlog/public/index.php'){
-   //          getArticles();
-   //       }else{
-   //          location.href = '../public/index.php';
-   //       }         
-   //    }
-   // }
-
    if(categoryLink != false || homeLink != false){
       e.preventDefault();
       const category = categoryLink != false ? categoryLink : homeLink;

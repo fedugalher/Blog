@@ -6,11 +6,23 @@ window.addEventListener('load', e =>{
    if(currentURL == 'http://localhost/FedugalherBlog/public/index.php'){
       getArticles();
    }else{
-      //Obtener parametros de la URL
+      //Obtener parametros de la URL para filtrar articulos segun la categoria seleccionada
       const params = window.location.search;
       const urlParams = new URLSearchParams(params);
       const category = urlParams.get('category');
       getArticlesByCategory(category);
+
+      //añadir la clase active al link seleccionado en el navbar
+      const navLinks = document.getElementsByClassName('nav-link');
+      for (const link in navLinks) {
+         // console.log(navLinks[link].classList.contains('active'));
+         // if (navLinks[link].classList.contains('active')){
+         //    navLinks[link].classList.remove('active');
+         // } 
+         if (navLinks[link].textContent === category){
+            navLinks[link].classList.add('active');
+         }
+      }
    }   
 });
 

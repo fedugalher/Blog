@@ -11,7 +11,7 @@
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav">
          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="articles_controller.php?method=selectCategory&category=Gameplays">Gameplays</a>
+            <a class="nav-link" aria-current="page" href="articles_controller.php?method=selectCategory&category=Gameplays">Gameplays</a>
          </li>
          <li class="nav-item">
             <a class="nav-link" href="index.php#Noticias-category">Noticias</a>
