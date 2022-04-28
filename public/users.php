@@ -47,7 +47,7 @@
 							</form>
 						</div>						
 
-						<div class="col-12 users-col">
+						<div class="col-12 users-col table-responsive">
 							<h3>Usuarios Registrados</h3>
 
 							<table class="table table-hover align-middle">
@@ -94,23 +94,8 @@
 				</article>
 			</div>
 			
-         <!-- Aside -->
-         <div class="col-lg-4">
-            <aside class="aside-container">
-            <h4>Menú</h4>
-            <hr>
-            
-            <div class="list-group">
-               <a href="article_new.html" class="list-group-item list-group-item-action active" aria-current="true">
-                 Agregar Artículo
-               </a>
-					<a href="admin.html" class="list-group-item list-group-item-action">Editar Artículo</a>
-               <a href="users.html" class="list-group-item list-group-item-action">Usuarios</a>
-					<a href="database.html" class="list-group-item list-group-item-action">Base de datos</a>
-               <a class="list-group-item list-group-item-action disabled">A disabled link item</a>
-             </div>
-            </aside>
-         </div>
+			<?php require_once('templates/admin_menu.php') ?>
+         
 		</div>
 
 

@@ -1,24 +1,52 @@
 'use_strict';
 
+var updateBtn = '';
+
 document.addEventListener('click', e => {
    //saber si el elemento al que se le hizo click y asignarlo a una constante
+   console.log(e.target)
    const editIcon = e.target.parentElement.className === 'edit-icon' ? true : false;
    const deleteIcon = e.target.parentElement.className === 'delete-icon' ? true : false;
+   const updateBtn = e.target.textContent === 'Actualizar' ? true : false;
   
    if(editIcon){
-      console.log('edit user')
+      console.log('edit user')      
       //Obtenr el id del usuraio cortando el contenido del tag id del elemento a
       let elementId = e.target.parentElement.id;
       let dash = elementId.indexOf('-');
       let userId = elementId.slice(dash+1,elementId.length);
       editUser(userId);
+   }else if(updateBtn){
+      console.log('vas a actualizar')
+      
    }
 });
 
+
 let editUser = id => {
-  
+   //Agregar o quitar clases y atributos para poder editar los campos de usuario
+   const userImgLabel = document.getElementById(`userImgLabel-${id}`);
+   const userNameInput = document.getElementById(`userName-${id}`);
+   const userRoleSelect = document.getElementById(`userRole-${id}`);
+   const userPassInput = document.getElementById(`userPass-${id}`);
+   const userPass2Input = document.getElementById(`userPass2-${id}`);
+   const updateBtn = document.getElementById(`updateUserBtn-${id}`);
+   const userImg = document.getElementById(`userImg-${id}`);
+   const trUser = document.getElementById(`trUser-${id}`);
+
+   trUser.classList.replace('disabled', 'enabled');
+   userNameInput.removeAttribute('disabled');
+   userRoleSelect.removeAttribute('disabled');
+   userPassInput.removeAttribute('disabled');
+   userPass2Input.removeAttribute('disabled');
+   userPass2Input.classList.remove('unset');
+   updateBtn.classList.remove('unset');
+   userImgLabel.classList.remove('unset');
+   userImg.classList.add('unset');    
    
 }
+
+
 
 // const btnUser = document.getElementById('btn-user');
 

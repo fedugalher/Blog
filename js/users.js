@@ -18,67 +18,32 @@ let getUsers = async () =>{
    for (const user in resultado.data) {
 
       const date = new Date(resultado.data[user].reg_date); //para poder formatear la hora con la funcion formatDate()
-      //asignar datos obtenidos a constantes
       const userId = resultado.data[user].id;
       const userImage = resultado.data[user].image
       const userName = resultado.data[user].username;
       const userRole = resultado.data[user].role;
       const userPass = resultado.data[user].password;      
 
-      // //Crear elementos
-      // //Tabla
-      // const userRow = document.createElement('tr');
-      // const thCount = document.createElement('th');
-      // const tdImg = document.createElement('td');
-      // const tdUsername = document.createElement('td');
-      // const tdRole = document.createElement('td');
-      // const tdPassword = document.createElement('td');
-      // const tdDate = document.createElement('td');
-      // const tdActions = document.createElement('td');
-      // //inputs
-      // const userImg = document.createElement('img');
-      // const userNameText = document.createElement('input');
-      // const userRoleSelect = document.createElement('select');
-      // const userPassText = document.createElement('input');
-      // //Links
-      // const userEditLink = document.createElement('A');
-      // const userDeleteLink = document.createElement('A');
-      // //Iconos
-      // const userEditIcon = document.createElement('i');
-      // const userDeleteIcon = document.createElement('i');
-
-
-      
-      // //Asignar atributos a elementos
-
-      // //Img
-      // userImg.setAttribute('src', `../images/users/${userImage}`);
-      // userImg.classList.add('user-img');
-      // //userNameText
-      // userNameText.setAttribute('type', 'text');
-      // userNameText.setAttribute('name', 'username');
-      // userNameText.value = userName;
-      // //userPassText
-      // userPassText.setAttribute('type', 'password');
-      // userPassText.setAttribute('name', 'password');
-      // userPassText.value = userPass;
-      // //Links
-      // userEditLink.setAttribute('id', `userEdit-${userId}`);
-      // userEditLink.classList.add('edit-icon');
-      // userEditLink.setAttribute('id', `userDelete-${userId}`);
-      // userDeleteLink.classList.add('edit-icon');
     
       usersTableBody.innerHTML += `
-         <tr id="user-${userId}" class="disabled">
+         <tr id="trUser-${userId}" class="disabled">
             <th scope="row">${count++}</th>
-            <td><img src="../images/users/${userImage}" alt="" class="user-img"></td>
-            <td><input type="text" value="${userName}" disabled></td>
-            <td id="tdUserRole-${userId}"></td>
-            <td><input type="password" value="${userPass}" id="userPass-${userId}" name="userPass" disabled></td>
-            <td>${formatDate(date)}</td>
             <td>
-            <a id="editUser-${userId}" href="#" class="edit-icon"><i class="fa-solid fa-pen-to-square"></i></a> 
-            <a id="deleteUser-${userId}" href="#" class="delete-icon"><i class="fa-solid fa-trash-can"></i></a>
+               <img src="../images/users/${userImage}" id="userImg-${userId}"  class="user-img">
+               <label id="userImgLabel-${userId}" for="userImgInput-${userId}" class="userInputLabel unset">Cambiar imagen</label>               
+               <input id="userImgInput-${userId}" class="unset" type="file" name="userImg">
+            </td>
+            <td><input type="text" value="${userName}" id="userName-${userId}" name="userName" disabled placeholder="Nombre de usuario"></td>
+            <td id="tdUserRole-${userId}"></td>
+            <td id="tdUserPass-${userId}">
+               <input type="password" value="${userPass}" id="userPass-${userId}" name="userPass" disabled placeholder="Password anterior">
+               <input type="password" value="" id="userPass2-${userId}" name="userPass2" disabled placeholder="Confirmar password" class="unset">
+            </td>
+            <td>${formatDate(date)}</td>
+            <td class="text-center">
+               <button id="updateUserBtn-${userId}" class="btn-green unset">Actualizar</button><br>
+               <a id="editUser-${userId}" href="#" class="edit-icon"><i class="fa-solid fa-pen-to-square"></i></a> 
+               <a id="deleteUser-${userId}" href="#" class="delete-icon"><i class="fa-solid fa-trash-can"></i></a>
             </td>
          </tr>
       `;
@@ -88,6 +53,7 @@ let getUsers = async () =>{
       const userRoleSelect = document.createElement('select');
       
       userRoleSelect.setAttribute('name', 'user-role');
+      userRoleSelect.setAttribute('id', `userRole-${userId}`);
       userRoleSelect.setAttribute('disabled', true);
       let roleOption1 = document.createElement('option');
       let roleOption2 = document.createElement('option');
@@ -99,10 +65,8 @@ let getUsers = async () =>{
       userRoleSelect.add(roleOption2, null);        
 
       if(roleOption1.value === userRole){
-         console.log('igual')
          roleOption1.setAttribute('selected', true)
       }else{
-         console.log('otro rol')
          roleOption2.setAttribute('selected', true)
       }
       tdRole.appendChild(userRoleSelect);
