@@ -52,9 +52,9 @@ function setNew(){
    
    $user = new User();
    $username = isset($_POST['username']) ? $_POST['username'] : 'No hay username';
-   $passwordUser = isset($_POST['password']) ? $_POST['password'] : 'No hay PasswordUser';
+   $passwordUser = isset($_POST['password']) ? $_POST['password'] : 'No hay Password';
    $role = isset($_POST['user-role']) ? $_POST['user-role'] : 'No hay Rol';
-   $image = isset($_FILES['image']['name']) ? $_FILES['image']['name'] : 'No hay Imagen';
+   $image = isset($_FILES['image']['name']) ? $_FILES['image']['name'] : 'no-image.png';
    $imageTmp = isset($_FILES['image']['tmp_name']) ? $_FILES['image']['tmp_name'] : 'No hay Imagen';
    $imgPath = '../images/users/';
 
@@ -82,27 +82,29 @@ function setNew(){
 function setUpdate(){
    
    $user = new User();
+   $userId = isset($_POST['id']) ? $_POST['id'] : 0;
    $username = isset($_POST['username']) ? $_POST['username'] : 'No hay username';
-   $passwordUser = isset($_POST['passwordUser']) ? $_POST['passwordUser'] : 'No hay PasswordUser';
+   $passwordUser = isset($_POST['password']) ? $_POST['password'] : 'No hay Password';
    $role = isset($_POST['role']) ? $_POST['role'] : 'No hay Rol';
-   $image = isset($_FILES['image']['name']) ? $_FILES['image']['name'] : 'No hay Imagen';
+   $image = isset($_FILES['image']['name']) ? $_FILES['image']['name'] : 'no-image.png';
    $imageTmp = isset($_FILES['image']['tmp_name']) ? $_FILES['image']['tmp_name'] : 'No hay Imagen';
-  
+   $imgPath = '../images/users/';
    
 
    $userArray = [
+      'id' => $userId,
       'username' => $username,
-      'passwordUser' => $passwordUser,
+      'password' => $passwordUser,
       'role' => $role,
       'image' => $image,
       'imageTmp' => $imageTmp,
       'imgPath' => $imgPath
    ];
 
-   $user->set($id, $username, $passwordUser, $role, $image);
+   $user->set($userId, $username, $passwordUser, $role, $image);
    
    if($user->update()){
-      if ($image != '') {
+      if ($image != 'no-image.png') {
          if (move_uploaded_file($imageTmp, $imgPath.$user->image)) {
             $userArray['img-msg'] = 'Se actualizó la imagen';
          }else {

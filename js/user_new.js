@@ -26,7 +26,7 @@ btnUser.addEventListener('click', e =>{
       data.append('username', username);
       data.append('password', password);
       data.append('password-confirm', passwordConfirm);
-      data.append('user-role', userRole);
+      data.append('role', userRole);
       data.append('image', image.files[0]);
       data.append('method', method);
       sendUser(data); //llama a la funcion send article y le pasa los datos del formulario

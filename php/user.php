@@ -124,12 +124,21 @@
 
 
       public function update(){
-         $query = "UPDATE `users` SET 
+         if($this->image != 'no-image.png'){
+            $query = "UPDATE `users` SET 
             `username` = '{$this->username}', 
-            `password` = '{$this->password}', 
+            `password` = MD5('{$this->passwordUser}'), 
             `role` = '{$this->role}', 
-            `image` = '{$this->image}', 
+            `image` = '{$this->image}'
             WHERE id = {$this->id}";
+         }else{
+            $query = "UPDATE `users` SET 
+            `username` = '{$this->username}', 
+            `password` = MD5('{$this->passwordUser}'), 
+            `role` = '{$this->role}'
+            WHERE id = {$this->id}";
+         }
+         
 
          $this->connect();
          $this->executeQuery($query, 'Datos de usuario actualizados', 'No se puede actualizar el usuario');

@@ -1,10 +1,9 @@
 'use_strict';
 
-var updateBtn = '';
+
 
 document.addEventListener('click', e => {
    //saber si el elemento al que se le hizo click y asignarlo a una constante
-   console.log(e.target)
    const editIcon = e.target.parentElement.className === 'edit-icon' ? true : false;
    const deleteIcon = e.target.parentElement.className === 'delete-icon' ? true : false;
    const updateBtn = e.target.textContent === 'Actualizar' ? true : false;
@@ -16,9 +15,15 @@ document.addEventListener('click', e => {
       let dash = elementId.indexOf('-');
       let userId = elementId.slice(dash+1,elementId.length);
       editUser(userId);
-   }else if(updateBtn){
+   }
+   
+   if(updateBtn){
       console.log('vas a actualizar')
-      
+      //Obtenr el id del usuraio cortando el contenido del tag id del elemento a
+      let elementId = e.target.id;
+      let dash = elementId.indexOf('-');
+      let userId = elementId.slice(dash+1,elementId.length);
+      updateUser(userId);
    }
 });
 
@@ -34,6 +39,7 @@ let editUser = id => {
    const userImg = document.getElementById(`userImg-${id}`);
    const trUser = document.getElementById(`trUser-${id}`);
 
+   userPass2Input.value = userPassInput.value
    trUser.classList.replace('disabled', 'enabled');
    userNameInput.removeAttribute('disabled');
    userRoleSelect.removeAttribute('disabled');
@@ -46,7 +52,42 @@ let editUser = id => {
    
 }
 
+let updateUser = async id =>{
+   const userName = document.getElementById(`userName-${id}`).value;
+   const userRole = document.getElementById(`userRole-${id}`).value;
+   const userPass = document.getElementById(`userPass-${id}`).value;
+   const userPass2 = document.getElementById(`userPass2-${id}`).value;
+   const userImg = document.getElementById(`userImgInput-${id}`);
+   const method = 'update'; 
+   const data = new FormData(); 
+   
+   if (userPass !== userPass2) {
+      alert('El password no coincide');
+   }else{
+     
+      data.append('id', id);
+      data.append('username', userName);
+      data.append('password', userPass);
+      data.append('password-confirm', userPass2);
+      data.append('role', userRole);
+      data.append('image', userImg.files[0]);
+      data.append('method', method);
+      
+      // sendUser(data); //llama a la funcion send article y le pasa los datos del formulario
 
+      const peticion = await fetch(`../php/users_controller.php`, {
+         method: 'POST',
+         body: data
+      }); 
+      const resultado = await peticion.json();
+      if(resultado['user-msg'] == 'Usuario actualizado'){
+         location.reload();
+      }
+   }
+
+
+   
+}
 
 // const btnUser = document.getElementById('btn-user');
 

@@ -31,7 +31,7 @@ let getUsers = async () =>{
             <td>
                <img src="../images/users/${userImage}" id="userImg-${userId}"  class="user-img">
                <label id="userImgLabel-${userId}" for="userImgInput-${userId}" class="userInputLabel unset">Cambiar imagen</label>               
-               <input id="userImgInput-${userId}" class="unset" type="file" name="userImg">
+               <input id="userImgInput-${userId}" class="unset" type="file" name="image">
             </td>
             <td><input type="text" value="${userName}" id="userName-${userId}" name="userName" disabled placeholder="Nombre de usuario"></td>
             <td id="tdUserRole-${userId}"></td>
