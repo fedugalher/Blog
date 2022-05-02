@@ -62,32 +62,9 @@
 									 <th scope="col">Acciones</th>
 								  </tr>
 								</thead>
-								<tbody id="usersTable-body">
-								  <!-- <tr>
-									<th scope="row">1</th>
-									<td><img src="images/users/no-image.png" alt="" class="user-img"></td>
-									<td>fedugalher</td>
-									<td>Administrador</td>
-									<td>
-									<a href="" class="edit-icon"><i class="fa-solid fa-pen-to-square"></i></a> 
-									<a href="" class="delete-icon"><i class="fa-solid fa-trash-can"></i></a>
-									</td>
-								  </tr>
-								  <tr>
-									<th scope="row">2</th>
-									<td><img src="images/users/no-image.png" alt="" class="user-img"></td>
-									<td>fedugalher</td>
-									<td>Administrador</td>
-									<td>
-										<a href="" class="edit-icon"><i class="fa-solid fa-pen-to-square"></i></a> 
-										<a href="" class="delete-icon"><i class="fa-solid fa-trash-can"></i></a>
-									</td>
-								 </tr>										  -->
+								<tbody id="usersTable-body">								 									
 								</tbody>
 							 </table>
-							 
-								
-
 						</div>
 
                </div>
@@ -103,9 +80,11 @@
   
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+  <script src="../js/main.js"></script> 
   <script src="../js/users.js"></script>
   <script src="../js/user_new.js"></script>
   <script src="../js/user_edit.js"></script>
+  <script src="../js/user_delete.js"></script>
   
 </body>
 </html>

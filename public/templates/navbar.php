@@ -9,17 +9,20 @@
       <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
-      <ul class="navbar-nav">
-         <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="articles_controller.php?method=selectCategory&category=Gameplays">Gameplays</a>
-         </li>
-         <li class="nav-item">
-            <a class="nav-link" href="index.php#Noticias-category">Noticias</a>
-         </li>
-         <li class="nav-item">
-            <a class="nav-link" href="index.php#Recomendaciones-category">Recomendaciones</a>
-         </li>
-      </ul>
+         <ul class="navbar-nav">
+            <li class="nav-item">
+               <a class="nav-link" aria-current="page" href="">Gameplays</a>
+            </li>
+            <li class="nav-item">
+               <a class="nav-link" href="">Noticias</a>
+            </li>
+            <li class="nav-item">
+               <a class="nav-link" href="">Recomendaciones</a>
+            </li>            
+         </ul>
       </div>
    </div>
 </nav>
+<div class="start-session">
+   <a href="../public/login.php">Iniciar Sesión</a>
+</div>

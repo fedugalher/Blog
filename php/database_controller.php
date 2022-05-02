@@ -17,6 +17,10 @@ switch ($method) {
       $db->createDB('fedugalher_blog');
       echo json_encode($db->message);
       break;
+   case 'dropDB':
+      $db->dropDB('fedugalher_blog');
+      echo json_encode($db->message);
+      break;   
    // default:
    //    echo $user->selectAll();
    //    break;

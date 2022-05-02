@@ -8,6 +8,7 @@
       public $role;
       public $image;
       public $regDate;
+      public $updated_at;
 
       public function set($id, $username, $passwordUser, $role, $image){
          $this->id = $id;
@@ -17,6 +18,7 @@
          $this->image = $image;
          date_default_timezone_set('America/Chihuahua');
          $this->regDate = date('Y-m-d H:i:s');
+         $this->updated_at = date('Y-m-d H:i:s');
       }
 
       public function createTable(){
@@ -27,6 +29,7 @@
             `role` VARCHAR(20) NOT NULL DEFAULT 'usuario' , 
             `image` VARCHAR(100) NOT NULL DEFAULT 'no-image.png' , 
             `reg_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP , 
+            `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ,
             PRIMARY KEY (`id`)) ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin";
          
          $this->connect();
@@ -70,7 +73,8 @@
                'password' => $row['password'], 
                'role' => $row['role'], 
                'image' => $row['image'],
-               'reg_date' => $row['reg_date']
+               'reg_date' => $row['reg_date'],
+               'updated_at' => $row['updated_at']
             ]);
    
          }
@@ -97,7 +101,8 @@
                'password' => $row['password'], 
                'role' => $row['role'], 
                'image' => $row['image'],
-               'reg_date' => $row['reg_date']
+               'reg_date' => $row['reg_date'],
+               'updated_at' => $row['updated_at']
             ];
    
          }
@@ -107,8 +112,8 @@
 
       public function create(){
          $query = "INSERT INTO `users` 
-            (`id`, `username`, `password`, `role`, `image`, `reg_date`) 
-            VALUES (NULL, '{$this->username}', MD5('{$this->passwordUser}'), '{$this->role}', '{$this->image}', '{$this->regDate}')";
+            (`id`, `username`, `password`, `role`, `image`, `reg_date`, `updated_at`) 
+            VALUES (NULL, '{$this->username}', MD5('{$this->passwordUser}'), '{$this->role}', '{$this->image}', '{$this->regDate}', '{$this->updated_at}')";
          
          $this->connect();
          $this->executeQuery($query, 'Usuario registrado correctamente', 'Error al registrar usuario');
@@ -123,22 +128,27 @@
       }
 
 
-      public function update(){
-         if($this->image != 'no-image.png'){
-            $query = "UPDATE `users` SET 
-            `username` = '{$this->username}', 
-            `password` = MD5('{$this->passwordUser}'), 
-            `role` = '{$this->role}', 
-            `image` = '{$this->image}'
-            WHERE id = {$this->id}";
-         }else{
-            $query = "UPDATE `users` SET 
-            `username` = '{$this->username}', 
-            `password` = MD5('{$this->passwordUser}'), 
-            `role` = '{$this->role}'
-            WHERE id = {$this->id}";
+      public function update(){         
+         $query = "UPDATE `users` SET ";
+         $userParams = [
+            'id' => $this->id,
+            'username' => $this->username,
+            'password' => $this->passwordUser,
+            'role' => $this->role,
+            'image' => $this->image,
+            'updated_at' => $this->updated_at
+         ];
+         foreach ($userParams as $key => $value) {
+            if($key != 'id' && $value != ''){
+               if($key != 'password'){
+                  $query .= "`{$key}` = '{$value}', ";
+               }else{
+                  $query .= "`{$key}` = MD5('{$value}'), ";
+               }
+            }
          }
-         
+         $query = substr($query, 0, -2);
+         $query .= " WHERE id = {$userParams['id']}";
 
          $this->connect();
          $this->executeQuery($query, 'Datos de usuario actualizados', 'No se puede actualizar el usuario');
@@ -148,12 +158,23 @@
             return true;
          }else{
             return false;
-         }
+         }         
+      }
+
+      public function delete($id){
+         $query = "DELETE FROM `users` WHERE `id` = $id";
          
+         $this->connect();
+         $this->executeQuery($query, 'Usuario eliminado', 'Error al eliminar el usuario');
+         $this->disconnect();
+
+         return json_encode($this->message);
+
       }
    }
 
    // $user = new User();
-   // $user->createTable();
+   // $user->set(1,'eduardo','','admin','');
+   // $user->update();
    
 ?>

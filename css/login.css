@@ -43,3 +43,12 @@ html body{
     color: #720d0d;
     background-color: #ffbfbf;
  }
+
+.login-links{
+  margin: 20px 0;
+}
+.login-links a{
+   margin-right: 30px;
+   color:#005076;
+   text-decoration: none;
+}

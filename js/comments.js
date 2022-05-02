@@ -10,15 +10,17 @@ commentBtn.addEventListener('click', e =>{
    e.preventDefault(); //Evita que se recargue la pagina al dar click en el boton submit
 
    const data = new FormData();
-   const commentName = document.getElementById('name').value;
-   const commentText = document.getElementById('comment').value;
+   const commentName = document.getElementById('name');
+   const commentText = document.getElementById('comment');
    const method = 'new';
 
-   data.append('name', commentName);
-   data.append('comment', commentText);
+   data.append('name', commentName.value);
+   data.append('comment', commentText.value);
    data.append('method', method);
    data.append('article_id', id);
    sendComment(data);
+   commentName.value = '';
+   commentText.value = '';
 });
 
 let sendComment = async (data) =>{   

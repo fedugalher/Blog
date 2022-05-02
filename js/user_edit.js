@@ -39,7 +39,8 @@ let editUser = id => {
    const userImg = document.getElementById(`userImg-${id}`);
    const trUser = document.getElementById(`trUser-${id}`);
 
-   userPass2Input.value = userPassInput.value
+   userPassInput.value = '';
+   userPass2Input.value = '';
    trUser.classList.replace('disabled', 'enabled');
    userNameInput.removeAttribute('disabled');
    userRoleSelect.removeAttribute('disabled');

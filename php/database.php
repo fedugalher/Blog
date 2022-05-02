@@ -32,6 +32,18 @@ class Database{
          array_push($this->message, ['msg'=>"Error al crear la base de datos {$this->dbName}", 'msgType'=>'error']);
       }
    }
+
+   public function dropDB($dbName){
+      $this->mysqli = new mysqli("$this->host", "$this->user", "$this->password", "");
+      if($this->mysqli->query("DROP DATABASE IF EXISTS {$dbName}")){
+         // echo "Se creo la base de datos {$dbName}";  
+         array_push($this->message, ['msg'=>"Se eliminó la base de datos {$this->dbName}", 'msgType'=>'succes']);        
+      }
+      else{
+         // echo 'Error al crear la base de datos';
+         array_push($this->message, ['msg'=>"Error al eliminar la base de datos {$this->dbName}", 'msgType'=>'error']);
+      }
+   }
   
 
    public function executeQuery($query, $succes, $error){

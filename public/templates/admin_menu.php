@@ -5,7 +5,7 @@
       <hr>
    
       <div class="list-group">
-         <a href="article_new.html" class="list-group-item list-group-item-action active" aria-current="true">
+         <a href="article_new.php" class="list-group-item list-group-item-action active" aria-current="true">
          Agregar Artículo
          </a>
          <a href="admin.php" class="list-group-item list-group-item-action">Editar Artículo</a>

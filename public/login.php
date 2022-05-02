@@ -20,21 +20,27 @@
 			<div class="col-lg-12 login-container">
 				<article>
 					<div class="row justify-content-center login-row">
-                  <h1>Iniciar Sesión</h1>
-                  <hr>
-                  <div class="col-lg-4 login-box">
-							<div class="login-img">
-								<i class="fa-solid fa-user-large"></i>								
-							</div>
-							<div class="login-msg"></div>
-                    <form action="" method="post" class="login-form">
-                       <input type="text" id="username" class="input-login" placeholder="Usuario" name="username">
-                       <input type="password" id="password" class="input-login" placeholder="Contraseña" name="password">
-                       <input type="submit" id="login-btn" class="input-login" value="Iniciar Sesión">
-                     </form>
-                  </div>
+              <h1>Iniciar Sesión</h1>
+              <hr>
+              <div class="col-lg-4 login-box">
+                <div class="login-img">
+                  <i class="fa-solid fa-user-large"></i>								
+                </div>
 
-               </div>
+                <div class="login-msg"></div>
+
+                <form action="" method="post" class="login-form">
+                    <input type="text" id="username" class="input-login" placeholder="Usuario" name="username">
+                    <input type="password" id="password" class="input-login" placeholder="Contraseña" name="password">
+                    <input type="submit" id="login-btn" class="input-login" value="Iniciar Sesión">
+                </form>
+
+                <div class="login-links">
+                  <a href="">Crear Cuenta</a>
+                  <a href="">Restablecer Contraseña</a>
+                </div>
+              </div>
+          </div>
 				</article>
 			</div>
 		
@@ -45,6 +51,7 @@
   
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+  <script src="../js/main.js"></script>
   <script src="../js/login.js"></script>
 
 </body>

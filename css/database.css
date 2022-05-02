@@ -15,6 +15,17 @@
 .btn-db:hover{
    background-color: #003a58;
  }
+ .btn-db-red{
+   background-color: #540000;
+   color: #d8d8d8;
+   border: none;
+   border-radius: 3px;
+   padding: 10px;
+   margin: 10px 10px;
+}
+.btn-db-red:hover{
+   background-color: #921212;
+ }
 /* .user-form #password, #password-confirm{
    display: inline;
    margin: 0px 5px;

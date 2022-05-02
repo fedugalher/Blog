@@ -32,14 +32,14 @@ btnPublish.addEventListener('click', e =>{
 });
 
 let sendArticle = async (data) =>{   
-   const peticion = await fetch('./php/articles_controller.php', {
+   const peticion = await fetch('../php/articles_controller.php', {
       method: 'POST',
       body: data
    }); 
    const resultado = await peticion.json();
    console.log(resultado)
    if(resultado['article-msg'] == 'Articulo guardado'){
-      location.href = 'index.html';
+      location.href = 'index.php';
    }
 }
 
