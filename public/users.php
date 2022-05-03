@@ -25,7 +25,7 @@
 	
 		<div class="row main-container">
 
-			<div class="col-lg-8 article-container">
+			<div class="col-lg-9 article-container">
 				<article>
 					<div class="row article-row">
                   <h1>Usuarios</h1>
@@ -34,7 +34,9 @@
                   <div id="addUserBox" class="col-12 users-col">
 							<h3>Agregar Usuario</h3>
 							<form class="user-form" action="" method="post" enctype="multipart/form-data">
-								<input id="userImg" class="user-input" type="file" name="image">
+							<label for="userImg" class="userImgLabel"></label>
+								<input id="userImg" class="user-input unset" type="file" name="image">
+								<input id="email" class="user-input" type="email" placeholder="Correo Electrónico" name="email">
 								<input id="username" class="user-input" type="text" placeholder="Nombre de Usuario" name="username">
 								<input id="password" class="user-input" type="password" placeholder="Contraseña" name="password">
 								<input id="password-confirm" class="user-input" type="password" placeholder="Confirmar Contraseña" name="password-confirm">
@@ -50,12 +52,13 @@
 						<div class="col-12 users-col table-responsive">
 							<h3>Usuarios Registrados</h3>
 
-							<table class="table table-hover align-middle">
+							<table class="table table-sm table-hover align-middle">
 								<thead>
 								  <tr>
 									 <th scope="col">#</th>
 									 <th scope="col">Imagen</th>
 									 <th scope="col">Usuario</th>
+									 <th scope="col">Correo Electrónico</th>
 									 <th scope="col">Rol</th>
 									 <th scope="col">Password</th>
 									 <th scope="col">Fecha de registro</th>

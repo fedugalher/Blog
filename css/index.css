@@ -14,6 +14,7 @@ article, aside, footer{
   display: block;
   text-align: right;
   margin-right: 5px;
+  
 }
 .start-session a{
   text-decoration: none;
@@ -79,6 +80,10 @@ article, aside{
   padding: 15px;
   height: 230px;
   /* text-align: justify; */
+}
+.article-text h5{
+  font-size: 18px;
+  font-style: italic;
 }
 .article-date{
   position:absolute;

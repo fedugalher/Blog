@@ -5,8 +5,7 @@
  margin-bottom: 10px;
 }
 .user-form #password, #password-confirm{
-   display: inline;
-   margin: 0px 5px;
+   display: block;
 }
 .user-form #userImg{
    border: none;
@@ -15,7 +14,8 @@
 .user-input{
    display: block;
    margin: 20px 5px;
-   width: 30%;
+   margin: 10px auto;
+   width:90%;
    border: 1px solid #d8d8d8;
    border-radius: 5px;
 }
@@ -93,5 +93,42 @@
  td input.unset{
     display: none;
  }
+
+ /* ---------- user_new.php ---------- */
+ .userImgLabel{
+   display: block;
+   text-align: center;
+   background-image: url('../images/camera.png');
+   background-size: contain;
+   background-repeat: no-repeat;
+   background-position: center;
+   margin:20px auto;
+   width: 200px;
+   height: 200px;
+   border-radius: 50%;
+   border: 1px solid #c5c5c5;
+   font-size: 12px;   
+ }
+ .userImgLabel:hover{
+   cursor: pointer;
+   background-color: white;
+   border-color: #003a58;
+ }
+ .msg-box{
+   font-size: 14px;
+   text-align: left;
+   border-radius: 3px;
+}
+.msg-box p{
+   display: block;
+   margin: 20px 5px;
+   margin: 10px auto;
+   padding-left: 5px;
+   width:90%;
+}
+.msg-error{
+   color: #720d0d;
+   background-color: #ffbfbf;
+}
 
 

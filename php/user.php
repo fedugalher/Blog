@@ -3,6 +3,7 @@
 
    class User extends Database{
       public $id;
+      public $email;
       public $username;
       public $passwordUser;
       public $role;
@@ -10,8 +11,9 @@
       public $regDate;
       public $updated_at;
 
-      public function set($id, $username, $passwordUser, $role, $image){
+      public function set($id, $email, $username, $passwordUser, $role, $image){
          $this->id = $id;
+         $this->email = $email;
          $this->username = $username;
          $this->passwordUser = $passwordUser;
          $this->role = $role;
@@ -24,6 +26,7 @@
       public function createTable(){
          $query = "CREATE TABLE IF NOT EXISTS `fedugalher_blog`.`users` ( 
             `id` INT(11) NOT NULL AUTO_INCREMENT , 
+            `email` VARCHAR(100) NOT NULL , 
             `username` VARCHAR(50) NOT NULL , 
             `password` VARCHAR(100) NOT NULL , 
             `role` VARCHAR(20) NOT NULL DEFAULT 'usuario' , 
@@ -69,6 +72,7 @@
             $row = $select->fetch_assoc();
             array_push($userData,[
                'id' => $row['id'], 
+               'email' => $row['email'], 
                'username' => $row['username'], 
                'password' => $row['password'], 
                'role' => $row['role'], 
@@ -97,6 +101,7 @@
          while($row = $select->fetch_assoc()){
             $userData = [
                'id' => $row['id'], 
+               'email' => $row['email'], 
                'username' => $row['username'], 
                'password' => $row['password'], 
                'role' => $row['role'], 
@@ -112,8 +117,8 @@
 
       public function create(){
          $query = "INSERT INTO `users` 
-            (`id`, `username`, `password`, `role`, `image`, `reg_date`, `updated_at`) 
-            VALUES (NULL, '{$this->username}', MD5('{$this->passwordUser}'), '{$this->role}', '{$this->image}', '{$this->regDate}', '{$this->updated_at}')";
+            (`id`, `email`, `username`, `password`, `role`, `image`, `reg_date`, `updated_at`) 
+            VALUES (NULL, '{$this->email}', '{$this->username}', MD5('{$this->passwordUser}'), '{$this->role}', '{$this->image}', '{$this->regDate}', '{$this->updated_at}')";
          
          $this->connect();
          $this->executeQuery($query, 'Usuario registrado correctamente', 'Error al registrar usuario');
@@ -132,6 +137,7 @@
          $query = "UPDATE `users` SET ";
          $userParams = [
             'id' => $this->id,
+            'email' => $this->email,
             'username' => $this->username,
             'password' => $this->passwordUser,
             'role' => $this->role,

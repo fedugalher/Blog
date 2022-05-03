@@ -23,6 +23,7 @@ let getUsers = async () =>{
 
       const date = new Date(resultado.data[user].reg_date); //para poder formatear la hora con la funcion formatDate()
       const userId = resultado.data[user].id;
+      const userEmail = resultado.data[user].email;
       const userImage = resultado.data[user].image
       const userName = resultado.data[user].username;
       const userRole = resultado.data[user].role;
@@ -36,8 +37,9 @@ let getUsers = async () =>{
                <img src="../images/users/${userImage}" id="userImg-${userId}"  class="user-img">
                <label id="userImgLabel-${userId}" for="userImgInput-${userId}" class="userInputLabel unset">Cambiar imagen</label>               
                <input id="userImgInput-${userId}" class="unset" type="file" name="image">
-            </td>
+            </td>            
             <td><input type="text" value="${userName}" id="userName-${userId}" name="userName" disabled placeholder="Nombre de usuario"></td>
+            <td><input type="text" value="${userEmail}" id="userEmail-${userId}" name="userEmail" disabled placeholder="Correo Electrónico"></td>
             <td id="tdUserRole-${userId}"></td>
             <td id="tdUserPass-${userId}">
                <input type="password" value="${userPass}" id="userPass-${userId}" name="userPass" disabled placeholder="Password anterior">

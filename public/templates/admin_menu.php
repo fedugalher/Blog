@@ -1,5 +1,5 @@
   <!-- Aside -->
-  <div class="col-lg-4">
+  <div class="col-lg-3">
    <aside class="aside-container">
       <h4>Menú</h4>
       <hr>

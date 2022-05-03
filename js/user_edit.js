@@ -31,6 +31,7 @@ document.addEventListener('click', e => {
 let editUser = id => {
    //Agregar o quitar clases y atributos para poder editar los campos de usuario
    const userImgLabel = document.getElementById(`userImgLabel-${id}`);
+   const userEmailInput = document.getElementById(`userEmail-${id}`);
    const userNameInput = document.getElementById(`userName-${id}`);
    const userRoleSelect = document.getElementById(`userRole-${id}`);
    const userPassInput = document.getElementById(`userPass-${id}`);
@@ -42,6 +43,7 @@ let editUser = id => {
    userPassInput.value = '';
    userPass2Input.value = '';
    trUser.classList.replace('disabled', 'enabled');
+   userEmailInput.removeAttribute('disabled');
    userNameInput.removeAttribute('disabled');
    userRoleSelect.removeAttribute('disabled');
    userPassInput.removeAttribute('disabled');
@@ -54,6 +56,7 @@ let editUser = id => {
 }
 
 let updateUser = async id =>{
+   const userEmail = document.getElementById(`userEmail-${id}`).value;
    const userName = document.getElementById(`userName-${id}`).value;
    const userRole = document.getElementById(`userRole-${id}`).value;
    const userPass = document.getElementById(`userPass-${id}`).value;
@@ -67,6 +70,7 @@ let updateUser = async id =>{
    }else{
      
       data.append('id', id);
+      data.append('email', userEmail);
       data.append('username', userName);
       data.append('password', userPass);
       data.append('password-confirm', userPass2);

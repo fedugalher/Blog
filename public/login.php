@@ -36,7 +36,7 @@
                 </form>
 
                 <div class="login-links">
-                  <a href="">Crear Cuenta</a>
+                  <a href="user_new.php">Crear Cuenta</a>
                   <a href="">Restablecer Contraseña</a>
                 </div>
               </div>

@@ -51,6 +51,7 @@ switch ($method) {
 function setNew(){
    
    $user = new User();
+   $email = isset($_POST['email']) ? $_POST['email'] : 'No hay email';
    $username = isset($_POST['username']) ? $_POST['username'] : 'No hay username';
    $passwordUser = isset($_POST['password']) ? $_POST['password'] : 'No hay Password';
    $role = isset($_POST['role']) ? $_POST['role'] : 'No hay Rol';
@@ -59,6 +60,7 @@ function setNew(){
    $imgPath = '../images/users/';
 
    $userArray = [
+      'email' => $email,
       'username' => $username,
       'password' => $passwordUser,
       'role' => $role,
@@ -67,7 +69,7 @@ function setNew(){
       'imgPath' => $imgPath
    ];
 
-   $user->set(null, $username, $passwordUser, $role, $image);
+   $user->set(null, $email, $username, $passwordUser, $role, $image);
    
    if($user->create()){
       if (move_uploaded_file($imageTmp, $imgPath.$user->image)) {
@@ -84,6 +86,7 @@ function setUpdate(){
    
    $user = new User();
    $userId = isset($_POST['id']) ? $_POST['id'] : 0;
+   $email = isset($_POST['email']) ? $_POST['email'] : 'No hay email';
    $username = isset($_POST['username']) ? $_POST['username'] : '';
    $passwordUser = isset($_POST['password']) ? $_POST['password'] : '';
    $role = isset($_POST['role']) ? $_POST['role'] : '';
@@ -94,6 +97,7 @@ function setUpdate(){
 
    $userArray = [
       'id' => $userId,
+      'email' => $email,
       'username' => $username,
       'password' => $passwordUser,
       'role' => $role,
@@ -102,7 +106,7 @@ function setUpdate(){
       'imgPath' => $imgPath
    ];
 
-   $user->set($userId, $username, $passwordUser, $role, $image);
+   $user->set($userId, $email, $username, $passwordUser, $role, $image);
    
    if($user->update()){
       if ($image != '') {
