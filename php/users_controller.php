@@ -55,6 +55,8 @@ function setNew(){
    $username = isset($_POST['username']) ? $_POST['username'] : 'No hay username';
    $passwordUser = isset($_POST['password']) ? $_POST['password'] : 'No hay Password';
    $role = isset($_POST['role']) ? $_POST['role'] : 'No hay Rol';
+   $status = 'inactivo';
+   $token = rand(1000000000, 9999999999);
    $image = isset($_FILES['image']['name']) ? $_FILES['image']['name'] : 'no-image.png';
    $imageTmp = isset($_FILES['image']['tmp_name']) ? $_FILES['image']['tmp_name'] : 'No hay Imagen';
    $imgPath = '../images/users/';
@@ -65,11 +67,13 @@ function setNew(){
       'password' => $passwordUser,
       'role' => $role,
       'image' => $image,
+      'status' => $status,
+      'token' => $token,
       'imageTmp' => $imageTmp,
       'imgPath' => $imgPath
    ];
 
-   $user->set(null, $email, $username, $passwordUser, $role, $image);
+   $user->set(null, $email, $username, $passwordUser, $role, $image, $status, $token);
    
    if($user->create()){
       if (move_uploaded_file($imageTmp, $imgPath.$user->image)) {
@@ -90,6 +94,8 @@ function setUpdate(){
    $username = isset($_POST['username']) ? $_POST['username'] : '';
    $passwordUser = isset($_POST['password']) ? $_POST['password'] : '';
    $role = isset($_POST['role']) ? $_POST['role'] : '';
+   $status = isset($_POST['status']) ? $_POST['status'] : '';
+   $token = isset($_POST['token']) ? $_POST['token'] : '';
    $image = isset($_FILES['image']['name']) ? $_FILES['image']['name'] : '';
    $imageTmp = isset($_FILES['image']['tmp_name']) ? $_FILES['image']['tmp_name'] : '';
    $imgPath = '../images/users/';
@@ -102,11 +108,13 @@ function setUpdate(){
       'password' => $passwordUser,
       'role' => $role,
       'image' => $image,
+      'status' => $status,
+      'token' => $token,
       'imageTmp' => $imageTmp,
       'imgPath' => $imgPath
    ];
 
-   $user->set($userId, $email, $username, $passwordUser, $role, $image);
+   $user->set($userId, $email, $username, $passwordUser, $role, $image, $status, $token);
    
    if($user->update()){
       if ($image != '') {

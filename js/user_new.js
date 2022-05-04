@@ -27,7 +27,7 @@ btnUser.addEventListener('click', e =>{
    if(userEmail === '' || username === '' || password === ''|| passwordConfirm === ''){
       messages.push('Algunos campos están en blanco');
    }   
-   if(! emailValidate(userEmail)){      
+   if(userEmail !== '' && !emailValidate(userEmail)){      
      messages.push('El correo electrónico no es correcto');
    }   
    if (password !== passwordConfirm) {
@@ -65,7 +65,6 @@ let sendUser = async (data) =>{
       }else{
          location.href = 'index.php';
       }
-
    }
 }
 

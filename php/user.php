@@ -8,16 +8,20 @@
       public $passwordUser;
       public $role;
       public $image;
+      public $status;
+      public $token;
       public $regDate;
       public $updated_at;
 
-      public function set($id, $email, $username, $passwordUser, $role, $image){
+      public function set($id, $email, $username, $passwordUser, $role, $image, $status, $token){
          $this->id = $id;
          $this->email = $email;
          $this->username = $username;
          $this->passwordUser = $passwordUser;
          $this->role = $role;
          $this->image = $image;
+         $this->status = $status;
+         $this->token = $token;
          date_default_timezone_set('America/Chihuahua');
          $this->regDate = date('Y-m-d H:i:s');
          $this->updated_at = date('Y-m-d H:i:s');
@@ -31,6 +35,8 @@
             `password` VARCHAR(100) NOT NULL , 
             `role` VARCHAR(20) NOT NULL DEFAULT 'usuario' , 
             `image` VARCHAR(100) NOT NULL DEFAULT 'no-image.png' , 
+            `status` VARCHAR(20) NOT NULL , 
+            `token` INT(11) NOT NULL , 
             `reg_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP , 
             `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ,
             PRIMARY KEY (`id`)) ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin";
@@ -77,6 +83,8 @@
                'password' => $row['password'], 
                'role' => $row['role'], 
                'image' => $row['image'],
+               'status' => $row['status'],
+               'token' => $row['token'],
                'reg_date' => $row['reg_date'],
                'updated_at' => $row['updated_at']
             ]);
@@ -106,6 +114,8 @@
                'password' => $row['password'], 
                'role' => $row['role'], 
                'image' => $row['image'],
+               'status' => $row['status'],
+               'token' => $row['token'],
                'reg_date' => $row['reg_date'],
                'updated_at' => $row['updated_at']
             ];
@@ -117,14 +127,25 @@
 
       public function create(){
          $query = "INSERT INTO `users` 
-            (`id`, `email`, `username`, `password`, `role`, `image`, `reg_date`, `updated_at`) 
-            VALUES (NULL, '{$this->email}', '{$this->username}', MD5('{$this->passwordUser}'), '{$this->role}', '{$this->image}', '{$this->regDate}', '{$this->updated_at}')";
+            (`id`, `email`, `username`, `password`, `role`, `image`, `status`, `token`, `reg_date`, `updated_at`) 
+            VALUES (
+               NULL, 
+               '{$this->email}', 
+               '{$this->username}', 
+               MD5('{$this->passwordUser}'), 
+               '{$this->role}', 
+               '{$this->image}', 
+               '{$this->status}', 
+               '{$this->token}', 
+               '{$this->regDate}', 
+               '{$this->updated_at}'
+            )";
          
          $this->connect();
          $this->executeQuery($query, 'Usuario registrado correctamente', 'Error al registrar usuario');
          $this->disconnect();
 
-         if($this->message[1]['msgType'] == 'succes'){
+         if($this->message[1]['msgType'] == 'succes'){            
             return true;
          }else{
             return false;
@@ -142,6 +163,8 @@
             'password' => $this->passwordUser,
             'role' => $this->role,
             'image' => $this->image,
+            'status' => $this->status,
+            'token' => $this->token,
             'updated_at' => $this->updated_at
          ];
          foreach ($userParams as $key => $value) {
