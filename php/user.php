@@ -118,8 +118,7 @@
                'token' => $row['token'],
                'reg_date' => $row['reg_date'],
                'updated_at' => $row['updated_at']
-            ];
-   
+            ];   
          }
          return json_encode($userData);      
       }
@@ -145,7 +144,8 @@
          $this->executeQuery($query, 'Usuario registrado correctamente', 'Error al registrar usuario');
          $this->disconnect();
 
-         if($this->message[1]['msgType'] == 'succes'){            
+         if($this->message[1]['msgType'] == 'succes'){    
+            require_once('mailer/email.php');        
             return true;
          }else{
             return false;
@@ -183,7 +183,7 @@
          $this->executeQuery($query, 'Datos de usuario actualizados', 'No se puede actualizar el usuario');
          $this->disconnect();
          
-         if($this->message[1]['msgType'] == 'succes'){
+         if($this->message[1]['msgType'] == 'succes'){            
             return true;
          }else{
             return false;
@@ -200,10 +200,28 @@
          return json_encode($this->message);
 
       }
+
+      public function activate($email, $token){
+         $query = "SELECT * FROM users WHERE email = '$email' AND token = $token";
+         $this->connect();
+         $select = $this->mysqli->query($query);
+
+         if($select->num_rows){
+            $newToken = rand(100000, 999999);
+            $query = "UPDATE `users` SET `status` = 'activo', `token` = $newToken 
+                     WHERE `email` = '$email' AND `token` = $token";
+            $this->executeQuery($query, 'Cuenta activada', 'No se puede activar tu cuenta');
+            $this->disconnect();
+         }else{
+            array_push($this->message, ['msg'=>'No existe la cuenta', 'msgType' => 'error']);
+         }
+         return json_encode($this->message);
+      }
    }
 
    // $user = new User();
    // $user->set(1,'eduardo','','admin','');
    // $user->update();
+   // echo $user->activate('fedugalher', 702983);
    
 ?>

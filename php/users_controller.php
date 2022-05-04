@@ -8,7 +8,6 @@ $id = isset($_GET['id']) ? $_GET['id'] : 0;
 $limit = isset($_GET['limit']) ? $_GET['limit'] : 0;
 
 
-
 if(isset($_GET['method'])){
    $method = $_GET['method'];
 }elseif (isset($_POST['method'])) {
@@ -42,6 +41,9 @@ switch ($method) {
    case 'delete':
       echo $user->delete($id);
       break;
+   case 'activate':
+      activate();;
+      break;
    
    // default:
    //    echo $user->selectAll();
@@ -56,7 +58,7 @@ function setNew(){
    $passwordUser = isset($_POST['password']) ? $_POST['password'] : 'No hay Password';
    $role = isset($_POST['role']) ? $_POST['role'] : 'No hay Rol';
    $status = 'inactivo';
-   $token = rand(1000000000, 9999999999);
+   $token = rand(100000, 999999);
    $image = isset($_FILES['image']['name']) ? $_FILES['image']['name'] : 'no-image.png';
    $imageTmp = isset($_FILES['image']['tmp_name']) ? $_FILES['image']['tmp_name'] : 'No hay Imagen';
    $imgPath = '../images/users/';
@@ -82,6 +84,7 @@ function setNew(){
          $userArray['img-msg'] = 'No se cargó una imagen';
       }
       $userArray['user-msg'] = 'Usuario Registrado';
+      $userArray['mailer'] = $user->message;
       echo json_encode($userArray);
    }  
 }
@@ -127,6 +130,13 @@ function setUpdate(){
       $userArray['user-msg'] = 'Usuario actualizado'; 
       echo json_encode($userArray);
    }  
+}
+
+function activate(){
+   $user = new User();
+   $email = isset($_GET['email']) ? $_GET['email'] : '';
+   $token = isset($_GET['token']) ? $_GET['token'] : 0;
+   echo $user->activate($email, $token);
 }
 
 

@@ -13,7 +13,7 @@ $mail = new PHPMailer(true);
 
 try {
     //Server settings
-    $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+    // $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
     $mail->isSMTP();                                            //Send using SMTP
     $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
     $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
@@ -37,15 +37,18 @@ try {
     //Content
     $mail->isHTML(true);                                  //Set email format to HTML
     $mail->Subject = 'Activa tu cuenta';
-    $mail->Body    = `
+    $mail->Body    = "
                     Para activar tu cuenta ingresa al siguiente enlace: <br>
-                    <a href="http://localhost/FedugalherBlog/public/index.php?user={$this->username}&token={$this->token}">Activar Cuenta</a>`;
+                    <a href='http://localhost/FedugalherBlog/public/user_validation.php?method=activate&email={$this->email}&token={$this->token}'>Activar Cuenta</a>";
     $mail->AltBody = 'Activa tu cuenta ingresando a este enlace';
 
     $mail->send();
-    // echo 'El mensaje ha sido enviado';
+    array_push($this->message, ['msg'=>'El mensaje ha sido enviado', 'msgType'=>'succes']);
+    
 } catch (Exception $e) {
     // echo "El mensaje no pudo ser enviado. Error: {$mail->ErrorInfo}";
+    array_push($this->message, ['msg'=>"El mensaje no pudo ser enviado. Error: {$mail->ErrorInfo}", 'msgType'=>'error']);
+    
 }
 
 ?>
