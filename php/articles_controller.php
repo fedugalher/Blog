@@ -1,5 +1,6 @@
 <?php
-
+session_start();
+$userRole = isset($_SESSION['role']) ? $_SESSION['role'] : '';
 require('article.php');
 
 $article = new Article();
@@ -18,44 +19,65 @@ if(isset($_GET['method'])){
    $method = 'No se recibió ningun metodo';
 }
 
-switch ($method) {
-   case 'articlesTable':
-      $article->createTable();
-      $article->alterTable();
-      echo json_encode($article->message);
-      break;
-   case 'selectAll':
-      echo $article->selectAll();
-      break;
-   case 'selectCategory':
-      echo $article->selectCategory($category);
-      break;
-   case 'all':
-      echo $article->all();
-      break;
-   case 'show':
-      echo $article->show($id);
-      break;
-   case 'selectLimit':
-      echo $article->selectLimit($limit);
-      break;
-   case 'new':
-      setNew();
-      break;
-   case 'edit':
-      echo $article->show($id);
-      break;
-   case 'update':
-      setUpdate();
-      break;
-   case 'delete':
-      echo $article->delete($id);
-      break;
-   
-   // default:
-   //    echo $article->selectAll();
-   //    break;
+if($userRole === 'admin'){
+   switch ($method) {
+      case 'articlesTable':
+         $article->createTable();
+         $article->alterTable();
+         echo json_encode($article->message);
+         break;
+      case 'selectAll':
+         echo $article->selectAll();
+         break;
+      case 'selectCategory':
+         echo $article->selectCategory($category);
+         break;
+      case 'all':
+         echo $article->all();
+         break;
+      case 'show':
+         echo $article->show($id);
+         break;
+      case 'selectLimit':
+         echo $article->selectLimit($limit);
+         break;
+      case 'new':
+         setNew();
+         break;
+      case 'edit':
+         echo $article->show($id);
+         break;
+      case 'update':
+         setUpdate();
+         break;
+      case 'delete':
+         echo $article->delete($id);
+         break;
+      
+      // default:
+      //    echo $article->selectAll();
+      //    break;
+   }
+}else{
+   switch ($method) {     
+      case 'selectAll':
+         echo $article->selectAll();
+         break;
+      case 'selectCategory':
+         echo $article->selectCategory($category);
+         break;     
+      case 'show':
+         echo $article->show($id);
+         break;
+      case 'selectLimit':
+         echo $article->selectLimit($limit);
+         break;      
+      default:
+         echo $article->selectAll();
+         break;
+   }
 }
+
 
 function setNew(){
    

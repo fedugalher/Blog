@@ -1,5 +1,6 @@
 <?php
-
+session_start();
+$userRole = isset($_SESSION['role']) ? $_SESSION['role'] : '';
 require('user.php');
 
 $user = new User();
@@ -15,39 +16,55 @@ if(isset($_GET['method'])){
 }else {
    $method = 'No se recibió ningun metodo';
 }
-
-switch ($method) {
-   case 'usersTable':
-      $user->createTable();
-      break;
-   case 'selectAll':
-      echo $user->selectAll();
-      break;
-   case 'show':
-      echo $user->show($id);
-      break;
-   case 'selectLimit':
-      echo $user->selectLimit($limit);
-      break;
-   case 'new':
-      setNew();
-      break;
-   case 'edit':
-      echo $user->show($id);
-      break;
-   case 'update':
-      setUpdate();
-      break;
-   case 'delete':
-      echo $user->delete($id);
-      break;
-   case 'activate':
-      activate();;
-      break;
-   
-   // default:
-   //    echo $user->selectAll();
-   //    break;
+if($userRole === 'admin'){
+   switch ($method) {
+      case 'usersTable':
+         $user->createTable();
+         break;
+      case 'selectAll':
+         echo $user->selectAll();
+         break;
+      case 'show':
+         echo $user->show($id);
+         break;
+      case 'selectLimit':
+         echo $user->selectLimit($limit);
+         break;
+      case 'new':
+         setNew();
+         break;
+      case 'edit':
+         echo $user->show($id);
+         break;
+      case 'update':
+         setUpdate();
+         break;
+      case 'delete':
+         echo $user->delete($id);
+         break;
+      case 'activate':
+         activate();;
+         break;
+      
+      // default:
+      //    echo $user->selectAll();
+      //    break;
+   }
+}else{
+   switch ($method) {      
+      case 'new':
+         setNew();
+         break;
+      case 'edit':
+         echo $user->show($id);
+         break;
+      case 'update':
+         setUpdate();
+         break;
+      case 'activate':
+         activate();;
+         break;
+   }
 }
 
 function setNew(){

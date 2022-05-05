@@ -3,22 +3,6 @@
 article, aside, footer{
   font-family: 'Comfortaa', cursive;
 }
-.start-session{
-  display: block;
-  text-align: right;
-  margin-right: 5px;
-  background-color: #e9e9e9;
-  
-}
-.start-session a{
-  text-decoration: none;
-  color: #001f2e;
-}
-.start-session a:hover{
-  text-decoration: none;
-  color: #016a9f;
-}
-
 .main-container{
   background-color: #e9e9e9;
 }

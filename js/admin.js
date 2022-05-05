@@ -1,18 +1,11 @@
 'use_strict';
 
 let articleRow = document.querySelector('.article-row');
-const sesionClose = document.getElementById('sesionClose');
 
 // Events
 window.addEventListener('load', ()=>{
    getArticles();
 });
-
-sesionClose.addEventListener('click', e => {
-   e.preventDefault();
-   closeSession();
-});
-
 
 // Functions
 let getArticles = async () =>{
@@ -65,13 +58,4 @@ let formatDate = date =>{
    let fullDate = `${day[date.getDay()]}, ${date.getDate()} de ${month[date.getMonth()]} de ${date.getFullYear()}`;
    // console.log(fullDate);
    return fullDate;
-}
-
-let closeSession = async () =>{
-   const peticion = await fetch('../php/sesions_controller.php?method=closeSesion'); 
-   const resultado = await peticion.json();
-   
-   if (resultado[0].msgType === 'succes') {
-      location.reload();
-   }
 }

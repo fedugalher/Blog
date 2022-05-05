@@ -14,13 +14,36 @@
 
       public function startSesion(){
          $userData = [];
-         $query = "SELECT * FROM users WHERE username = '{$this->username}' AND password = MD5('{$this->userPassword}') AND role = 'admin'";
+         $query = "SELECT * FROM users 
+            WHERE (username = '{$this->username}' OR email = '{$this->username}' ) 
+            AND password = MD5('{$this->userPassword}')";
          $this->connect();
          $select = $this->mysqli->query($query);
-         if(mysqli_num_rows($select) !== 0){
-            $_SESSION['started'] = 1;
-            $userData = ['username' => $this->username, 'password' => $this->userPassword, 'role'=>'admin'];
-            array_push($this->message, ['msg'=>"Datos Correctos", 'msgType'=>'succes']);
+         
+         if(mysqli_num_rows($select) !== 0){            
+            while($row = $select->fetch_assoc()){
+               $userData = [
+                  'id' => $row['id'], 
+                  'email' => $row['email'], 
+                  'username' => $row['username'], 
+                  'password' => $row['password'], 
+                  'role' => $row['role'], 
+                  'image' => $row['image'],
+                  'status' => $row['status'],
+                  'token' => $row['token'],
+                  'reg_date' => $row['reg_date'],
+                  'updated_at' => $row['updated_at']
+               ];   
+            }
+            if($userData['status'] === 'activo'){
+               $_SESSION['started'] = true;
+               $_SESSION['role'] = $userData['role'] === 'admin' ? 'admin' : 'usuario';
+               $_SESSION['username'] = $userData['username'];
+               array_push($this->message, ['msg'=>"Datos Correctos", 'msgType'=>'succes']);
+            }else{
+               $userdata = ['username'=>'', 'password'=>'', 'role'=>''];
+               array_push($this->message, ['msg'=>"Cuenta inactiva", 'msgType'=>'error']);
+            }
          }else{            
             $userdata = ['username'=>'', 'password'=>'', 'role'=>''];
             array_push($this->message, ['msg'=>"Datos Inorrectos", 'msgType'=>'error']);
@@ -37,11 +60,11 @@
 
       public function closeSesion(){
          if(session_destroy()){
+            session_unset();
             array_push($this->message, ['msg'=>"Se ha cerrado la sesión", 'msgType'=>'succes']);            
          }else{
             array_push($this->message, ['msg'=>"Error al cerrar la sesión", 'msgType'=>'error']);
-         }    
-         
+         }             
          return json_encode($this->message);
       }
 

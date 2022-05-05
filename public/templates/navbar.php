@@ -1,3 +1,10 @@
+<?php	
+	if(isset($_SESSION['username'])){
+		$welcome = $_SESSION['username'].' <a href="../php/sesions_controller.php?method=sesionClose" id="sesionClose"><i class="fa-solid fa-right-from-bracket login-icons"></i></a>';
+	}else{
+      $welcome = '<a href="../public/login.php" class="login-link"><i class="fa-solid fa-right-to-bracket login-icons"></i> Iniciar Sesión</a>';
+   }
+?>
 <header>
    <div class="container-header"></div>
 </header> 
@@ -9,7 +16,7 @@
       <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
-         <ul class="navbar-nav">
+         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
                <a class="nav-link" aria-current="page" href="">Gameplays</a>
             </li>
@@ -20,9 +27,9 @@
                <a class="nav-link" href="">Recomendaciones</a>
             </li>            
          </ul>
+         <span class="navbar-text">
+            <?php echo $welcome ?>
+         </span>
       </div>
    </div>
 </nav>
-<div class="start-session">
-   <a href="../public/login.php">Iniciar Sesión</a>
-</div>

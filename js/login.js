@@ -23,22 +23,13 @@ let startSesion = async (data) =>{
       body: data
    }); 
    const resultado = await peticion.json();
-   console.log(resultado['messages'][1].msgType)
-   if(resultado['messages'][1].msgType === 'succes'){
+   console.log(resultado['messages'][1].msg)
+
+   if(resultado['messages'][1].msg === 'Datos Correctos'){
       location.href = './admin.php';
    }else{
-      loginMsg.textContent = 'Datos de usuario incorrectos';
+      loginMsg.textContent = resultado['messages'][1].msg;
       loginMsg.classList.add('msg-error');
-
    }
    
-}
-
-let closeSession = async () =>{
-   const peticion = await fetch('../php/sesions_controller.php?method=closeSesion'); 
-   const resultado = await peticion.json();
-   
-   if (resultado[0].msgType === 'succes') {
-      location.reload();
-   }
 }

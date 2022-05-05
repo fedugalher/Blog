@@ -1,17 +1,10 @@
 'use_strict';
 
 let usersTableBody = document.getElementById('usersTable-body');
-const sesionClose = document.getElementById('sesionClose');
 
 window.addEventListener('load', ()=>{
    getUsers();
 });
-
-sesionClose.addEventListener('click', e => {
-   e.preventDefault();
-   closeSession();
-});
-
 
 let getUsers = async () =>{
    
@@ -77,15 +70,6 @@ let getUsers = async () =>{
       }
       tdRole.appendChild(userRoleSelect);
    }   
-}
-
-let closeSession = async () =>{
-   const peticion = await fetch('../php/sesions_controller.php?method=closeSesion'); 
-   const resultado = await peticion.json();
-   
-   if (resultado[0].msgType === 'succes') {
-      location.reload();
-   }
 }
 
 let formatDate = date =>{

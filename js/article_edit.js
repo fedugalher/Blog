@@ -1,7 +1,5 @@
 'use_strict';
 
-const sesionClose = document.getElementById('sesionClose');
-
 //Obtener parametros de la URL
 const params = window.location.search;
 const urlParams = new URLSearchParams(params);
@@ -65,15 +63,6 @@ const sendArticle = async (data) =>{
    const resultado = await peticion.json();
    if(resultado['article-msg'] == 'Articulo guardado'){
       location.href = 'index.php';
-   }
-}
-
-let closeSession = async () =>{
-   const peticion = await fetch('../php/sesions_controller.php?method=closeSesion'); 
-   const resultado = await peticion.json();
-   
-   if (resultado[0].msgType === 'succes') {
-      location.reload();
    }
 }
 
