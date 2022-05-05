@@ -10,16 +10,18 @@ commentBtn.addEventListener('click', e =>{
    e.preventDefault(); //Evita que se recargue la pagina al dar click en el boton submit
 
    const data = new FormData();
-   const commentName = document.getElementById('name');
+   // const commentName = document.getElementById('name');
+   const userId = document.getElementById('user-id');
    const commentText = document.getElementById('comment');
    const method = 'new';
 
-   data.append('name', commentName.value);
+   // data.append('name', commentName.value);
+   data.append('user_id', parseInt(userId.value));
    data.append('comment', commentText.value);
    data.append('method', method);
    data.append('article_id', id);
    sendComment(data);
-   commentName.value = '';
+   // commentName.value = '';
    commentText.value = '';
 });
 
@@ -45,7 +47,7 @@ const getComments = async ()=>{
       const date = new Date(resultado[comment].date); //para poder formatear la hora con la funcion formatDate()
       commentsContainer.innerHTML+= `
          <div class="col-lg-11 coment">
-            <p class="coment-name">${resultado[comment].name}</p>
+            <p class="coment-name">${resultado[comment].username}</p>
             <p>${resultado[comment].comment}</p>
             <span class="article-date">${formatDate(date)}</span>
          </div>

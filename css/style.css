@@ -226,5 +226,11 @@ footer p{
   color: #005076;
 }
 
-
+/*------------------ Login ------------------*/
+span .userImg{
+  width: 30px;
+  height: 30px;
+  border-radius: 30px;
+  margin-right: 10px;
+}
 

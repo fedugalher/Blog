@@ -1,3 +1,6 @@
+<?php
+	session_start();	
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,7 +43,12 @@
               <hr>           
               
               <form id="comment-form" action="" method="post">
-                <input id="name" class="coment-input" type="text" placeholder="Escribe tu nombre" name="name">
+                <!-- <input id="name" class="coment-input" type="text" placeholder="Escribe tu nombre" name="name"> -->
+                <span class="user-name">
+                  <img src="../images/users/<?= $image ?>" class="userImg">
+                  <input id="user-id" type="hidden" value="<?= $id ?>" name="user-id">
+                  <?= $username ?>
+                </span>
                 <textarea id="comment" class="coment-input" name="comment" placeholder="Escribe tu mensaje"></textarea>
                 <input id="coment-btn" class="coment-input btn-send" type="submit" value="Comentar">
               </form>

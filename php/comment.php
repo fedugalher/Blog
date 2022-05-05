@@ -4,19 +4,19 @@ require('database.php');
 
 class Comment extends Database{
    public $id;
-   public $commenter;
    public $comment;   
    public $date;  
    public $article_id;
+   public $user_id;
    public $arrayPrueba = [1,2,3,4,5,6];
 
-   public function set($id, $commenter, $comment, $article_id){   
-      $this->id = $id != null ? $id : null;   
-      $this->commenter = $commenter;
+   public function set($id, $comment, $article_id, $user_id){   
+      $this->id = $id != null ? $id : null;        
       $this->comment = $comment;     
       date_default_timezone_set('America/Chihuahua');
       $this->date = date('Y-m-d H:i:s');
       $this->article_id = $article_id;
+      $this->user_id = $user_id;
       
    }
 
@@ -26,14 +26,15 @@ class Comment extends Database{
       if($this->mysqli->query(
          "CREATE TABLE IF NOT EXISTS `comments` ( 
             `id` INT(11) NOT NULL AUTO_INCREMENT , 
-            `name` VARCHAR(100) NOT NULL , 
-            `comment` VARCHAR(1000) NOT NULL ,
+            `comment` VARCHAR(500) NOT NULL,
             `date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP , 
             `article_id` INT(11) NOT NULL ,
+            `user_id` INT(11) NOT NULL ,
             PRIMARY KEY (`id`)) ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin"
          )
       ){
          array_push($this->message, ['msg'=>"Se creó la tabla comments", 'msgType'=>'succes']);
+         $this->alterTable();
       }
       else{
          array_push($this->message, ['msg'=>"Erorr al crear la tabla articles", 'msgType'=>'error']);
@@ -42,15 +43,21 @@ class Comment extends Database{
    }
 
    public function alterTable(){
-      $query = "ALTER TABLE `comments` ADD FOREIGN KEY (`article_id`) REFERENCES `articles`(`id`) ON DELETE CASCADE ON UPDATE CASCADE";
+      $FK = ['article_id', 'user_id'];
+      $reference = ['articles', 'users'];
       $this->connect();
-      if($this->mysqli->query($query)){
-         array_push($this->message, ['msg'=>"Se creo la relación de la tabla comments con articles", 'msgType'=>'succes']);
+      for ($i=0; $i < 2; $i++) { 
+         $query = "ALTER TABLE `comments` ADD FOREIGN KEY (`$FK[$i]`) REFERENCES `$reference[$i]`(`id`) ON DELETE CASCADE ON UPDATE CASCADE";
+         
+         if($this->mysqli->query($query)){
+            array_push($this->message, ['msg'=>"Se creo la relación de la tabla comments con $reference[$i]", 'msgType'=>'succes']);
+         }
+         else{
+            array_push($this->message, ['msg'=>"Error al crear la relacion de la tabla comments con $reference[$i]", 'msgType'=>'error']);
+         }   
+         
       }
-      else{
-         array_push($this->message, ['msg'=>"Error al crear la relacion de la tabla comments con articles", 'msgType'=>'error']);
-      }   
-      $this->disconnect();
+      // $this->disconnect();   //Se desconecta en create table   
    }
 
 
@@ -67,8 +74,8 @@ class Comment extends Database{
 
    public function create(){
       $query = "INSERT INTO `comments` 
-         (`id`, `name`, `comment`, `date`, `article_id`) 
-         VALUES (NULL, '{$this->commenter}', '{$this->comment}', '{$this->date}', '{$this->article_id}')";
+         (`id`, `comment`, `date`, `article_id`, `user_id`) 
+         VALUES (NULL, '{$this->comment}', '{$this->date}', '{$this->article_id}', '{$this->user_id}')";
       
       $this->connect();
       $this->executeQuery($query, 'Comentario guardado', 'Error al guardar comentario');
@@ -84,7 +91,10 @@ class Comment extends Database{
 
 
    public function selectAll($id){      
-      $query = "SELECT * FROM `comments` WHERE article_id = $id ORDER BY id DESC";
+      $query = "SELECT `comments`.*, `users`.`username` FROM `comments` 
+               INNER JOIN `users` WHERE `comments`.article_id = $id 
+               AND `comments`.`user_id` = `users`.`id`
+               ORDER BY `comments`.`id` DESC";
       $this->connect();
       $select = $this->mysqli->query($query);
       $this->disconnect();
@@ -92,9 +102,11 @@ class Comment extends Database{
       while($row = $select->fetch_assoc()){
          array_push($commentsData, [
             'id' => $row['id'], 
-            'name' => $row['name'], 
             'comment' => $row['comment'],
-            'date' => $row['date']
+            'date' => $row['date'],
+            'article_id' => $row['article_id'],
+            'user_id' => $row['user_id'],
+            'username' => $row['username']
          ]);
          
       }
@@ -111,11 +123,11 @@ class Comment extends Database{
       
       while($row = $select->fetch_assoc()){
          $commentData = [
-            'id' => $row['id'], 
-            'name' => $row['name'], 
+            'id' => $row['id'],            
             'comment' => $row['comment'], 
             'date' => $row['date'],
             'article_id' => $row['article_id'],
+            'user_id' => $row['user_id']
          ];
 
       }
@@ -136,11 +148,11 @@ class Comment extends Database{
 
    public function update(){
      
-         $query = "UPDATE `comments` SET 
-         `name` = '{$this->name}', 
+         $query = "UPDATE `comments` SET          
          `comment` = '{$this->comment}', 
          `date` = '{$this->date}',
-         `article_id` = '{$this->article_id}'
+         `article_id` = '{$this->article_id}',
+         `user_id` = '{$this->user_id}'
          WHERE `comments`.`id` = {$this->id}";
          
        $this->connect();
@@ -166,11 +178,11 @@ class Comment extends Database{
 
       while($row = $select->fetch_assoc()){
          array_push($commentData,[
-            'id' => $row['id'], 
-            'name' => $row['name'], 
+            'id' => $row['id'],             
             'comment' => $row['comment'], 
             'date' => $row['date'],
             'article_id' => $row['article_id'],
+            'user_id' => $row['user_id']
          ]);
       }
       $data = [

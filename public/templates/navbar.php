@@ -1,7 +1,12 @@
 <?php	
-	if(isset($_SESSION['username'])){
-		$welcome = $_SESSION['username'].' <a href="../php/sesions_controller.php?method=sesionClose" id="sesionClose"><i class="fa-solid fa-right-from-bracket login-icons"></i></a>';
-	}else{
+	if(isset($_SESSION['started'])){
+      $id = $_SESSION['id'];;
+      $username = $_SESSION['username'];
+      $image = $_SESSION['image'];
+		$welcome = $username.' <a href="../php/sesions_controller.php?method=sesionClose" id="sesionClose"><i class="fa-solid fa-right-from-bracket login-icons"></i></a>';
+   }else{
+      $id = 0;
+      $username = 'Inicia Sesion para poder comentar';
       $welcome = '<a href="../public/login.php" class="login-link"><i class="fa-solid fa-right-to-bracket login-icons"></i> Iniciar Sesión</a>';
    }
 ?>

@@ -37,8 +37,10 @@
             }
             if($userData['status'] === 'activo'){
                $_SESSION['started'] = true;
-               $_SESSION['role'] = $userData['role'] === 'admin' ? 'admin' : 'usuario';
+               $_SESSION['id'] = $userData['id'];
                $_SESSION['username'] = $userData['username'];
+               $_SESSION['role'] = $userData['role'] === 'admin' ? 'admin' : 'usuario';
+               $_SESSION['image'] = $userData['image'];             
                array_push($this->message, ['msg'=>"Datos Correctos", 'msgType'=>'succes']);
             }else{
                $userdata = ['username'=>'', 'password'=>'', 'role'=>''];
