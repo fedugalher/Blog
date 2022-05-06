@@ -80,26 +80,73 @@ const getComments = async ()=>{
 //Comment Edit
 document.addEventListener('click', e =>{
    let element = e.target;
-   console.log(element);
    const editIcon = element.id.includes('edit');
+   const deleteIcon = element.id.includes('delete');
+   const saveBtn = element.id.includes('save');
+   const cancelBtn = element.id.includes('cancel');
    
    if(editIcon){
       e.preventDefault();
       const id = element.id.slice(5, element.id.length);
       const userActions = element.parentElement.parentElement;
       const saveBtn = document.createElement('button');
+      const cancelBtn = document.createElement('button');
       const commentText = document.getElementById(`comment-${id}`);
-
-      saveBtn.classList.add('btn-green');
-      saveBtn.setAttribute('id', 'saveComment');
-      saveBtn.textContent = 'Guardar';
-      userActions.insertBefore(saveBtn, userActions.firstChild);
-
      
-      
-      commentText.setAttribute('contenteditable', true);
-      commentText.classList.add('comment-edit');
+      if(userActions.childNodes[0].nodeName !== 'BUTTON' || userActions.childNodes[1].nodeName !== 'BUTTON'){
+         saveBtn.classList.add('btn-green');
+         saveBtn.setAttribute('id', `save-${id}`);
+         saveBtn.textContent = 'Guardar';
+         cancelBtn.classList.add('btn-red');
+         cancelBtn.setAttribute('id', `cancel-${id}`);
+         cancelBtn.textContent = 'Cancelar';
+         userActions.insertBefore(saveBtn, userActions.firstChild); 
+         userActions.insertBefore(cancelBtn, userActions.firstChild);      
+         commentText.setAttribute('contenteditable', true);
+         commentText.classList.add('comment-edit');
+      }      
       
    }
+
+   if(deleteIcon){
+      e.preventDefault();
+      const id = element.id.slice(7, element.id.length);
+   }
+
+   if(saveBtn){
+      const id = element.id.slice(5, element.id.length);
+      updateComment(id);           
+   }
+
+   if(cancelBtn){
+      const id = element.id.slice(7, element.id.length);
+      const userActions = element.parentElement;
+      const buttons = userActions.getElementsByTagName('BUTTON');
+      const commentText = document.getElementById(`comment-${id}`);
+     
+      console.log(commentText)
+      commentText.removeAttribute('contenteditable');
+      commentText.classList.remove('comment-edit');     
+      userActions.removeChild(buttons[0]);
+      userActions.removeChild(buttons[0]);     
+   }
+
+  
 });
 
+let updateComment = async id => {
+   const data = new FormData();
+   const commentText = document.getElementById(`comment-${id}`);
+   const method = 'update';
+   data.append('id', id);
+   data.append('comment', commentText.textContent);
+   data.append('method', method);
+   const peticion = await fetch('../php/comments_controller.php', {
+      method: 'POST',
+      body: data
+   }); 
+   const resultado = await peticion.json();
+   if(resultado['comment-msg'] === 'Comentario actualizado'){
+      location.reload();
+   }   
+}

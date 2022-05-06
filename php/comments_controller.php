@@ -77,6 +77,7 @@ function setNew(){
 function setUpdate(){
    
    $comment = new Comment();
+   $id = isset($_POST['id']) ? $_POST['id'] : 0;
    $commentText = isset($_POST['comment']) ? $_POST['comment'] : 'No hay comentario';
    $article_id = isset($_POST['article_id']) ? $_POST['article_id'] : 0;
    $user_id = isset($_SESSION['id']) ? $_SESSION['id'] : 0;
@@ -88,7 +89,9 @@ function setUpdate(){
    ];
 
    $comment->set($id, $commentText, $article_id, $user_id);   
-   $comment->update();
+   if($comment->update()){
+      $commentArray['comment-msg'] = 'Comentario actualizado';
+   }
    echo json_encode($commentArray);
 }
 

@@ -151,7 +151,6 @@ class Comment extends Database{
          $query = "UPDATE `comments` SET          
          `comment` = '{$this->comment}', 
          `date` = '{$this->date}',
-         `article_id` = '{$this->article_id}',
          `user_id` = '{$this->user_id}'
          WHERE `comments`.`id` = {$this->id}";
          
