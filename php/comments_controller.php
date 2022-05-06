@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 require('comment.php');
 
 $comment = new Comment();
@@ -55,7 +55,7 @@ function setNew(){
    $comment = new Comment();   
    $commentText = isset($_POST['comment']) ? $_POST['comment'] : 'No hay comentario';
    $article_id = isset($_POST['article_id']) ? $_POST['article_id'] : 0;
-   $user_id = isset($_POST['user_id']) ? $_POST['user_id'] : 0;
+   $user_id = isset($_SESSION['id']) ? $_SESSION['id'] : 0;
 
    $commentArray = [
       'comment' => $commentText,
@@ -79,7 +79,7 @@ function setUpdate(){
    $comment = new Comment();
    $commentText = isset($_POST['comment']) ? $_POST['comment'] : 'No hay comentario';
    $article_id = isset($_POST['article_id']) ? $_POST['article_id'] : 0;
-   $user_id = isset($_POST['user_id']) ? $_POST['user_id'] : 0;
+   $user_id = isset($_SESSION['id']) ? $_SESSION['id'] : 0;
 
    $commentArray = [      
       'comment' => $commentText,

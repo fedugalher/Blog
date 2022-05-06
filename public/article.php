@@ -1,5 +1,6 @@
-<?php
-	session_start();	
+<?php 
+  session_start(); 
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,21 +42,22 @@
             <div class="col-lg-12 form-coment-col">  
               <h3>Comentarios</h3> 
               <hr>           
-              
-              <form id="comment-form" action="" method="post">
-                <!-- <input id="name" class="coment-input" type="text" placeholder="Escribe tu nombre" name="name"> -->
-                <span class="user-name">
-                  <img src="../images/users/<?= $image ?>" class="userImg">
-                  <input id="user-id" type="hidden" value="<?= $id ?>" name="user-id">
-                  <?= $username ?>
-                </span>
-                <textarea id="comment" class="coment-input" name="comment" placeholder="Escribe tu mensaje"></textarea>
-                <input id="coment-btn" class="coment-input btn-send" type="submit" value="Comentar">
-              </form>
-
-              <div id="comments">
-
-              </div>
+              <?php if($username){ ?>
+                <form id="comment-form" action="" method="post">
+                  <div class="userData">  
+                      <img src="../images/users/<?php echo $image; ?>" class="userImg">                 
+                      <span id="username"><?php echo $username; ?></span>
+                  </div>
+                  <textarea id="comment" class="coment-input" name="comment" placeholder="Escribe tu mensaje"></textarea>
+                  <input id="coment-btn" class="coment-input btn-send" type="submit" value="Comentar">
+                </form>
+              <?php }else{ ?>
+                <div class="comments-msg">
+                  <a href="../public/login.php" class="login-link">Inicia Sesión</a>
+                  para dejar tu comentario.                  
+                </div> 
+              <?php } ?>
+              <div id="comments"></div>
             </div>
           </div>
           
@@ -74,7 +76,7 @@
     
   </div>
 
-	<?php require_once('templates/footer.php') ?>
+	<?php require_once('templates/footer.php'); ?>
 
   <script src="../js/main.js"></script>
   <script src="../js/article.js"></script>
