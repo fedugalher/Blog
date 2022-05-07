@@ -91,7 +91,7 @@ class Comment extends Database{
 
 
    public function selectAll($id){      
-      $query = "SELECT `comments`.*, `users`.`username` FROM `comments` 
+      $query = "SELECT `comments`.*, `users`.`username`, `users`.`image` FROM `comments` 
                INNER JOIN `users` WHERE `comments`.article_id = $id 
                AND `comments`.`user_id` = `users`.`id`
                ORDER BY `comments`.`id` DESC";
@@ -106,7 +106,8 @@ class Comment extends Database{
             'date' => $row['date'],
             'article_id' => $row['article_id'],
             'user_id' => $row['user_id'],
-            'username' => $row['username']
+            'username' => $row['username'],
+            'image' => $row['image']
          ]);
          
       }

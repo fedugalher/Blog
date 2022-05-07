@@ -43,14 +43,18 @@ let sendComment = async (data) =>{
 const getComments = async ()=>{
    const peticion = await fetch(`../php/comments_controller.php?method=selectAll&id=${id}`); 
    const resultado = await peticion.json();
-   const userName = document.getElementById('username').textContent;  
+   const userName = document.getElementById('username');  
 
    commentsContainer.innerHTML = '';
    for (const comment in resultado) {
       const date = new Date(resultado[comment].date); //para poder formatear la hora con la funcion formatDate()
       commentsContainer.innerHTML+= `
          <div class="col-lg-11 coment">
-            <p class="coment-name" id="${resultado[comment].id}">${resultado[comment].username}</p>
+            <p class="coment-name" id="${resultado[comment].id}">
+               <img src="../images/users/${resultado[comment].image}" class="userImg">               
+               ${resultado[comment].username}
+            </p>
+            <hr>
             <p id="comment-${resultado[comment].id}">${resultado[comment].comment}</p>            
             <span class="article-date">
                <span class="userActions"></span>               
@@ -64,15 +68,17 @@ const getComments = async ()=>{
    let commentName = document.getElementsByClassName('coment-name');
 
    for (const comment in userActions) {
-      if(userName === commentName[comment].textContent){
-         userActions[comment].innerHTML = `
-                <a href="#" class="edit-icon">
-                  <i class="fa-solid fa-pen-to-square" id="edit-${parseInt(commentName[comment].id)}"></i>
-               </a>
-                <a href="#" class="delete-icon">
-                  <i class="fa-solid fa-trash-can" id="delete-${parseInt(commentName[comment].id)}"></i>
-               </a>
-               <br>`;
+      if(userName !== null && commentName[comment].textContent !== undefined){
+         if(commentName[comment].textContent.includes(userName.textContent)){
+            userActions[comment].innerHTML = `
+                   <a href="#" class="edit-icon">
+                     <i class="fa-solid fa-pen-to-square" id="edit-${parseInt(commentName[comment].id)}"></i>
+                  </a>
+                   <a href="#" class="delete-icon">
+                     <i class="fa-solid fa-trash-can" id="delete-${parseInt(commentName[comment].id)}"></i>
+                  </a>
+                  <br>`;
+         }
       }      
    }   
 }
@@ -129,9 +135,7 @@ document.addEventListener('click', e =>{
       commentText.classList.remove('comment-edit');     
       userActions.removeChild(buttons[0]);
       userActions.removeChild(buttons[0]);     
-   }
-
-  
+   }  
 });
 
 let updateComment = async id => {

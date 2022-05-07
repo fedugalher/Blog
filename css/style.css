@@ -158,7 +158,7 @@ aside p{
   margin-bottom: 50px;
   background-color: #00273a;
   color: #dddddd;
-  width: 200px;
+  width: 120px;
   height: 40px;
 }
 .btn-send:hover{
@@ -177,10 +177,21 @@ aside p{
   margin-bottom: 5px;
   font-size: 14px;
 }
+.coment .userImg{
+  position: relative;
+  width: 30px;
+  height: 30px;
+  border-radius: 30px;
+  top: -10px;
+  margin-right: 10px;
+
+}
 .coment p.coment-name{
   font-size: 16px;
   font-weight: 700;
   font-style: italic;
+  margin-top: -15px;
+  margin-bottom: -15px;
 }
 .article-date{
   font-size: 12px;

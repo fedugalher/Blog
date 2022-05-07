@@ -50,7 +50,7 @@
 					<div class="col-12 users-col table-responsive">
 						<h3>Usuarios Registrados</h3>
 						<table class="table table-sm table-hover align-middle">
-							<thead>
+							<thead class="text-center">
 								<tr>
 									<th scope="col">#</th>
 									<th scope="col">Imagen</th>
