@@ -64,6 +64,12 @@ if($userRole === 'admin'){
       case 'activate':
          activate();;
          break;
+      case 'passwordRequest':
+         passwordRequest();
+         break;
+      case 'passwordReset':
+         passwordReset();
+         break;
    }
 }
 
@@ -156,5 +162,19 @@ function activate(){
    echo $user->activate($email, $token);
 }
 
+function passwordRequest(){
+   $user = new User();
+   $email = isset($_POST['email']) ? $_POST['email'] : '';
+   $username = isset($_POST['username']) ? $_POST['username'] : 0;
+   echo $user->passwordRequest($email, $username);
+}
+
+function passwordReset(){
+   $user = new User();
+   $email = isset($_POST['email']) ? $_POST['email'] : '';
+   $token = isset($_POST['token']) ? $_POST['token'] : 0;
+   $password = isset($_POST['password']) ? $_POST['password'] : 'No hay password';
+   echo $user->passwordReset($email, $token, $password);
+}
 
 ?>

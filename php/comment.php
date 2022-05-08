@@ -94,7 +94,7 @@ class Comment extends Database{
       $query = "SELECT `comments`.*, `users`.`username`, `users`.`image` FROM `comments` 
                INNER JOIN `users` WHERE `comments`.article_id = $id 
                AND `comments`.`user_id` = `users`.`id`
-               ORDER BY `comments`.`id` DESC";
+               ORDER BY `comments`.`date` DESC";
       $this->connect();
       $select = $this->mysqli->query($query);
       $this->disconnect();
@@ -150,8 +150,7 @@ class Comment extends Database{
    public function update(){
      
          $query = "UPDATE `comments` SET          
-         `comment` = '{$this->comment}', 
-         `date` = '{$this->date}',
+         `comment` = '{$this->comment}',
          `user_id` = '{$this->user_id}'
          WHERE `comments`.`id` = {$this->id}";
          

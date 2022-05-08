@@ -217,6 +217,47 @@
          }
          return json_encode($this->message);
       }
+
+      public function passwordRequest($email, $username){
+         $query = "SELECT * FROM users WHERE email = '$email' AND username = '$username'";
+         $this->connect();
+         $select = $this->mysqli->query($query);
+         $this->disconnect();
+         
+         if($select->num_rows){
+            while($row = $select->fetch_assoc()){
+               $token = $row['token'];   
+            }            
+            require_once('mailer/passwordRequest.php');             
+         }else{
+            array_push($this->message, ['msg'=>'No existe la cuenta', 'msgType' => 'error']);
+         }
+         
+         return json_encode($this->message);
+      }
+
+      public function passwordReset($email, $token, $password){
+         $token = intval($token);
+         $query = "SELECT * FROM users WHERE email = '$email' AND token = $token";
+         $this->connect();
+         $select = $this->mysqli->query($query);
+
+         if($select->num_rows){
+            $newToken = rand(100000, 999999);
+            date_default_timezone_set('America/Chihuahua');
+            $updated_at = date('Y-m-d H:i:s');
+            $query = "UPDATE `users` 
+                     SET `password` = MD5('{$password}'), 
+                     `token` = $newToken,
+                     `updated_at` = '$updated_at'
+                     WHERE `email` = '$email' AND `token` = $token";
+            $this->executeQuery($query, 'El password ha sido cambiado correctamente', 'Error al cambiar el password');
+            $this->disconnect();
+         }else{
+            array_push($this->message, ['msg'=>'Lo siento, no hay ninguna cuenta asociada a los datos que ingresaste', 'msgType' => 'error']);
+         }
+         return json_encode($this->message);
+      }
    }
 
    // $user = new User();

@@ -43,6 +43,10 @@ html body{
     color: #720d0d;
     background-color: #ffbfbf;
  }
+ .msg-succes{
+   color: #0d723f;
+   background-color: #bfffe2;
+}
 
 .login-links{
   margin: 20px 0;
