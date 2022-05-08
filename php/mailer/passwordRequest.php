@@ -44,6 +44,8 @@ try {
                     <a href='http://localhost/FedugalherBlog/public/user_passwordReset.php?&email={$email}&token={$token}'>Restablecer Contraseña</a>.";
     $mail->AltBody = 'Restablecer Contraseña';
 
+    $mail->CharSet = 'UTF-8';
+
     $mail->send();
     array_push($this->message, ['msg'=>'El mensaje ha sido enviado', 'msgType'=>'succes']);
     

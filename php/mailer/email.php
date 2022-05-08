@@ -42,6 +42,8 @@ try {
                     <a href='http://localhost/FedugalherBlog/public/user_validation.php?method=activate&email={$this->email}&token={$this->token}'>Activar Cuenta</a>";
     $mail->AltBody = 'Activa tu cuenta ingresando a este enlace';
 
+    $mail->CharSet = 'UTF-8';
+    
     $mail->send();
     array_push($this->message, ['msg'=>'El mensaje ha sido enviado', 'msgType'=>'succes']);
     
