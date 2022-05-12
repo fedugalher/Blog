@@ -1,10 +1,14 @@
 <?php	
-	if(isset($_SESSION['started'])){     
+	if(isset($_SESSION['started'])){  
+      $userId   = $_SESSION['id'];
       $username = $_SESSION['username'];
-      $image = $_SESSION['image'];
+      $email    = $_SESSION['email'];
+      $image    = $_SESSION['image'];
    }else{
+      $userId   = '';
       $username = '';
-      $image = '';
+      $email    = '';
+      $image    = '';
    }
 ?>
 <header>
@@ -29,13 +33,29 @@
                <a class="nav-link" href="">Recomendaciones</a>
             </li>            
          </ul>
-         <span class="navbar-text">
+         <span class="navbar-text navbar-right">
             <?php if($username){ ?>
                <img src="../images/users/<?php echo $image ?>" class="userImg">
-               <?php echo $username ?>
-               <a href='../php/sesions_controller.php?method=sesionClose' id='sesionClose'>
-                  <i class='fa-solid fa-right-from-bracket login-icons'></i>
-               </a>
+
+               <div class="user-name dropdown">
+                  <a class=" btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                     <?php echo $username ?>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuLink">
+                     <li>                        
+                        <a class="dropdown-item" href="../php/users_controller.php?method=show" id="userProfile">
+                           <i class="fa-solid fa-user login-icons"></i> 
+                           Mi perfil
+                        </a>
+                     </li>
+                     <li>
+                        <a class="dropdown-item" href="../php/sesions_controller.php?method=sesionClose" id='sesionClose'>
+                           <i class='fa-solid fa-right-from-bracket login-icons'></i>
+                           Cerrar Sesión                           
+                        </a>
+                     </li>
+                  </ul>
+               </div>
             <?php }else{ ?>
                <a href="../public/login.php" class="login-link">
                   <i class="fa-solid fa-right-to-bracket login-icons"></i> 

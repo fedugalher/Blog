@@ -35,8 +35,7 @@ let sendComment = async (data) =>{
    const resultado = await peticion.json();
 
    if(resultado['article-msg'] == 'Tu comentario ha sido enviado'){
-    getComments();
-     
+    getComments();     
    }
 }
 
@@ -117,6 +116,10 @@ document.addEventListener('click', e =>{
    if(deleteIcon){
       e.preventDefault();
       const id = element.id.slice(7, element.id.length);
+      const deleteConfirm = confirm('¿Estas seguro de que deseas eliminar tu comentario?');
+      if(deleteConfirm){
+         deleteComment(id);
+      }
    }
 
    if(saveBtn){
@@ -125,16 +128,17 @@ document.addEventListener('click', e =>{
    }
 
    if(cancelBtn){
-      const id = element.id.slice(7, element.id.length);
-      const userActions = element.parentElement;
-      const buttons = userActions.getElementsByTagName('BUTTON');
-      const commentText = document.getElementById(`comment-${id}`);
+      location.reload();
+      // const id = element.id.slice(7, element.id.length);
+      // const userActions = element.parentElement;
+      // const buttons = userActions.getElementsByTagName('BUTTON');
+      // const commentText = document.getElementById(`comment-${id}`);
      
-      console.log(commentText)
-      commentText.removeAttribute('contenteditable');
-      commentText.classList.remove('comment-edit');     
-      userActions.removeChild(buttons[0]);
-      userActions.removeChild(buttons[0]);     
+      // console.log(commentText)
+      // commentText.removeAttribute('contenteditable');
+      // commentText.classList.remove('comment-edit');     
+      // userActions.removeChild(buttons[0]);
+      // userActions.removeChild(buttons[0]);     
    }  
 });
 
@@ -152,5 +156,26 @@ let updateComment = async id => {
    const resultado = await peticion.json();
    if(resultado['comment-msg'] === 'Comentario actualizado'){
       location.reload();
+   }   
+}
+
+let deleteComment = async id => {
+   const data = new FormData();
+   const method = 'delete';
+
+   data.append('id', id);
+   data.append('method', method);
+
+   const peticion = await fetch('../php/comments_controller.php', {
+      method: 'POST',
+      body: data
+   }); 
+
+   const resultado = await peticion.json();
+
+   if(resultado[1].msg === 'Comentario eliminado'){
+      location.reload();
+   }else{
+      console.log('Error al eliminar el comentario');
    }   
 }

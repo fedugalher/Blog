@@ -116,8 +116,15 @@
  }
  .userImgLabel:hover{
    cursor: pointer;
+   background-image: url('../images/camera.png');
    background-color: white;
    border-color: #003a58;
+   
+ }
+ .imgLabel{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
  }
  .msg-box{
    font-size: 14px;

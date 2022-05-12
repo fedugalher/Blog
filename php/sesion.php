@@ -39,6 +39,7 @@
                $_SESSION['started'] = true;
                $_SESSION['id'] = $userData['id'];
                $_SESSION['username'] = $userData['username'];
+               $_SESSION['email'] = $userData['email'];
                $_SESSION['role'] = $userData['role'] === 'admin' ? 'admin' : 'usuario';
                $_SESSION['image'] = $userData['image'];             
                array_push($this->message, ['msg'=>"Datos Correctos", 'msgType'=>'succes']);

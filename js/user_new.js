@@ -74,6 +74,5 @@ let emailValidate = email => {
        return false
     }else{
        return true
-    }
-       
+    }       
 }

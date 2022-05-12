@@ -102,6 +102,7 @@
    
       public function show($id){
          $query = "SELECT * FROM users WHERE id = $id";
+         $userData = [];
          $this->connect();
          $select = $this->mysqli->query($query);
          $this->disconnect();

@@ -136,8 +136,8 @@ class Comment extends Database{
    }
 
 
-   public function delete($id){
-      $query = "DELETE FROM comments WHERE `comments`.`id` = {$id}";
+   public function delete($id, $user_id){
+      $query = "DELETE FROM comments WHERE `comments`.`id` = {$id} AND `comments`.`user_id`";
       $this->connect();
       $this->executeQuery($query, 'Comentario eliminado', 'No se puede eliminar el comentario');
       $this->disconnect();

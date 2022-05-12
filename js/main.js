@@ -10,6 +10,7 @@ const currentURL = window.location.href;
 document.addEventListener('click', e =>{
 
    let element = e.target;
+   
    //Para acceder a los Articulos
    if(element.parentElement !== null){
       //Articles
@@ -17,14 +18,15 @@ document.addEventListener('click', e =>{
          let elementId = element.parentElement.id;
          let dash = elementId.indexOf('-');
          let articleId = elementId.slice(dash+1,elementId.length);
-         console.log(location.href=`article.php?id=${articleId}`);
+         location.href=`article.php?id=${articleId}`;
       }   
 
       //Navbar
       const categoryLink = element.classList.contains('nav-link') ? element.textContent : false;
       const homeLink = element.classList.contains('navbar-brand') ? 'home' : false;
-      const logoutLink = element.parentElement.id === 'sesionClose' ? 'sesionClose' : false;
-
+      const logoutLink = element.id === 'sesionClose' ? 'sesionClose' : false;
+      const userProfile = element.id === 'userProfile' || element.parentElement.id === 'userProfile' ? true : false;
+ 
       if(categoryLink != false || homeLink != false){
          e.preventDefault();
          const category = categoryLink != false ? categoryLink : homeLink;
@@ -32,6 +34,9 @@ document.addEventListener('click', e =>{
       }else if(logoutLink != false){
          e.preventDefault();
          closeSession();
+      }else if(userProfile){
+         e.preventDefault();
+         location.href = '../public/user_show.php';
       }
    }
 });

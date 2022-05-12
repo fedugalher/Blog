@@ -42,7 +42,7 @@ switch ($method) {
       setUpdate();
       break;
    case 'delete':
-      echo $comment->delete($id);
+      setDelete();
       break;
    
    // default:
@@ -93,6 +93,14 @@ function setUpdate(){
       $commentArray['comment-msg'] = 'Comentario actualizado';
    }
    echo json_encode($commentArray);
+}
+
+function setDelete(){
+   $comment = new Comment();
+   $id = isset($_POST['id']) ? $_POST['id'] : 0;
+   $user_id = $_SESSION['id'];
+
+   echo $comment->delete($id, $user_id);
 }
 
 // $comment = new Comment();

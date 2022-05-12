@@ -1,6 +1,7 @@
 <?php
 session_start();
 $userRole = isset($_SESSION['role']) ? $_SESSION['role'] : '';
+$user_id = isset($_SESSION['id']) ? $_SESSION['id'] : 0;
 require('user.php');
 
 $user = new User();
@@ -34,7 +35,7 @@ if($userRole === 'admin'){
          setNew();
          break;
       case 'edit':
-         echo $user->show($id);
+         echo $user->show($user_id);
          break;
       case 'update':
          setUpdate();
@@ -60,6 +61,9 @@ if($userRole === 'admin'){
          break;
       case 'update':
          setUpdate();
+         break;
+      case 'show':
+         echo $user->show($user_id);
          break;
       case 'activate':
          activate();;

@@ -1,5 +1,5 @@
 .login-icons{
-   margin: 0 10px;
+   margin: 0 5px 0 0;
    font-size: 14px;   
 }
 .login-link{
@@ -9,5 +9,11 @@ span .userImg{
    width: 30px;
    height: 30px;
    border-radius: 30px;
-   margin-right: 10px;
+   margin-right: 5px;
+ }
+ .navbar-right{
+    margin-right: 50px;
+ }
+ .user-name{
+    display: inline;
  }
