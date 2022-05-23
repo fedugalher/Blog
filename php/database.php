@@ -11,25 +11,25 @@ class Database{
    public function connect(){
       $this->mysqli = new mysqli("$this->host", "$this->user", "$this->password", "$this->dbName");
       if ($this->mysqli->connect_errno) {
-         array_push($this->message, ['msg'=>"Falló la conexión a la base de datos {$this->dbName}", 'msgType'=>'error']);
+         array_push($this->message, ['db-msg'=>"Falló la conexión a la base de datos {$this->dbName}", 'msgType'=>'error']);
       }
-      array_push($this->message, ['msg'=>"Conexión exitosa a la base de datos {$this->dbName}", 'msgType'=>'succes']);
+      array_push($this->message, ['db-msg'=>"Conexión exitosa a la base de datos {$this->dbName}", 'msgType'=>'succes']);
    }
 
    public function disconnect(){
       $this->mysqli->close();
-      array_push($this->message, ['msg'=>"Se ha desconectado de la base de datos", 'msgType'=>'succes']);
+      array_push($this->message, ['db-msg'=>"Se ha desconectado de la base de datos", 'msgType'=>'succes']);
    }
 
    public function createDB($dbName){
       $this->mysqli = new mysqli("$this->host", "$this->user", "$this->password", "");
       if($this->mysqli->query("CREATE DATABASE IF NOT EXISTS {$dbName} CHARACTER SET utf8 COLLATE utf8_bin ")){
          // echo "Se creo la base de datos {$dbName}";  
-         array_push($this->message, ['msg'=>"Se creó la base de datos {$this->dbName}", 'msgType'=>'succes']);        
+         array_push($this->message, ['db-msg'=>"Se creó la base de datos {$this->dbName}", 'msgType'=>'succes']);        
       }
       else{
          // echo 'Error al crear la base de datos';
-         array_push($this->message, ['msg'=>"Error al crear la base de datos {$this->dbName}", 'msgType'=>'error']);
+         array_push($this->message, ['db-msg'=>"Error al crear la base de datos {$this->dbName}", 'msgType'=>'error']);
       }
    }
 
@@ -37,20 +37,20 @@ class Database{
       $this->mysqli = new mysqli("$this->host", "$this->user", "$this->password", "");
       if($this->mysqli->query("DROP DATABASE IF EXISTS {$dbName}")){
          // echo "Se creo la base de datos {$dbName}";  
-         array_push($this->message, ['msg'=>"Se eliminó la base de datos {$this->dbName}", 'msgType'=>'succes']);        
+         array_push($this->message, ['db-msg'=>"Se eliminó la base de datos {$this->dbName}", 'msgType'=>'succes']);        
       }
       else{
          // echo 'Error al crear la base de datos';
-         array_push($this->message, ['msg'=>"Error al eliminar la base de datos {$this->dbName}", 'msgType'=>'error']);
+         array_push($this->message, ['db-msg'=>"Error al eliminar la base de datos {$this->dbName}", 'msgType'=>'error']);
       }
    }
   
 
    public function executeQuery($query, $succes, $error){
       if($this->mysqli->query($query)){
-         array_push($this->message, ['msg'=>$succes, 'msgType'=>'succes']);
+         array_push($this->message, ['db-msg'=>$succes, 'msgType'=>'succes']);
       }else{
-         array_push($this->message, ['msg'=>$error, 'msgType'=>'error']);
+         array_push($this->message, ['db-msg'=>$error, 'msgType'=>'error']);
       }
    }
 }

@@ -42,14 +42,14 @@
                $_SESSION['email'] = $userData['email'];
                $_SESSION['role'] = $userData['role'] === 'admin' ? 'admin' : 'usuario';
                $_SESSION['image'] = $userData['image'];             
-               array_push($this->message, ['msg'=>"Datos Correctos", 'msgType'=>'succes']);
+               array_push($this->message, ['session-msg'=>"Datos Correctos", 'msgType'=>'succes']);
             }else{
                $userdata = ['username'=>'', 'password'=>'', 'role'=>''];
-               array_push($this->message, ['msg'=>"Cuenta inactiva", 'msgType'=>'error']);
+               array_push($this->message, ['session-msg'=>"Cuenta inactiva", 'msgType'=>'error']);
             }
          }else{            
             $userdata = ['username'=>'', 'password'=>'', 'role'=>''];
-            array_push($this->message, ['msg'=>"Datos Inorrectos", 'msgType'=>'error']);
+            array_push($this->message, ['session-msg'=>"Datos Inorrectos", 'msgType'=>'error']);
          }
          $this->disconnect();
 
@@ -64,9 +64,9 @@
       public function closeSesion(){
          if(session_destroy()){
             session_unset();
-            array_push($this->message, ['msg'=>"Se ha cerrado la sesión", 'msgType'=>'succes']);            
+            array_push($this->message, ['session-msg'=>"Se ha cerrado la sesión", 'msgType'=>'succes']);            
          }else{
-            array_push($this->message, ['msg'=>"Error al cerrar la sesión", 'msgType'=>'error']);
+            array_push($this->message, ['session-msg'=>"Error al cerrar la sesión", 'msgType'=>'error']);
          }             
          return json_encode($this->message);
       }

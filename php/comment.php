@@ -33,11 +33,11 @@ class Comment extends Database{
             PRIMARY KEY (`id`)) ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin"
          )
       ){
-         array_push($this->message, ['msg'=>"Se creó la tabla comments", 'msgType'=>'succes']);
+         array_push($this->message, ['comment-msg'=>"Se creó la tabla comments", 'msgType'=>'succes']);
          $this->alterTable();
       }
       else{
-         array_push($this->message, ['msg'=>"Erorr al crear la tabla articles", 'msgType'=>'error']);
+         array_push($this->message, ['comment-msg'=>"Erorr al crear la tabla articles", 'msgType'=>'error']);
       }   
       $this->disconnect();
    }
@@ -50,10 +50,10 @@ class Comment extends Database{
          $query = "ALTER TABLE `comments` ADD FOREIGN KEY (`$FK[$i]`) REFERENCES `$reference[$i]`(`id`) ON DELETE CASCADE ON UPDATE CASCADE";
          
          if($this->mysqli->query($query)){
-            array_push($this->message, ['msg'=>"Se creo la relación de la tabla comments con $reference[$i]", 'msgType'=>'succes']);
+            array_push($this->message, ['comment-msg'=>"Se creo la relación de la tabla comments con $reference[$i]", 'msgType'=>'succes']);
          }
          else{
-            array_push($this->message, ['msg'=>"Error al crear la relacion de la tabla comments con $reference[$i]", 'msgType'=>'error']);
+            array_push($this->message, ['comment-msg'=>"Error al crear la relacion de la tabla comments con $reference[$i]", 'msgType'=>'error']);
          }   
          
       }

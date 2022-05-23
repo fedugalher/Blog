@@ -23,12 +23,12 @@ let startSesion = async (data) =>{
       body: data
    }); 
    const resultado = await peticion.json();
-   console.log(resultado['messages'][1].msg)
+   console.log(resultado['messages'][1]['session-msg'])
 
-   if(resultado['messages'][1].msg === 'Datos Correctos'){
+   if(resultado['messages'][1]['session-msg'] === 'Datos Correctos'){
       location.href = './admin.php';
    }else{
-      loginMsg.textContent = resultado['messages'][1].msg;
+      loginMsg.textContent = resultado['messages'][1]['session-msg'];
       loginMsg.classList.add('msg-error');
    }
    

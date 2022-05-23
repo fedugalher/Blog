@@ -43,9 +43,9 @@
          
          $this->connect();
          if($this->mysqli->query($query)){
-            array_push($this->message, ['msg'=>"Se creó la tabla users", 'msgType'=>'succes']);
+            array_push($this->message, ['user-msg'=>"Se creó la tabla users", 'msgType'=>'succes']);
          }else{
-            array_push($this->message, ['msg'=>"Error al crear la tabla users", 'msgType'=>'error']);
+            array_push($this->message, ['user-msg'=>"Error al crear la tabla users", 'msgType'=>'error']);
          }
          $this->disconnect();
          echo json_encode($this->message);
@@ -125,33 +125,36 @@
       }
    
 
-      public function create(){
-         $query = "INSERT INTO `users` 
-            (`id`, `email`, `username`, `password`, `role`, `image`, `status`, `token`, `reg_date`, `updated_at`) 
-            VALUES (
-               NULL, 
-               '{$this->email}', 
-               '{$this->username}', 
-               MD5('{$this->passwordUser}'), 
-               '{$this->role}', 
-               '{$this->image}', 
-               '{$this->status}', 
-               '{$this->token}', 
-               '{$this->regDate}', 
-               '{$this->updated_at}'
-            )";
-         
-         $this->connect();
-         $this->executeQuery($query, 'Usuario registrado correctamente', 'Error al registrar usuario');
-         $this->disconnect();
-
-         if($this->message[1]['msgType'] == 'succes'){    
-            require_once('mailer/email.php');        
-            return true;
+      public function create(){         
+         if(!$this->emailExists() && !$this->usernameExists()){
+            $query = "INSERT INTO `users` 
+               (`id`, `email`, `username`, `password`, `role`, `image`, `status`, `token`, `reg_date`, `updated_at`) 
+               VALUES (
+                  NULL, 
+                  '{$this->email}', 
+                  '{$this->username}', 
+                  MD5('{$this->passwordUser}'), 
+                  '{$this->role}', 
+                  '{$this->image}', 
+                  '{$this->status}', 
+                  '{$this->token}', 
+                  '{$this->regDate}', 
+                  '{$this->updated_at}'
+               )";
+            
+            $this->connect();
+            $this->executeQuery($query, 'Usuario registrado correctamente', 'Error al registrar usuario');
+            $this->disconnect();
+   
+            if($this->message[1]['msgType'] == 'succes'){    
+               require_once('mailer/email.php');        
+               return true;
+            }else{
+               return false;
+            }
          }else{
             return false;
          }
-
       }
 
 
@@ -214,7 +217,7 @@
             $this->executeQuery($query, 'Cuenta activada', 'No se puede activar tu cuenta');
             $this->disconnect();
          }else{
-            array_push($this->message, ['msg'=>'No existe la cuenta', 'msgType' => 'error']);
+            array_push($this->message, ['user-msg'=>'No existe la cuenta', 'msgType' => 'error']);
          }
          return json_encode($this->message);
       }
@@ -231,7 +234,7 @@
             }            
             require_once('mailer/passwordRequest.php');             
          }else{
-            array_push($this->message, ['msg'=>'No existe la cuenta', 'msgType' => 'error']);
+            array_push($this->message, ['user-msg'=>'No existe la cuenta', 'msgType' => 'error']);
          }
          
          return json_encode($this->message);
@@ -255,9 +258,37 @@
             $this->executeQuery($query, 'El password ha sido cambiado correctamente', 'Error al cambiar el password');
             $this->disconnect();
          }else{
-            array_push($this->message, ['msg'=>'Lo siento, no hay ninguna cuenta asociada a los datos que ingresaste', 'msgType' => 'error']);
+            array_push($this->message, ['user-msg'=>'Lo siento, no hay ninguna cuenta asociada a los datos que ingresaste', 'msgType' => 'error']);
          }
          return json_encode($this->message);
+      }
+
+      public function usernameExists(){
+         $query = "SELECT username FROM users WHERE username = '{$this->username}'";
+         $this->connect();
+         $select = $this->mysqli->query($query);
+         $this->disconnect();
+         
+         if($select->num_rows){  
+            array_push($this->message, ['user-msg'=>'El usuario que ingresaste ya está en uso', 'msgType' => 'error']);
+            return true;
+         }else{
+            return false;
+         }     
+      }
+
+      public function emailExists(){
+         $query = "SELECT email FROM users WHERE email = '{$this->email}'";
+         $this->connect();
+         $select = $this->mysqli->query($query);
+         $this->disconnect();
+         
+         if($select->num_rows){  
+            array_push($this->message, ['user-msg'=>'El correo que ingresaste ya está en uso', 'msgType' => 'error']);
+            return true;
+         }else{
+            return false;
+         } 
       }
    }
 
@@ -265,5 +296,8 @@
    // $user->set(1,'eduardo','','admin','');
    // $user->update();
    // echo $user->activate('fedugalher', 702983);
+  
+ 
+   
    
 ?>

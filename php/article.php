@@ -56,10 +56,10 @@ class Article extends Database{
             PRIMARY KEY (`id`)) ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin"
          )
       ){
-         array_push($this->message, ['msg'=>"Se creó la tabla articles", 'msgType'=>'succes']);
+         array_push($this->message, ['article-msg'=>"Se creó la tabla articles", 'msgType'=>'succes']);
       }
       else{
-         array_push($this->message, ['msg'=>"Erorr al crear la tabla users", 'msgType'=>'error']);
+         array_push($this->message, ['article-msg'=>"Erorr al crear la tabla users", 'msgType'=>'error']);
       }   
       $this->disconnect();
    }
@@ -68,10 +68,10 @@ class Article extends Database{
       $query = "ALTER TABLE `articles` ADD FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE ON UPDATE CASCADE";
       $this->connect();
       if($this->mysqli->query($query)){
-         array_push($this->message, ['msg'=>"Se creo la relación de la tabla articles con users", 'msgType'=>'succes']);
+         array_push($this->message, ['article-msg'=>"Se creo la relación de la tabla articles con users", 'msgType'=>'succes']);
       }
       else{
-         array_push($this->message, ['msg'=>"Error al crear la relacion de la tabla articles con users", 'msgType'=>'error']);
+         array_push($this->message, ['article-msg'=>"Error al crear la relacion de la tabla articles con users", 'msgType'=>'error']);
       }   
       $this->disconnect();
    }
@@ -241,9 +241,9 @@ class Article extends Database{
 
       if($this->message[1]['msgType'] == 'succes'){
          if (unlink("../images/articles/article-{$id}.jpg")) {
-            array_push($this->message, ['msg'=>'Se eliminó la imagen del articulo', 'msgType'=>'succes']);
+            array_push($this->message, ['article-msg'=>'Se eliminó la imagen del articulo', 'msgType'=>'succes']);
          }else {
-            array_push($this->message, ['msg'=>'No se pudo eliminarla imagen del articulo', 'msgType'=>'error']);
+            array_push($this->message, ['article-msg'=>'No se pudo eliminarla imagen del articulo', 'msgType'=>'error']);
          }
       }
 

@@ -113,6 +113,8 @@ function setNew(){
       $userArray['user-msg'] = 'Usuario Registrado';
       $userArray['mailer'] = $user->message;
       echo json_encode($userArray);
+   }else{
+      echo json_encode($user->message);
    }  
 }
 

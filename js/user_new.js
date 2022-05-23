@@ -1,6 +1,7 @@
 'use_strict';
 
 const btnUser = document.getElementById('btn-user');
+const msgBox = document.querySelector('.msg-box');
 
 
 // Evento Click
@@ -19,8 +20,7 @@ btnUser.addEventListener('click', e =>{
    const passwordConfirm = document.getElementById('password-confirm').value;
    const userRole = currentURL === 'http://localhost/FedugalherBlog/public/users.php' ? document.getElementById('user-role').value : 'usuario';
    const image = document.getElementById('userImg');
-   const method = 'new';
-   const msgBox = document.querySelector('.msg-box');
+   const method = 'new';   
    const messages = [];
 
 
@@ -32,6 +32,9 @@ btnUser.addEventListener('click', e =>{
    }   
    if (password !== passwordConfirm) {
       messages.push('El password no coincide');
+   }
+   if(password.length < 8){
+      messages.push('El password debe ser de al menos 8 caracteres');
    }
    console.log(messages.length)
    if(messages.length === 0){
@@ -58,12 +61,23 @@ let sendUser = async (data) =>{
       body: data
    }); 
    const resultado = await peticion.json();
-   console.log(resultado)
+
+   msgBox.innerHTML = '';
+   
    if(resultado['user-msg'] == 'Usuario Registrado'){
       if(currentURL === 'http://localhost/FedugalherBlog/public/users.php'){
          location.href = 'users.php';
       }else{
          location.href = 'index.php';
+      }
+   }else{      
+      for (const msg in resultado) {
+         if(resultado[msg]['user-msg']){
+            console.log(resultado[msg]['user-msg'])
+            msgBox.innerHTML+=`
+            <p class="msg-error">* ${resultado[msg]['user-msg']}</p>         
+         `;
+         }
       }
    }
 }
