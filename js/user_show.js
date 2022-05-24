@@ -1,12 +1,14 @@
 'use_strict';
 
+const userForm = document.getElementById('userForm');
 const userImg = document.querySelector('.userImgLabel');
 const username = document.getElementById('username');
 const email = document.getElementById('email');
-const password = document.getElementById('password');
+const newPassword = document.getElementById('password-new');
 const passwordConfirm = document.getElementById('password-confirm');
+const password = document.getElementById('password');
 const image = document.getElementById('userImg');
-const method = 'update';
+const msgBox = document.querySelector('.msg-box');
 const saveBtn = document.getElementById('btn-user');
 
 window.addEventListener('load', ()=>{
@@ -26,13 +28,57 @@ let showUser = async () =>{
 
 saveBtn.addEventListener('click', e =>{
    e.preventDefault();
-   const data = new FormData();
-   data.append('email', email);
-   data.append('username', username);
-   data.append('password', password);
-   data.append('image', image.files[0]);
-   data.append('method', method);
+   let errorsCount = 0;
+   msgBox.innerHTML = '';
+   
+   if(newPassword.value !== passwordConfirm.value){
+      msgBox.innerHTML+= `<p class="msg-error">* La contraseña no coincide</p>`;
+      passwordConfirm.classList.add('input-error');      
+      errorsCount++;
+   }
+   
+   if(newPassword.value.length < 8 && !newPassword.value === ''){
+      msgBox.innerHTML+= `<p class="msg-error">* La contraseña debe contener al menos 8 caracteres</p>`;
+      newPassword.classList.add('input-error');
+      errorsCount++;
+   }
+
+   if(errorsCount === 0){
+      const data = new FormData();
+      data.append('email', email.value);
+      data.append('username', username.value);
+      data.append('password-new', newPassword.value);
+      data.append('password', password.value);
+      data.append('image', image.files[0]);
+      data.append('method', 'update');
+      sendUser(data);
+   }
+  
 });
+
+let sendUser = async (data) =>{   
+   const peticion = await fetch('../php/users_controller.php', {
+      method: 'POST',
+      body: data
+   }); 
+   const resultado = await peticion.json();
+   console.log(resultado)
+   msgBox.innerHTML = '';
+   
+   if(resultado.length == 7 && resultado[6]['user-msg'] == 'Usuario actualizado'){
+      if(currentURL === 'http://localhost/FedugalherBlog/public/users.php'){
+         location.href = 'users.php';
+      }else{
+         location.href = 'user_show.php';
+      }
+   }else{      
+      for (const msg in resultado) {
+         if(resultado[msg]['user-msg'] && resultado[msg]['msgType'] === 'error'){
+            msgBox.innerHTML+=`<p class="msg-error">${resultado[msg]['user-msg']}</p>`;
+         }
+      }
+   }
+}
 
 //Previsualizar imagen antes de subirla --Ya funciona
 document.getElementById("userImg").onchange = function(e) {

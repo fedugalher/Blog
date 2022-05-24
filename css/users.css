@@ -143,6 +143,11 @@
    background-color: #ffbfbf;
 }
 
+/* user_show.php */
+.input-error{
+   border: 2px solid #720d0d;
+}
+
 /* Comments */
 p .coment-name .user-img{   
    width: 40px;

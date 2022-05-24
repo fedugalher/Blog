@@ -36,8 +36,9 @@
 							<div class="msg-box"></div>														
 							<input id="username" class="user-input" type="text" placeholder="Nombre de Usuario" name="username">
                      <input id="email" class="user-input" type="email" placeholder="Correo Electrónico" name="email">
-							<input id="password" class="user-input" type="password" placeholder="Contraseña" name="password">
-							<input id="password-confirm" class="user-input" type="password" placeholder="Confirmar Contraseña" name="password-confirm">
+							<input id="password-new" class="user-input" type="password" placeholder="Contraseña nueva" name="password">
+							<input id="password-confirm" class="user-input" type="password" placeholder="Confirmar contraseña" name="password-confirm">
+							<input id="password" class="user-input" type="password" placeholder="Contraseña actual" name="password">
 							<input id="btn-user" class="user-input btn-send" type="submit" value="Guardar">																
 						</form>
 					</div>

@@ -26,7 +26,7 @@ if($userRole === 'admin'){
          echo $user->selectAll();
          break;
       case 'show':
-         echo $user->show($id);
+         echo $user->show($user_id);
          break;
       case 'selectLimit':
          echo $user->selectLimit($limit);
@@ -118,7 +118,7 @@ function setNew(){
    }  
 }
 
-function setUpdate(){
+function setUpdateAdmin(){
    
    $user = new User();
    $userId = isset($_POST['id']) ? $_POST['id'] : 0;
@@ -148,7 +148,7 @@ function setUpdate(){
 
    $user->set($userId, $email, $username, $passwordUser, $role, $image, $status, $token);
    
-   if($user->update()){
+   if($user->updateAdmin()){
       if ($image != '') {
          if (move_uploaded_file($imageTmp, $imgPath.$user->image)) {
             $userArray['img-msg'] = 'Se actualizó la imagen';
@@ -181,6 +181,52 @@ function passwordReset(){
    $token = isset($_POST['token']) ? $_POST['token'] : 0;
    $password = isset($_POST['password']) ? $_POST['password'] : 'No hay password';
    echo $user->passwordReset($email, $token, $password);
+}
+
+function setUpdate(){
+   $user = new User();
+   $user_id = isset($_SESSION['id']) ? $_SESSION['id'] : 0;
+   $email = isset($_POST['email']) ? $_POST['email'] : 'No hay email';
+   $username = isset($_POST['username']) ? $_POST['username'] : '';
+   $passwordUser = isset($_POST['password']) ? $_POST['password'] : '';
+   $passwordNew = isset($_POST['password-new']) ? $_POST['password-new'] : '';
+   $role = isset($_POST['role']) ? $_POST['role'] : '';
+   $status = isset($_POST['status']) ? $_POST['status'] : '';
+   $token = isset($_POST['token']) ? $_POST['token'] : '';
+   $image = isset($_FILES['image']['name']) ? $_FILES['image']['name'] : '';
+   $imageTmp = isset($_FILES['image']['tmp_name']) ? $_FILES['image']['tmp_name'] : '';
+   $imgPath = '../images/users/';
+   
+
+   $userArray = [
+      'id' => $user_id,
+      'email' => $email,
+      'username' => $username,
+      'password' => $passwordUser,  
+      'password-new' => $passwordNew, 
+      'role' => $role,   
+      'status' => $status, 
+      'token' => $token, 
+      'image' => $image,     
+      'imageTmp' => $imageTmp,
+      'imgPath' => $imgPath
+   ];
+
+   $user->passwordNew = $passwordNew;
+   $user->set($user_id, $email, $username, $passwordUser, $role, $image, $status, $token);
+   
+   if($user->update()){
+      if ($image != '') {
+         if (move_uploaded_file($imageTmp, $imgPath.$user->image)) {
+            $userArray['img-msg'] = 'Se actualizó la imagen';
+         }else {
+            $userArray['img-msg'] = 'No se pudo actualizar la imagen';
+         }
+      }    
+      // $userArray['user-msg'] = 'Usuario actualizado';
+      array_push($user->message, ['user-msg'=>'Usuario actualizado', 'msgType'=>'succes']);       
+   }
+   echo json_encode($user->message);
 }
 
 ?>

@@ -6,6 +6,7 @@
       public $email;
       public $username;
       public $passwordUser;
+      public $passwordNew;
       public $role;
       public $image;
       public $status;
@@ -158,7 +159,7 @@
       }
 
 
-      public function update(){         
+      public function updateAdmin(){         
          $query = "UPDATE `users` SET ";
          $userParams = [
             'id' => $this->id,
@@ -192,6 +193,75 @@
          }else{
             return false;
          }         
+      }
+
+      public function update(){
+         $userData = [];
+         $query = "SELECT * FROM `users` WHERE id = {$this->id} AND password = MD5('{$this->passwordUser}')";         
+         $this->connect();
+         $select = $this->mysqli->query($query);       
+         $this->disconnect();
+
+         if($select->num_rows === 1){
+            array_push($this->message, ['user-msg'=>'Contraseña Correcta', 'msgType'=>'succes']); 
+            
+            for ($rows = $select->num_rows - 1; $rows >= 0; $rows--) {
+               $row = $select->fetch_assoc();
+               array_push($userData,[
+                  'id' => $row['id'], 
+                  'email' => $row['email'], 
+                  'username' => $row['username'], 
+                  'password' => $row['password'], 
+                  'role' => $row['role'], 
+                  'image' => $row['image'],
+                  'status' => $row['status'],
+                  'token' => $row['token'],
+                  'reg_date' => $row['reg_date'],
+                  'updated_at' => $row['updated_at']
+               ]);      
+            }
+            
+            if($userData[0]['username'] !== $this->username){
+              if(!$this->usernameExists()){
+               $userParams['username'] = $this->username;
+              } 
+            }
+
+            if($userData[0]['email'] !== $this->email){
+               if(!$this->emailExists()){
+                $userParams['email'] = $this->email;
+               } 
+             }
+            
+            $query = "UPDATE `users` SET ";
+            $userParams = [
+               'password' => $this->passwordNew,
+               'image' => $this->image,
+               'updated_at' => $this->updated_at
+            ];
+            foreach ($userParams as $key => $value) {
+               if($value != ''){
+                  if($key != 'password'){
+                     $query .= "`{$key}` = '{$value}', ";
+                  }else{
+                     $query .= "`{$key}` = MD5('{$value}'), ";
+                  }
+               }
+            }
+            $query = substr($query, 0, -2);
+            $query .= " WHERE id = {$this->id}";
+
+            $this->connect();
+            $this->executeQuery($query, 'Datos de usuario actualizados', 'Error al actualizar tus datos');
+            $this->disconnect();
+            return true;
+                  
+         }else{
+            array_push($this->message, ['user-msg'=>'Contraseña incorrecta', 'msgType'=>'error']);            
+            $this->disconnect();
+            return false;
+         }
+         
       }
 
       public function delete($id){
@@ -290,6 +360,10 @@
             return false;
          } 
       }
+
+
+
+      
    }
 
    // $user = new User();
