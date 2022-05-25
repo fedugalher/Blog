@@ -142,6 +142,10 @@
    color: #720d0d;
    background-color: #ffbfbf;
 }
+.msg-succes{
+   color: #0d723f;
+   background-color: #bfffe2;
+}
 
 /* user_show.php */
 .input-error{

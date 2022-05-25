@@ -197,7 +197,10 @@
 
       public function update(){
          $userData = [];
+         $userParams = [];  
+         $userUpdated = false;       
          $query = "SELECT * FROM `users` WHERE id = {$this->id} AND password = MD5('{$this->passwordUser}')";         
+        
          $this->connect();
          $select = $this->mysqli->query($query);       
          $this->disconnect();
@@ -229,36 +232,74 @@
 
             if($userData[0]['email'] !== $this->email){
                if(!$this->emailExists()){
-                $userParams['email'] = $this->email;
+                  $userParams['email'] = $this->email;
+                  $userParams['status'] = 'inactivo';
                } 
-             }
+            }
+
+            if($userData[0]['password'] !== md5($this->passwordNew)){
+               if($this->passwordNew !== ''){
+                  $userParams['password'] = $this->passwordNew;
+               }
+            }else{
+               array_push($this->message, ['user-msg'=>'Tu nueva contraseña no puede ser igual a la actual', 'msgType'=>'error']); 
+               return false;
+            }
+
+            if($userData[0]['image'] !== $this->image && $this->image !== ''){
+               $userParams['image'] = $this->imagew;
+            }
             
-            $query = "UPDATE `users` SET ";
-            $userParams = [
-               'password' => $this->passwordNew,
-               'image' => $this->image,
-               'updated_at' => $this->updated_at
-            ];
-            foreach ($userParams as $key => $value) {
-               if($value != ''){
-                  if($key != 'password'){
-                     $query .= "`{$key}` = '{$value}', ";
-                  }else{
-                     $query .= "`{$key}` = MD5('{$value}'), ";
+            if(count($userParams) > 0){
+               $newToken = rand(100000, 999999);
+               $this->token = $newToken;
+               $userParams['token'] = $newToken;
+               $userParams['updated_at'] = $this->updated_at;
+            }
+
+            if(count($userParams) > 0){
+               $query = "UPDATE `users` SET ";
+   
+               foreach ($userParams as $key => $value) {
+                  if($value != ''){
+                     if($key != 'password'){
+                        $query .= "`{$key}` = '{$value}', ";
+                     }else{
+                        $query .= "`{$key}` = MD5('{$value}'), ";
+                     }
                   }
                }
-            }
-            $query = substr($query, 0, -2);
-            $query .= " WHERE id = {$this->id}";
+               $query = substr($query, 0, -2);
+               $query .= " WHERE id = {$this->id}";
+   
+               $this->connect();
+               $this->executeQuery($query, 'Datos de usuario actualizados', 'Error al actualizar tus datos');
+               $this->disconnect();
 
-            $this->connect();
-            $this->executeQuery($query, 'Datos de usuario actualizados', 'Error al actualizar tus datos');
-            $this->disconnect();
-            return true;
+               for ($i=0; $i < count($this->message); $i++) { 
+                  foreach ($this->message[$i] as $key => $value) {
+                     if($value === 'Datos de usuario actualizados'){
+                       $userUpdated = true;
+                     }
+                  }
+               }
+
+               if($userUpdated){
+                  if($userParams['email']){
+                     require_once('mailer/email.php'); 
+                  }
+                  return true;
+               }else{
+                  return false;
+               }             
+               
+            }else{
+               array_push($this->message, ['user-msg'=>'No hay datos a actualizar', 'msgType'=>'error']);
+               return false;
+            }
                   
          }else{
             array_push($this->message, ['user-msg'=>'Contraseña incorrecta', 'msgType'=>'error']);            
-            $this->disconnect();
             return false;
          }
          

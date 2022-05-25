@@ -30,7 +30,36 @@ saveBtn.addEventListener('click', e =>{
    e.preventDefault();
    let errorsCount = 0;
    msgBox.innerHTML = '';
+   username.classList.remove('input-error');
+   email.classList.remove('input-error');
+   newPassword.classList.remove('input-error');
+   passwordConfirm.classList.remove('input-error');
+   password.classList.remove('input-error');
    
+   if(username.value === '' || email.value === '' || password.value === ''){
+      let params = {'Nombre de usuario': username.value, 'Correo electrónico':email.value, 'Contraseña actual':password.value};
+      
+      for (const param in params) {
+         if (params[param] === '') {
+            msgBox.innerHTML+= `<p class="msg-error">* El campo <b>${param}</b> está vacio.</p>`;
+            switch (param) {
+               case 'Nombre de usuario':
+                  username.classList.add('input-error');
+                  break;
+               case 'Correo electrónico':
+                  email.classList.add('input-error');
+                  break;
+               case 'Contraseña actual':
+                  password.classList.add('input-error');
+                  break;            
+               default:
+                  break;
+            }
+            errorsCount++;
+         }
+      }     
+   }
+
    if(newPassword.value !== passwordConfirm.value){
       msgBox.innerHTML+= `<p class="msg-error">* La contraseña no coincide</p>`;
       passwordConfirm.classList.add('input-error');      
@@ -65,16 +94,17 @@ let sendUser = async (data) =>{
    console.log(resultado)
    msgBox.innerHTML = '';
    
-   if(resultado.length == 7 && resultado[6]['user-msg'] == 'Usuario actualizado'){
+   if(resultado[resultado.length-1]['user-msg'] == 'Usuario actualizado'){
       if(currentURL === 'http://localhost/FedugalherBlog/public/users.php'){
          location.href = 'users.php';
       }else{
-         location.href = 'user_show.php';
+         msgBox.innerHTML+=`<p class="msg-succes">* Tus datos han sido actualizados</p>`;
+         setTimeout('location.reload()', 3000);         
       }
    }else{      
       for (const msg in resultado) {
          if(resultado[msg]['user-msg'] && resultado[msg]['msgType'] === 'error'){
-            msgBox.innerHTML+=`<p class="msg-error">${resultado[msg]['user-msg']}</p>`;
+            msgBox.innerHTML+=`<p class="msg-error">* ${resultado[msg]['user-msg']}</p>`;
          }
       }
    }
