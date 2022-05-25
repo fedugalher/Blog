@@ -93,13 +93,24 @@ let sendUser = async (data) =>{
    const resultado = await peticion.json();
    console.log(resultado)
    msgBox.innerHTML = '';
-   
+
    if(resultado[resultado.length-1]['user-msg'] == 'Usuario actualizado'){
       if(currentURL === 'http://localhost/FedugalherBlog/public/users.php'){
          location.href = 'users.php';
-      }else{
-         msgBox.innerHTML+=`<p class="msg-succes">* Tus datos han sido actualizados</p>`;
-         setTimeout('location.reload()', 3000);         
+      }else{   
+         msgBox.innerHTML+=`<p class="msg-succes">
+            * Tus datos han sido actualizados, por favor inicia sesión nuevamente para ver los cambios.
+         </p>`;                   
+         for (const message in resultado) {
+           if(resultado[message]['msg'] == 'El mensaje ha sido enviado'){
+            msgBox.innerHTML+= `
+               <p class="msg-succes">
+                  * Se ha enviado un enlace para activar tu nueva cuenta de correo electrónico, 
+                  por favor accede e inicia sesión nuevamente. 
+               </p>`;            
+           }
+         }
+         setTimeout('closeSession()', 10000);    
       }
    }else{      
       for (const msg in resultado) {

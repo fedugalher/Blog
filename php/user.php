@@ -285,7 +285,7 @@
                }
 
                if($userUpdated){
-                  if($userParams['email']){
+                  if(array_key_exists('email', $userParams)){
                      require_once('mailer/email.php'); 
                   }
                   return true;

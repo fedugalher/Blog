@@ -15,15 +15,15 @@ try {
     //Server settings
     // $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
     $mail->isSMTP();                                            //Send using SMTP
-    $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
+    $mail->Host       = 'smtp.office365.com';                     //Set the SMTP server to send through
     $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-    $mail->Username   = 'fedugalher.blog@gmail.com';                     //SMTP username
-    $mail->Password   = 'Agosto.1989';                               //SMTP password
+    $mail->Username   = 'fedugalher_blog@outlook.com';                     //SMTP username
+    $mail->Password   = 'Agosto.1989!';                               //SMTP password
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;            //Enable implicit TLS encryption
     $mail->Port       = 587;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
     //Recipients
-    $mail->setFrom('fedugalher.blog@gmail.com', 'Fedugalher Blog');
+    $mail->setFrom('fedugalher_blog@outlook.com', 'Fedugalher Blog');
     $mail->addAddress("{$email}", "{$username}");     //Add a recipient
     // $mail->addAddress('ellen@example.com');               //Name is optional
     // $mail->addReplyTo('info@example.com', 'Information');
