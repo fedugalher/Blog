@@ -1,14 +1,25 @@
 <?php
 
+
 class Database{
-   public $host = 'localhost';
-   public $user = 'root';
-   public $password = '';
-   public $dbName = 'fedugalher_blog';
+   public $host;
+   public $user;
+   public $password;
+   public $dbName;
    public $mysqli = '';
    public $message = array();
 
-   public function connect(){
+   public function __construct(){
+      require('../vendor/autoload.php');
+      $dotenv = Dotenv\Dotenv::createImmutable('../');
+      $dotenv->load();
+      $this->host     = $_ENV['DB_HOST'];
+      $this->user     = $_ENV['DB_USER'];
+      $this->password = $_ENV['DB_PASSWORD'];
+      $this->dbName   = $_ENV['DB_NAME'];
+   }
+
+   public function connect(){     
       $this->mysqli = new mysqli("$this->host", "$this->user", "$this->password", "$this->dbName");
       if ($this->mysqli->connect_errno) {
          array_push($this->message, ['db-msg'=>"Falló la conexión a la base de datos {$this->dbName}", 'msgType'=>'error']);

@@ -47,7 +47,7 @@ let getArticles = async () =>{
                <div class="article-img" id="article-img-${resultado.data[article].id}"></div>
                <div class="article-text">
                   <h5>${resultado.data[article].title}</h5>
-                  ${resultado.data[article].body.substring(0,99)}                                 
+                  ${resultado.data[article].body.substring(0,199)} ...                                 
                   <span class="article-date">${formatDate(date)}</span>
                </div>
             </div>
