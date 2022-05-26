@@ -42,13 +42,11 @@ let passwordReset = async (data) =>{
    const resultado = await peticion.json();
    console.log(resultado)
 
-   if(resultado[1].msg === 'El password ha sido cambiado correctamente'){
+   if(resultado[1]['db-msg'] === 'El password ha sido cambiado correctamente'){
       loginMsg.textContent = 'Tu password ha sido cambiado, ya puedes iniciar sesión.'
       loginMsg.classList.add('msg-succes');
    }else{
-      loginMsg.textContent = resultado[1].msg;
+      loginMsg.textContent = resultado[1]['db-msg'];
       loginMsg.classList.add('msg-error');
    }
-
-   console.log('aqui llega')
 }

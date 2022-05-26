@@ -2,6 +2,7 @@
 
 const btnUser = document.getElementById('btn-user');
 const msgBox = document.querySelector('.msg-box');
+const userImg = document.querySelector('.userImgLabel');
 
 
 // Evento Click
@@ -36,7 +37,7 @@ btnUser.addEventListener('click', e =>{
    if(password.length < 8){
       messages.push('El password debe ser de al menos 8 caracteres');
    }
-   console.log(messages.length)
+   
    if(messages.length === 0){
       data.append('email', userEmail);
       data.append('username', username);
@@ -64,11 +65,16 @@ let sendUser = async (data) =>{
 
    msgBox.innerHTML = '';
    
-   if(resultado['user-msg'] == 'Usuario Registrado'){
+   if(resultado['user-msg'] == 'Usuario Registrado'){      
       if(currentURL === 'http://localhost/FedugalherBlog/public/users.php'){
          location.href = 'users.php';
       }else{
-         location.href = 'index.php';
+         msgBox.innerHTML += `
+         <p class="msg-succes">
+            * Tu usuario ha sido registrado, por favor revisa tu correo electrónico
+            y sigue las instrucciones para activar tu cuenta. 
+         </p>`;
+         setTimeout("location.href = 'index.php'", 10000);
       }
    }else{      
       for (const msg in resultado) {
@@ -90,3 +96,24 @@ let emailValidate = email => {
        return true
     }       
 }
+
+//Previsualizar imagen antes de subirla --Ya funciona
+document.getElementById("userImg").onchange = function(e) {
+   // Creamos el objeto de la clase FileReader
+   let reader = new FileReader();
+ 
+   // Leemos el archivo subido y se lo pasamos a nuestro fileReader
+   reader.readAsDataURL(e.target.files[0]);
+ 
+   // Le decimos que cuando este listo ejecute el código interno
+   reader.onload = function(){
+      console.log(reader.result)
+      let image = document.createElement('img'); 
+      image.classList.add('imgLabel');
+ 
+     image.src = reader.result;
+ 
+     userImg.innerHTML = '';
+     userImg.append(image);
+   };
+ }

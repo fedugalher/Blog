@@ -41,8 +41,8 @@ let getUsers = async () =>{
             <td>${formatDate(date)}</td>
             <td class="text-center">
                <button id="updateUserBtn-${userId}" class="btn-green unset">Actualizar</button><br>
-               <a id="editUser-${userId}" href="#" class="edit-icon"><i class="fa-solid fa-pen-to-square"></i></a> 
-               <a id="deleteUser-${userId}" href="#" class="delete-icon"><i class="fa-solid fa-trash-can"></i></a>
+               <a id="editUser-${userId}" href="" class="edit-icon"><i class="fa-solid fa-pen-to-square"></i></a> 
+               <a id="deleteUser-${userId}" href="" class="delete-icon"><i class="fa-solid fa-trash-can"></i></a>
             </td>
          </tr>
       `;

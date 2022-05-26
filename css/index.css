@@ -68,9 +68,16 @@ article, aside{
   height: 230px;
   /* text-align: justify; */
 }
+
+.article-text p{
+  margin-bottom: 20px;
+  text-align: justify;
+}
 .article-text h5{
+  margin-bottom: 20px;
   font-size: 18px;
   font-style: italic;
+  font-weight: 700;
 }
 .article-date{
   position:absolute;

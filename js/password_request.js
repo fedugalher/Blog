@@ -41,7 +41,6 @@ let passwordRequest = async (data) =>{
       loginMsg.textContent = 'Los datos que ingresaste son incorrectos, favor de verificarlos.';
       loginMsg.classList.add('msg-error');
    }
-   console.log('aqui llega')
 }
 
 let emailValidate = email => {

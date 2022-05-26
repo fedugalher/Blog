@@ -26,7 +26,7 @@ let getArticle = async () =>{
 
    articleImage.setAttribute('src', `../images/articles/${resultado.image}`);
    articleTitle.textContent = resultado.title;
-   articleText.textContent = resultado.body;
+   articleText.innerHTML = resultado.body;
    articleDate.textContent = `Publicado el ${formatDate(date)}`;
 }
 
@@ -43,9 +43,11 @@ let getArticles = async () =>{
          <div class="row aside-row article-card" id="article-${resultado.data[article].id}">            
             <div class="col-lg-12 col-md-3 aside-img-box" id="article-img-${resultado.data[article].id}"></div>           
             <div class="col-lg-12 col-md-9 aside-text-box">
-               <p>${resultado.data[article].body.substring(0,99)}... <a href="article.php?id=${resultado.data[article].id}">Ver más</a></p>
-               
-               <span class="article-date">Publicado el ${formatDate(date)}</span>
+               <div class="article-text">
+                  <h5>${resultado.data[article].title}</h5>
+                  ${resultado.data[article].body.substring(0,99)}                  
+                  <span class="article-date">Publicado el ${formatDate(date)}</span>
+               </div>
             </div>             
          </div>
       `;

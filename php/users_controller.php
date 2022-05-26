@@ -38,7 +38,7 @@ if($userRole === 'admin'){
          echo $user->show($user_id);
          break;
       case 'update':
-         setUpdate();
+         setUpdateAdmin();
          break;
       case 'delete':
          echo $user->delete($id);

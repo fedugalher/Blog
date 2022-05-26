@@ -91,7 +91,7 @@ let sendUser = async (data) =>{
       body: data
    }); 
    const resultado = await peticion.json();
-   console.log(resultado)
+   
    msgBox.innerHTML = '';
 
    if(resultado[resultado.length-1]['user-msg'] == 'Usuario actualizado'){

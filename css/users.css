@@ -104,7 +104,7 @@
    display: block;
    text-align: center;
    background-image: url('../images/camera.png');
-   background-size: contain;
+   background-size: cover;
    background-repeat: no-repeat;
    background-position: center;
    margin:20px auto;

@@ -12,9 +12,6 @@
       
       <p>Felipe Eduardo Galindo Hernández</p>
       <p>fedugalher@gmail.com</p>
-
-      <span class="login">
-         <a href="./login.php">Login</a>
-      </span>
+      
    </footer>
 </div>

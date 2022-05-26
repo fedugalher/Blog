@@ -31,7 +31,7 @@
                   <div class="article-img text-center">
                     <img src="../images/articles/no-image.png" alt="" id="article-img">
                   </div>                  
-                  <p class="article-text"></p>
+                  <div class="article-text"></div>
                   <span class="article-date" id="article-date">dd/mm/aaaa</span>
                 </div>
               </div>   

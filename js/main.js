@@ -10,7 +10,6 @@ const currentURL = window.location.href;
 document.addEventListener('click', e =>{
 
    let element = e.target;
-   
    //Para acceder a los Articulos
    if(element.parentElement !== null){
       //Articles

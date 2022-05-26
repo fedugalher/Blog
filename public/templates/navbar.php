@@ -4,11 +4,13 @@
       $username = $_SESSION['username'];
       $email    = $_SESSION['email'];
       $image    = $_SESSION['image'];
+      $role     = $_SESSION['role'];
    }else{
       $userId   = '';
       $username = '';
       $email    = '';
       $image    = '';
+      $role    = '';
    }
 ?>
 <header>
@@ -42,11 +44,18 @@
                      <?php echo $username ?>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuLink">
-                     <li>                        
-                        <a class="dropdown-item" href="../php/users_controller.php?method=show" id="userProfile">
-                           <i class="fa-solid fa-user login-icons"></i> 
-                           Mi perfil
-                        </a>
+                     <li> 
+                        <?php if($role == 'admin'){ ?>       
+                           <a class="dropdown-item" href="../public/admin.php" id="adminMenu">
+                           <i class="fa-solid fa-user-gear login-icons"></i>
+                              Admin
+                           </a>
+                        <?php }else{ ?>  
+                           <a class="dropdown-item" href="../php/users_controller.php?method=show" id="userProfile">
+                              <i class="fa-solid fa-user login-icons"></i> 
+                              Mi perfil
+                           </a>
+                        <?php } ?> 
                      </li>
                      <li>
                         <a class="dropdown-item" href="../php/sesions_controller.php?method=sesionClose" id='sesionClose'>
