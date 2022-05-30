@@ -7,7 +7,6 @@ const id = urlParams.get('id');
 
 const articleImg = document.querySelector('.article-img');
 const articleImage = document.createElement('img');
-const imgFile = document.getElementById('img-file');
 const title = document.getElementById('title');
 const body = document.getElementById('body');
 const category = document.getElementById('category');
@@ -45,7 +44,8 @@ const getArticle = async () =>{
    const peticion = await fetch(`../php/articles_controller.php?method=edit&id=${id}`); 
    const resultado = await peticion.json(); 
    
-   articleImage.src = `../images/articles/${resultado.image}`; 
+   articleImage.src = `../images/articles/${resultado.image}`;
+   articleImage.id = 'article-image'; 
    articleImg.innerHTML = '';
    articleImg.append(articleImage);
    title.value = resultado.title;
@@ -65,4 +65,24 @@ const sendArticle = async (data) =>{
       location.href = 'index.php';
    }
 }
+
+//Previsualizar imagen antes de subirla --Ya funciona
+document.getElementById("img-file").onchange = function(e) {
+   // Creamos el objeto de la clase FileReader
+   let reader = new FileReader();
+ 
+   // Leemos el archivo subido y se lo pasamos a nuestro fileReader
+   reader.readAsDataURL(e.target.files[0]);
+ 
+   // Le decimos que cuando este listo ejecute el código interno
+   reader.onload = function(){
+     let preview = document.querySelector('.article-img')
+            
+   //   const articleImage = document.getElementById('article-image');
+     articleImage.src = reader.result;
+ 
+     preview.innerHTML = '';
+     preview.append(articleImage);
+   };
+ }
 

@@ -10,7 +10,8 @@ class Article extends Database{
    public $image;
    public $video;
    public $status;
-   public $date;  
+   public $created_at;
+   public $updated_at;  
    public $user_id;
    public $isSucces;
    public $arrayPrueba = [1,2,3,4,5,6];
@@ -32,7 +33,8 @@ class Article extends Database{
       $this->video = $video; 
       $this->status = $status;
       date_default_timezone_set('America/Chihuahua');
-      $this->date = date('Y-m-d H:i:s');
+      $this->created_at = date('Y-m-d H:i:s');
+      $this->updated_at = date('Y-m-d H:i:s');
       $this->user_id = $user_id;
 
       // echo json_encode($this->arrayPrueba);
@@ -51,7 +53,8 @@ class Article extends Database{
             `image` VARCHAR(100) ,
             `video` VARCHAR(100) ,
             `status` VARCHAR(20) DEFAULT 'unpublished',
-            `date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP , 
+            `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ,
+            `updated_at` DATETIME NOT NULL, 
             `user_id` INT(11) NOT NULL ,
             PRIMARY KEY (`id`)) ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin"
          )
@@ -92,7 +95,7 @@ class Article extends Database{
    public function selectAll(){
       $data;
       $articleData = array();      
-      $query = "SELECT * FROM `articles` WHERE status = 'published' ORDER BY category, date DESC";
+      $query = "SELECT * FROM `articles` WHERE status = 'published' ORDER BY category, created_at DESC";
       
       $this->connect();
       $select = $this->mysqli->query($query);      
@@ -108,7 +111,8 @@ class Article extends Database{
             'image' => $row['image'],
             'video' => $row['video'],
             'status' => $row['status'],
-            'date' => $row['date']
+            'created_at' => $row['created_at'],
+            'updated_at' => $row['updated_at']
          ]);
 
       }
@@ -141,7 +145,8 @@ class Article extends Database{
             'image' => $row['image'],
             'video' => $row['video'],
             'status' => $row['status'],
-            'date' => $row['date']
+            'created_at' => $row['created_at'],
+            'updated_at' => $row['updated_at']
          ]);
 
       }
@@ -174,7 +179,8 @@ class Article extends Database{
             'image' => $row['image'],
             'video' => $row['video'],
             'status' => $row['status'],
-            'date' => $row['date']
+            'created_at' => $row['created_at'],
+            'updated_at' => $row['updated_at']
          ]);
 
       }
@@ -203,7 +209,8 @@ class Article extends Database{
             'image' => $row['image'],
             'video' => $row['video'],
             'status' => $row['status'],
-            'date' => $row['date'],
+            'created_at' => $row['created_at'],
+            'updated_at' => $row['updated_at'],
             'comments' => []
          ];
       }    
@@ -214,11 +221,15 @@ class Article extends Database{
 
    public function create(){
       $nextId = $this->nextId()['next_id'];
-      $this->image = $this->image != '' ? "article-$nextId.jpg" : "no-image.png";
+      $articleName = str_replace(" ","_",$this->created_at);
+      $articleName = str_replace(":","",$articleName);
+      $articleName = $articleName."_".$nextId.".jpg";
+      // $newName = substr($this->created_at, 0, 10)."_".$nextId.".jpg";
+      $this->image = $this->image != '' ? $articleName : "no-image.png";
       $this->video = $this->video != '' ? "{$this->video}" : null;
 
-      $query = "INSERT INTO `articles` (`id`, `title`, `body`, `category`, `image`, `video`, `status`, `date`, `user_id`) 
-         VALUES (NULL, '{$this->title}', '{$this->body}', '{$this->category}', '{$this->image}',  '{$this->video}', '{$this->status}', '{$this->date}', '{$this->user_id}')";
+      $query = "INSERT INTO `articles` (`id`, `title`, `body`, `category`, `image`, `video`, `status`, `created_at`, `updated_at`, `user_id`) 
+         VALUES (NULL, '{$this->title}', '{$this->body}', '{$this->category}', '{$this->image}',  '{$this->video}', '{$this->status}', '{$this->created_at}', '{$this->updated_at}', '{$this->user_id}')";
       $this->connect();
       $this->executeQuery($query, 'Articulo agregado correctamente', 'Error al agregar el articulo');
       $this->disconnect();
@@ -254,7 +265,11 @@ class Article extends Database{
 
    public function update(){
      if($this->image != '' || $this->video != ''){
-         $this->image = $this->image != '' ? "article-{$this->id}.jpg" : "no-image.png";
+         $articleName = str_replace(" ","_",$this->created_at);
+         $articleName = str_replace(":","",$articleName);
+         $articleName = $articleName."_".$this->id.".jpg";
+         // $newName = substr($this->updated_at, 0, 10)."_".$this->id.".jpg";
+         $this->image = $this->image != '' ? $articleName : "no-image.png";
          $this->video = $this->video != '' ? "{$this->video}" : null;
          $query = "UPDATE `articles` SET 
          `title` = '{$this->title}', 
@@ -263,7 +278,7 @@ class Article extends Database{
          `image` = '{$this->image}', 
          `video` = '{$this->video}',
          `status` = '{$this->status}', 
-         `date` = '{$this->date}',
+         `updated_at` = '{$this->updated_at}',         
          `user_id` = '{$this->user_id}'
          WHERE `articles`.`id` = {$this->id}";
      }else{
@@ -272,7 +287,7 @@ class Article extends Database{
          `body` = '{$this->body}', 
          `category` = '{$this->category}',      
          `status` = '{$this->status}', 
-         `date` = '{$this->date}',
+         `updated_at` = '{$this->updated_at}',
          `user_id` = '{$this->user_id}'
          WHERE `articles`.`id` = {$this->id}";
      }     
@@ -323,7 +338,8 @@ class Article extends Database{
             'image' => $row['image'],
             'video' => $row['video'],
             'status' => $row['status'],
-            'date' => $row['date'],
+            'created_at' => $row['created_at'],
+            'updated_at' => $row['updated_at'],
             'user_id' => $row['user_id'],
          ]);
       }
@@ -333,10 +349,45 @@ class Article extends Database{
       ];
       return json_encode($data);
    }
+
+   public function searchImg(){
+      // $directory = '../images/articles';
+      // $files = scandir($directory);
+      // $datesArray = [];
+
+      // foreach ($files as $key => $value) {
+      //    if(strpos($value, "_7")){
+      //       $date = substr($value, 0, 10);
+      //       $time = substr($value, 11, 6);
+      //       $temp = strtotime($date." ".$time);
+      //       array_push($datesArray, date('Y-m-d H:i:s', $temp));
+      //    }         
+      // }
+
+      // $currentImg = max($datesArray);      
+      // $currentImg = str_replace(" ","_",$currentImg);
+      // $currentImg = str_replace(":","",$currentImg);
+      // $currentImg = $currentImg."_"."7".".jpg";
+      // echo $currentImg;
+
+      if(!file_exists('../images/articles/7')){
+         mkdir('../images/articles/7',0777);
+      }
+      // if(mkdir('../images/articles/7',0777) == 1){
+      //    echo 'creado';
+      // }else{
+      //    echo 'no se puede crear';
+      // }
+
+      
+
+
+   }
 }
 
 // Pruebas
-// $article = new Article();
+$article = new Article();
+$article->searchImg();
 // $article->createTable();
 // $article->alterTable();
 // $article->set(null, '$title', '$body', '$category', '$image', '$video');

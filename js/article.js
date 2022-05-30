@@ -23,7 +23,7 @@ let getArticle = async () =>{
    const peticion = await fetch(`../php/articles_controller.php?method=show&id=${id}`); 
    const resultado = await peticion.json();
    const date = new Date(resultado.date); //para poder formatear la hora con la funcion formatDate()
-
+   console.log(resultado)
    articleImage.setAttribute('src', `../images/articles/${resultado.image}`);
    articleTitle.textContent = resultado.title;
    articleText.innerHTML = resultado.body;
