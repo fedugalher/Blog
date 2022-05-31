@@ -17,10 +17,10 @@ const deleteArticle = async (id) => {
    const peticion = await fetch(`../php/articles_controller.php?method=delete&id=${id}`); 
    const resultado = await peticion.json();
    console.log(resultado[1].msg);
-   if(resultado[1].msg == 'Articulo eliminado'){
+   if(resultado[1]['db-msg'] == 'Articulo eliminado'){
          location.reload();
    }else{
-      console.log('No s epudo eliminar el articulo')
+      console.log('No se pudo eliminar el articulo')
    }
 
 }

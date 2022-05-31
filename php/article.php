@@ -260,10 +260,21 @@ class Article extends Database{
       $this->disconnect();
 
       if($this->message[1]['msgType'] == 'succes'){
-         if (unlink("../images/articles/article-{$id}.jpg")) {
-            array_push($this->message, ['article-msg'=>'Se eliminó la imagen del articulo', 'msgType'=>'succes']);
+         $directory = "../images/articles/$id/";
+         $files = scandir($directory);
+         foreach ($files as $key => $value) {
+            if(!is_dir($value)){              
+               if(unlink($directory.$value)){
+                  array_push($this->message, ['article-msg'=>"Se eliminó la imagen: $value", 'msgType'=>'succes']);
+               }else{
+                  array_push($this->message, ['article-msg'=>"Error al eliminar la imagen: $value", 'msgType'=>'error']);
+               }                           
+            }                
+         }
+         if (rmdir($directory)) {            
+            array_push($this->message, ['article-msg'=>'Se eliminó el directorio del artículo', 'msgType'=>'succes']);
          }else {
-            array_push($this->message, ['article-msg'=>'No se pudo eliminarla imagen del articulo', 'msgType'=>'error']);
+            array_push($this->message, ['article-msg'=>'No se pudo eliminar el directorio del articulo', 'msgType'=>'error']);
          }
       }
 
