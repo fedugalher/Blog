@@ -52,11 +52,10 @@ if($userRole === 'admin'){
          break;
       case 'delete':
          echo $article->delete($id);
+         break;      
+      default:
+         header("location: http://localhost/FedugalherBlog/public/index.php");
          break;
-      
-      // default:
-      //    echo $article->selectAll();
-      //    break;
    }
 }else{
    switch ($method) {     
@@ -73,7 +72,7 @@ if($userRole === 'admin'){
          echo $article->selectLimit($limit);
          break;      
       default:
-         echo $article->selectAll();
+         header("location: http://localhost/FedugalherBlog/public/index.php");
          break;
    }
 }
