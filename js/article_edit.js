@@ -44,7 +44,7 @@ const getArticle = async () =>{
    const peticion = await fetch(`../php/articles_controller.php?method=edit&id=${id}`); 
    const resultado = await peticion.json(); 
    
-   articleImage.src = `../images/articles/${resultado.image}`;
+   articleImage.src = `../images/articles/${id}/${resultado.image}`;
    articleImage.id = 'article-image'; 
    articleImg.innerHTML = '';
    articleImg.append(articleImage);
@@ -61,8 +61,8 @@ const sendArticle = async (data) =>{
       body: data
    }); 
    const resultado = await peticion.json();
-   if(resultado['article-msg'] == 'Articulo guardado'){
-      location.href = 'index.php';
+   if(resultado[resultado.length - 1]['article-msg'] == 'Artículo actualizado'){
+      location.href = 'admin.php';
    }
 }
 

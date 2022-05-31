@@ -22,9 +22,9 @@ window.addEventListener('load', ()=>{
 let getArticle = async () =>{   
    const peticion = await fetch(`../php/articles_controller.php?method=show&id=${id}`); 
    const resultado = await peticion.json();
-   const date = new Date(resultado.date); //para poder formatear la hora con la funcion formatDate()
+   const date = new Date(resultado['created_at']); //para poder formatear la hora con la funcion formatDate()
    console.log(resultado)
-   articleImage.setAttribute('src', `../images/articles/${resultado.image}`);
+   articleImage.setAttribute('src', `../images/articles/${resultado.id}/${resultado.image}`);
    articleTitle.textContent = resultado.title;
    articleText.innerHTML = resultado.body;
    articleDate.textContent = `Publicado el ${formatDate(date)}`;
@@ -37,7 +37,7 @@ let getArticles = async () =>{
 
    for (const article in resultado.data) {
 
-      const date = new Date(resultado.data[article].date); //para poder formatear la hora con la funcion formatDate()
+      const date = new Date(resultado.data[article]['created_at']); //para poder formatear la hora con la funcion formatDate()
           
       asideContainer.innerHTML += `
          <div class="row aside-row article-card" id="article-${resultado.data[article].id}">            
@@ -53,7 +53,7 @@ let getArticles = async () =>{
       `;
       //Agregar imagen personalizada a cada articulo
       const articleImage = document.getElementById(`article-img-${resultado.data[article].id}`);
-      articleImage.style.backgroundImage = `url('../images/articles/${resultado.data[article].image}')`;
+      articleImage.style.backgroundImage = `url('../images/articles/${resultado.data[article].id}/${resultado.data[article].image}')`;
    }   
 }
 

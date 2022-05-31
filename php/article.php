@@ -8,6 +8,7 @@ class Article extends Database{
    public $body;
    public $category;
    public $image;
+   public $imageTmp;
    public $video;
    public $status;
    public $created_at;
@@ -24,12 +25,13 @@ class Article extends Database{
    //    $this->date = date('Y-m-d H:i:s');
    // }
 
-   public function set($id, $title, $body, $category, $image, $video, $status, $user_id){   
+   public function set($id, $title, $body, $category, $image, $imageTmp, $video, $status, $user_id){   
       $this->id = $id != null ? $id : null;   
       $this->title = $title;
       $this->body = $body;
       $this->category = $category;    
       $this->image = $image;
+      $this->imageTmp = $imageTmp;
       $this->video = $video; 
       $this->status = $status;
       date_default_timezone_set('America/Chihuahua');
@@ -129,7 +131,7 @@ class Article extends Database{
    public function selectCategory($category){
       $data;
       $articleData = array();      
-      $query = "SELECT * FROM `articles` WHERE status = 'published' AND category = '$category' ORDER BY date DESC";
+      $query = "SELECT * FROM `articles` WHERE status = 'published' AND category = '$category' ORDER BY created_at DESC";
       
       $this->connect();
       $select = $this->mysqli->query($query);      
@@ -224,7 +226,7 @@ class Article extends Database{
       $articleName = str_replace(" ","_",$this->created_at);
       $articleName = str_replace(":","",$articleName);
       $articleName = $articleName."_".$nextId.".jpg";
-      // $newName = substr($this->created_at, 0, 10)."_".$nextId.".jpg";
+
       $this->image = $this->image != '' ? $articleName : "no-image.png";
       $this->video = $this->video != '' ? "{$this->video}" : null;
 
@@ -234,11 +236,18 @@ class Article extends Database{
       $this->executeQuery($query, 'Articulo agregado correctamente', 'Error al agregar el articulo');
       $this->disconnect();
 
-      // echo json_encode($this->arrayPrueba);
       if($this->message[3]['msgType'] == 'succes'){
-         return true;
+         if(!file_exists("../images/articles/$nextId")){
+            mkdir("../images/articles/$nextId",0777);
+         }
+         if (move_uploaded_file($this->imageTmp, "../images/articles/$nextId/".$this->image)) {
+            array_push($this->message, ['article-msg'=>"Se guardó la imagen", 'msgType'=>'succes']);
+         }else {
+            array_push($this->message, ['article-msg'=>"Error al guardar imagen", 'msgType'=>'error']);
+         } 
+         array_push($this->message, ['article-msg'=>"Artículo guardado", 'msgType'=>'succes']);       
       }else{
-         return false;
+         array_push($this->message, ['article-msg'=>"Error al guardar artículo", 'msgType'=>'error']);
       }    
    }
 
@@ -268,7 +277,6 @@ class Article extends Database{
          $articleName = str_replace(" ","_",$this->created_at);
          $articleName = str_replace(":","",$articleName);
          $articleName = $articleName."_".$this->id.".jpg";
-         // $newName = substr($this->updated_at, 0, 10)."_".$this->id.".jpg";
          $this->image = $this->image != '' ? $articleName : "no-image.png";
          $this->video = $this->video != '' ? "{$this->video}" : null;
          $query = "UPDATE `articles` SET 
@@ -296,9 +304,17 @@ class Article extends Database{
        $this->disconnect();
          
       if($this->message[2]['msgType'] == 'succes'){
-         return true;
+         if ($this->image != '') {
+            if (move_uploaded_file($this->imageTmp, "../images/articles/{$this->id}/{$this->image}")) {
+               array_push($this->message, ['article-msg'=>"Se guardó la imagen", 'msgType'=>'succes']);
+               $this->deletePastImages($this->id, $this->image);
+            }else {
+               array_push($this->message, ['article-msg'=>"Error al guardar imagen", 'msgType'=>'error']);
+            } 
+         } 
+         array_push($this->message, ['article-msg'=>"Artículo actualizado", 'msgType'=>'succes']); 
       }else{
-         return false;
+         array_push($this->message, ['article-msg'=>"Error al actualizar artículo", 'msgType'=>'error']);
       } 
    }
 
@@ -350,44 +366,27 @@ class Article extends Database{
       return json_encode($data);
    }
 
-   public function searchImg(){
-      // $directory = '../images/articles';
-      // $files = scandir($directory);
-      // $datesArray = [];
-
-      // foreach ($files as $key => $value) {
-      //    if(strpos($value, "_7")){
-      //       $date = substr($value, 0, 10);
-      //       $time = substr($value, 11, 6);
-      //       $temp = strtotime($date." ".$time);
-      //       array_push($datesArray, date('Y-m-d H:i:s', $temp));
-      //    }         
-      // }
-
-      // $currentImg = max($datesArray);      
-      // $currentImg = str_replace(" ","_",$currentImg);
-      // $currentImg = str_replace(":","",$currentImg);
-      // $currentImg = $currentImg."_"."7".".jpg";
-      // echo $currentImg;
-
-      if(!file_exists('../images/articles/7')){
-         mkdir('../images/articles/7',0777);
+   public function deletePastImages($id, $currentImage){
+      $directory = "../images/articles/$id/";
+      $files = scandir($directory);
+      foreach ($files as $key => $value) {
+         if(!is_dir($value)){
+            if($value !== $currentImage){
+               if(unlink($directory.$value)){
+                  array_push($this->message, ['article-msg'=>"Se eliminó la imagen: $value", 'msgType'=>'succes']);
+               }else{
+                  array_push($this->message, ['article-msg'=>"Error al eliminar la imagen: $value", 'msgType'=>'error']);
+               }
+            }            
+         }                
       }
-      // if(mkdir('../images/articles/7',0777) == 1){
-      //    echo 'creado';
-      // }else{
-      //    echo 'no se puede crear';
-      // }
-
-      
-
-
    }
+
 }
 
 // Pruebas
-$article = new Article();
-$article->searchImg();
+// $article = new Article();
+// $article->searchImg();
 // $article->createTable();
 // $article->alterTable();
 // $article->set(null, '$title', '$body', '$category', '$image', '$video');

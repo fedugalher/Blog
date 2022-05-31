@@ -19,7 +19,7 @@ let getArticles = async () =>{
    
    for (const article in resultado.data) {
 
-      const date = new Date(resultado.data[article].date); //para poder formatear la hora con la funcion formatDate()
+      const date = new Date(resultado.data[article]['created_at']); //para poder formatear la hora con la funcion formatDate()
       currentCategory = resultado.data[article].category;
       
       if(pastCategory != currentCategory){
@@ -46,7 +46,7 @@ let getArticles = async () =>{
       `;
       //Agregar imagen personalizada a cada articulo
       const articleImage = document.getElementById(`article-img-${resultado.data[article].id}`);
-      articleImage.style.backgroundImage = `url('../images/articles/${resultado.data[article].image}')`;
+      articleImage.style.backgroundImage = `url('../images/articles/${resultado.data[article].id}/${resultado.data[article].image}')`;
    }
    
 }

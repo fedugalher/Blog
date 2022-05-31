@@ -38,7 +38,7 @@ let sendArticle = async (data) =>{
    }); 
    const resultado = await peticion.json();
    console.log(resultado)
-   if(resultado['article-msg'] == 'Articulo guardado'){
+   if(resultado[6]['article-msg'] == 'Artículo guardado'){
       location.href = 'index.php';
    }
 }

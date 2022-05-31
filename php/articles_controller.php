@@ -104,16 +104,10 @@ function setNew(){
       'user_id' => $user_id,
    ];
 
-   $article->set(null, $title, $body, $category, $image, $video, $status, $user_id);
-   
-   if($article->create()){
-      if (move_uploaded_file($imageTmp, $imgPath.$article->image)) {
-         $articleArray['article-msg'] = 'Articulo guardado';
-      }else {
-         $articleArray['article-msg'] = 'Error al guardar aticulo';
-      }
-      echo json_encode($articleArray);
-   }  
+   $article->set(null, $title, $body, $category, $image, $imageTmp, $video, $status, $user_id);
+   $article->create();      
+   echo json_encode($article->message);
+    
 }
 
 function setUpdate(){
@@ -143,19 +137,10 @@ function setUpdate(){
       'user_id' => $user_id,
    ];
 
-   $article->set($id, $title, $body, $category, $image, $video, $status, $user_id);
-   
-   if($article->update()){
-      if ($image != '') {
-         if (move_uploaded_file($imageTmp, $imgPath.$article->image)) {
-            $articleArray['img-msg'] = 'Se actualizó la imagen';
-         }else {
-            $articleArray['img-msg'] = 'No se pudo actualizar la imagen';
-         }
-      }    
-      $articleArray['article-msg'] = 'Articulo guardado'; 
-      echo json_encode($articleArray);
-   }  
+   $article->set($id, $title, $body, $category, $image, $imageTmp, $video, $status, $user_id);
+   $article->update();
+   echo json_encode($article->message);
+     
 }
 
 

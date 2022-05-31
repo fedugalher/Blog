@@ -53,10 +53,11 @@ article p{
 }
 .article-text{
   padding-top: 20px;
+  text-align: justify;
 }
 .article-text p{
   margin-bottom: 20px;
-  text-align: justify;
+  /* text-align: justify; */
 }
 .article-text h5{
   margin-bottom: 20px;
@@ -94,8 +95,8 @@ article, aside{
   width: 150px;
   height: 150px;
 }
-.aside-text-box{
-  text-align:justify;
+.aside-text-box .article-text{
+  text-align:left;
 }
 aside h4{
   font-size: 30px;
@@ -104,7 +105,7 @@ aside h4{
 }
 
 aside p{
-  /* padding: 10px; */
+  padding: 10px;
 }
 @media screen and (max-width:991px) and (min-width:768px){
   .aside-text-box{

@@ -3,7 +3,8 @@
 let articleRow = document.querySelector('.article-row');
 
 window.addEventListener('load', e =>{
-   if(currentURL == 'http://localhost/FedugalherBlog/public/index.php'){
+   if(currentURL == 'http://localhost/FedugalherBlog/public/index.php' || 
+      currentURL == 'http://localhost/FedugalherBlog/public/'){
       getArticles();
    }else{
       //Obtener parametros de la URL para filtrar articulos segun la categoria seleccionada
@@ -33,7 +34,7 @@ let getArticles = async () =>{
    articleRow.innerHTML = '';
    for (const article in resultado.data) {
 
-      const date = new Date(resultado.data[article].date); //para poder formatear la hora con la funcion formatDate()
+      const date = new Date(resultado.data[article]['created_at']); //para poder formatear la hora con la funcion formatDate()
       currentCategory = resultado.data[article].category;
       
       if(pastCategory != currentCategory){
@@ -55,7 +56,7 @@ let getArticles = async () =>{
       `;
       //Agregar imagen personalizada a cada articulo
       const articleImage = document.getElementById(`article-img-${resultado.data[article].id}`);
-      articleImage.style.backgroundImage = `url('../images/articles/${resultado.data[article].image}')`;
+      articleImage.style.backgroundImage = `url('../images/articles/${resultado.data[article].id}/${resultado.data[article].image}')`;
    }
    
 }
@@ -69,8 +70,8 @@ let getArticlesByCategory = async category =>{
    
    articleRow.innerHTML = '';
    for (const article in resultado.data) {
-
-      const date = new Date(resultado.data[article].date); //para poder formatear la hora con la funcion formatDate()
+      
+      const date = new Date(resultado.data[article]['created_at']); //para poder formatear la hora con la funcion formatDate()
       currentCategory = resultado.data[article].category;
       
       if(pastCategory != currentCategory){
@@ -84,7 +85,7 @@ let getArticlesByCategory = async category =>{
                <div class="article-img" id="article-img-${resultado.data[article].id}"></div>
                <div class="article-text">
                   <h5>${resultado.data[article].title}</h5>
-                  ${resultado.data[article].body.substring(0,99)}                                 
+                  ${resultado.data[article].body.substring(0,199)} ...                                 
                   <span class="article-date">${formatDate(date)}</span>
                </div>
             </div>
@@ -92,7 +93,7 @@ let getArticlesByCategory = async category =>{
       `;
       //Agregar imagen personalizada a cada articulo
       const articleImage = document.getElementById(`article-img-${resultado.data[article].id}`);
-      articleImage.style.backgroundImage = `url('../images/articles/${resultado.data[article].image}')`;
+      articleImage.style.backgroundImage = `url('../images/articles/${resultado.data[article].id}/${resultado.data[article].image}')`;
    }
    
 }
