@@ -351,7 +351,7 @@ class Article extends Database{
    public function selectLimit($limit){
       $data = array();
       $articleData = array();
-      $query = "SELECT * FROM `articles` WHERE status = 'published' LIMIT $limit";
+      $query = "SELECT * FROM `articles` WHERE status = 'published' ORDER BY created_at DESC LIMIT $limit";
       $this->connect();
       $select = $this->mysqli->query($query);      
       $this->disconnect();
