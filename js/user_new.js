@@ -3,6 +3,7 @@
 const btnUser = document.getElementById('btn-user');
 const msgBox = document.querySelector('.msg-box');
 const userImg = document.querySelector('.userImgLabel');
+const loader = document.querySelector('.loader');
 
 
 // Evento Click
@@ -46,9 +47,16 @@ btnUser.addEventListener('click', e =>{
       data.append('role', userRole);
       data.append('image', image.files[0]);
       data.append('method', method);
+
+      btnUser.setAttribute('disabled', true);
+      msgBox.innerHTML = '';
+      loader.innerHTML = `
+         <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+         </div>	
+      `;
       sendUser(data); //llama a la funcion send article y le pasa los datos del formulario     
-   }else{
-      
+   }else{      
       for (const msg in messages) {
          msgBox.innerHTML += `<p class="msg-error">* ${messages[msg]}</p>`;
       }
@@ -61,9 +69,7 @@ let sendUser = async (data) =>{
       method: 'POST',
       body: data
    }); 
-   const resultado = await peticion.json();
-
-   msgBox.innerHTML = '';
+   const resultado = await peticion.json();   
    
    if(resultado['user-msg'] == 'Usuario Registrado'){      
       if(currentURL === 'http://localhost/FedugalherBlog/public/users.php'){
@@ -74,9 +80,13 @@ let sendUser = async (data) =>{
             * Tu usuario ha sido registrado, por favor revisa tu correo electrónico
             y sigue las instrucciones para activar tu cuenta. 
          </p>`;
+         loader.innerHTML = '';
          setTimeout("location.href = 'index.php'", 10000);
       }
-   }else{      
+   }else{  
+      btnUser.removeAttribute('disabled');
+      msgBox.innerHTML = '';
+      loader.innerHTML = '';
       for (const msg in resultado) {
          if(resultado[msg]['user-msg']){
             console.log(resultado[msg]['user-msg'])

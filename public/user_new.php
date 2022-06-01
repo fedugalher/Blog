@@ -26,11 +26,13 @@
 							<label for="userImg" class="userImgLabel"></label>
 							<input id="userImg" class="user-input unset" type="file" name="image">
 							<div class="msg-box"></div>
+							<div class="loader text-center"></div>							
 							<input id="email" class="user-input" type="email" placeholder="Correo Electrónico" name="email">							
 							<input id="username" class="user-input" type="text" placeholder="Nombre de Usuario" name="username">
 							<input id="password" class="user-input" type="password" placeholder="Contraseña" name="password">
 							<input id="password-confirm" class="user-input" type="password" placeholder="Confirmar Contraseña" name="password-confirm">
-							<input id="btn-user" class="user-input btn-send" type="submit" value="Guardar">																
+							<input id="btn-user" class="user-input btn-send" type="submit" value="Guardar">
+																						
 						</form>
 					</div>
 				</div>

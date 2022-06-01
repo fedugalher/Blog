@@ -2,6 +2,8 @@
 
 const currentURL = window.location.href;
 
+
+
 // ------------------------- Eventos -------------------------
 
 // click con e.target
@@ -23,7 +25,7 @@ document.addEventListener('click', e =>{
       const homeLink = element.classList.contains('navbar-brand') ? 'home' : false;
       const logoutLink = element.id === 'sesionClose' ? 'sesionClose' : false;
       const userProfile = element.id === 'userProfile' || element.parentElement.id === 'userProfile' ? true : false;
- 
+      
       if(categoryLink != false || homeLink != false){
          e.preventDefault();
          const category = categoryLink != false ? categoryLink : homeLink;
@@ -39,22 +41,32 @@ document.addEventListener('click', e =>{
 });
 
 window.addEventListener('load', ()=>{
-   navbarCategories();
+   navbarCategories();  
 });
 
 let navbarCategories = async () =>{   
    const peticion = await fetch('../php/categories_controller.php?method=selectAll'); 
-   const resultado = await peticion.json();
+   const resultado = await peticion.json();   
+
    const categories = resultado.data;
-   const ulNav = document.querySelector('.navbar-nav');
+   const ulNav = document.querySelector('.navbar-nav'); 
+   
    
    for (const category in categories) {      
      ulNav.innerHTML+=`
          <li class="nav-item">
-            <a class="nav-link" href="">${categories[category].name}</a>
+            <a id="${categories[category].name}" class="nav-link" href="">${categories[category].name}</a>
          </li>
      `;
    }
+
+   //Agregar clase active al enlace seleccionado
+   const params = window.location.search;
+   const urlParams = new URLSearchParams(params);
+   const category = urlParams.get('category');
+   const categorySelected = document.getElementById(`${category}`);
+   const home = document.getElementById('Inicio');
+   categorySelected !== null ? categorySelected.classList.add('active') : home.classList.add('active');
 }
 
 let closeSession = async () =>{

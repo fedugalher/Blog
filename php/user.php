@@ -247,7 +247,7 @@
             }
 
             if($userData[0]['image'] !== $this->image && $this->image !== ''){
-               $userParams['image'] = $this->imagew;
+               $userParams['image'] = $this->image;
             }
             
             if(count($userParams) > 0){

@@ -33,6 +33,11 @@
 .user-form #btn-user:hover{
    background-color: #003a58;
  }
+
+.user-form #btn-user:disabled{
+   background-color:#c5c5c5;
+   color: #757575;
+}
  .user-info div{
     padding: 10px;
  }
