@@ -2,7 +2,6 @@
 
 const btnPublish = document.getElementById('btn-publish');
 
-
 // Evento Click
 btnPublish.addEventListener('click', e =>{
    e.preventDefault(); //Evita que se recargue la pagina al dar click en el boton submit
@@ -63,3 +62,23 @@ document.getElementById("img-file").onchange = function(e) {
      preview.append(image);
    };
  }
+
+//Obtener categorias para llenar el select
+
+ window.addEventListener('load', ()=>{
+      getCategories();
+ });
+
+let getCategories = async () =>{   
+   const peticion = await fetch('../php/categories_controller.php?method=selectAll'); 
+   const resultado = await peticion.json();
+   const categories = resultado.data;
+   const categorySelect = document.getElementById('category');
+
+   for (const category in categories) {
+     let option = document.createElement('option');
+     option.value = categories[category].name;
+     option.text = categories[category].name;
+     categorySelect.add(option);
+   }   
+}

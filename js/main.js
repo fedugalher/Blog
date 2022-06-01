@@ -2,8 +2,6 @@
 
 const currentURL = window.location.href;
 
-
-
 // ------------------------- Eventos -------------------------
 
 // click con e.target
@@ -40,6 +38,25 @@ document.addEventListener('click', e =>{
    }
 });
 
+window.addEventListener('load', ()=>{
+   navbarCategories();
+});
+
+let navbarCategories = async () =>{   
+   const peticion = await fetch('../php/categories_controller.php?method=selectAll'); 
+   const resultado = await peticion.json();
+   const categories = resultado.data;
+   const ulNav = document.querySelector('.navbar-nav');
+   
+   for (const category in categories) {      
+     ulNav.innerHTML+=`
+         <li class="nav-item">
+            <a class="nav-link" href="">${categories[category].name}</a>
+         </li>
+     `;
+   }
+}
+
 let closeSession = async () =>{
    const peticion = await fetch('../php/sesions_controller.php?method=closeSesion'); 
    const resultado = await peticion.json();
@@ -48,6 +65,3 @@ let closeSession = async () =>{
       location.reload();
    }
 }
-
-
-

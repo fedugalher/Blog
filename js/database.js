@@ -5,7 +5,7 @@ const btnDropDb = document.getElementById('btn-dropDb');
 const btnUsers = document.getElementById('btn-users');
 const btnArticles = document.getElementById('btn-articles');
 const btnComments = document.getElementById('btn-comments');
-
+const btnCategories = document.getElementById('btn-categories');
 
 // Evento Click
 btnDb.addEventListener('click', e =>{
@@ -31,6 +31,11 @@ btnArticles.addEventListener('click', e =>{
 btnComments.addEventListener('click', e =>{
    e.preventDefault(); //Evita que se recargue la pagina al dar click en el boton submit
    commentsTable(); 
+});
+
+btnCategories.addEventListener('click', e =>{
+   e.preventDefault(); //Evita que se recargue la pagina al dar click en el boton submit
+   categoriesTable(); 
 });
 
 let createDb = async () =>{   
@@ -59,6 +64,12 @@ let articlesTable = async () =>{
 
 let commentsTable = async () =>{   
    const peticion = await fetch('../php/comments_controller.php?method=commentsTable'); 
+   const resultado = await peticion.json();
+   console.log(resultado);
+}
+
+let categoriesTable = async () =>{   
+   const peticion = await fetch('../php/categories_controller.php?method=categoriesTable'); 
    const resultado = await peticion.json();
    console.log(resultado);
 }

@@ -1,0 +1,61 @@
+.categories-col{
+ margin: auto;
+ border: 3px dotted #cbcbcb ;
+ border-radius: 10px;
+ margin-bottom: 30px;
+ font-size: 14px;
+}
+.category-input{
+   display: block;
+   margin: 20px 5px;
+   margin: 10px auto;
+   width:60%;
+   border: 1px solid #d8d8d8;
+   border-radius: 5px;
+}
+.category-input:focus{
+   outline: none;
+   box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);   
+}
+.category-form #btn-category{
+   background-color: #001f2e;
+   color: #d8d8d8;
+   width: 150px;
+}
+.category-form #btn-category:hover{
+   background-color: #003a58;
+ }
+ .category-info div{
+    padding: 10px;
+ }
+
+ article h3{
+    text-align: center;
+    font-family: 'Comfortaa', cursive;
+    margin-top: 30px;
+    margin-bottom: 30px;
+ }
+
+
+ /* ---------- category_new.php ---------- */
+ 
+ .msg-box{
+   font-size: 14px;
+   text-align: left;
+   border-radius: 3px;
+}
+.msg-box p{
+   display: block;
+   margin: 20px 5px;
+   margin: 10px auto;
+   padding-left: 5px;
+   width:90%;
+}
+.msg-error{
+   color: #720d0d;
+   background-color: #ffbfbf;
+}
+.msg-succes{
+   color: #0d723f;
+   background-color: #bfffe2;
+}

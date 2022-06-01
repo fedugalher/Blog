@@ -38,6 +38,7 @@
 							<button class="btn-db" id="btn-users">Crear Tabla Usuarios</button>
 							<button class="btn-db" id="btn-articles">Crear Tabla Articulos</button>
 							<button class="btn-db" id="btn-comments">Crear Tabla Comentarios</button>
+							<button class="btn-db" id="btn-categories">Crear Tabla Categorias</button>
 						</div>
 					</div>
 				</article>

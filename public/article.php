@@ -69,7 +69,7 @@
       <!-- Aside -->
       <div class="col-md-12 col-lg-3">
         <aside class="aside-container">
-          <h4>Publicaciones anteriores</h4>
+          <h4>Lo más nuevo</h4>
           <hr>          
         </aside>
       </div>

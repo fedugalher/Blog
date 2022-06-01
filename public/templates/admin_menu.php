@@ -10,6 +10,7 @@
          </a>
          <a href="admin.php" class="list-group-item list-group-item-action">Editar Artículo</a>
          <a href="users.php" class="list-group-item list-group-item-action">Usuarios</a>
+         <a href="categories.php" class="list-group-item list-group-item-action">Categorias</a>
          <a href="database.php" class="list-group-item list-group-item-action">Base de datos</a>
          <a class="list-group-item list-group-item-action disabled">A disabled link item</a>
       </div>

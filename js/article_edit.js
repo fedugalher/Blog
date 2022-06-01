@@ -9,7 +9,7 @@ const articleImg = document.querySelector('.article-img');
 const articleImage = document.createElement('img');
 const title = document.getElementById('title');
 const body = document.getElementById('body');
-const category = document.getElementById('category');
+const categorySelect = document.getElementById('category');
 const image = document.getElementById('img-file');
 const articleStatus = document.getElementById('status');
 const btnPublish = document.getElementById('btn-publish');
@@ -17,6 +17,7 @@ const data = new FormData();
 
 
 window.onload = e =>{
+   getCategories();
    getArticle();   
 }
 
@@ -30,7 +31,7 @@ btnPublish.addEventListener('click', e =>{
 
    data.append('title', title.value);
    data.append('body', body.value);
-   data.append('category', category.value);
+   data.append('category', categorySelect.value);
    data.append('image', image.files[0]);
    data.append('status', articleStatus.checked);
    data.append('user_id', 1); //esto es temporal igual que en el metodo new
@@ -49,7 +50,7 @@ const getArticle = async () =>{
    articleImg.innerHTML = '';
    articleImg.append(articleImage);
    title.value = resultado.title;
-   category.value = resultado.category;
+   categorySelect.value = resultado.category;
    body.value = resultado.body;
    articleStatus.checked = resultado.status === 'published' ? true : false;
    console.log(resultado)
@@ -85,4 +86,19 @@ document.getElementById("img-file").onchange = function(e) {
      preview.append(articleImage);
    };
  }
+
+ //Obtener categorias para llenar el select
+
+const getCategories = async () =>{   
+   const peticion = await fetch('../php/categories_controller.php?method=selectAll'); 
+   const resultado = await peticion.json();
+   const categories = resultado.data;   
+
+   for (const category in categories) {
+     let option = document.createElement('option');
+     option.value = categories[category].name;
+     option.text = categories[category].name;
+     categorySelect.add(option);
+   }   
+}
 

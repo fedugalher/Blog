@@ -25,15 +25,7 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-               <a class="nav-link" aria-current="page" href="">Gameplays</a>
-            </li>
-            <li class="nav-item">
-               <a class="nav-link" href="">Noticias</a>
-            </li>
-            <li class="nav-item">
-               <a class="nav-link" href="">Recomendaciones</a>
-            </li>            
+            
          </ul>
          <span class="navbar-text navbar-right">
             <?php if($username){ ?>
@@ -75,3 +67,4 @@
       </div>
    </div>
 </nav>
+

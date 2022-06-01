@@ -45,9 +45,6 @@
                      <input id="title" class="coment-input" type="text" placeholder="Título" name="title">
                      <select id="category" class="form-select coment-input" aria-label="Default select example" name="category">
                         <option selected>Selecciona una categoría</option>
-                        <option value="Gameplays">Gameplays</option>
-                        <option value="Noticias">Noticias</option>
-                        <option value="Recomendaciones">Recomendaciones</option>
                       </select>
                      <textarea id="body" class="coment-input" name="body" placeholder="Escribe el cuerpo del artículo"></textarea>
                      <input type="checkbox" name="status" id="status" value="published"> <label for="status">Publicar</label>
