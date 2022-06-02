@@ -83,6 +83,7 @@ function setNew(){
    $article = new Article();
    $title = isset($_POST['title']) ? $_POST['title'] : 'No hay titulo';
    $body = isset($_POST['body']) ? $_POST['body'] : 'No hay Texto';
+   $preview = isset($_POST['preview']) ? $_POST['preview'] : 'No hay Texto';
    $category = isset($_POST['category']) ? $_POST['category'] : 'No hay Categoria';
    $image = isset($_FILES['image']['name']) ? $_FILES['image']['name'] : 'No hay Imagen';
    $imageTmp = isset($_FILES['image']['tmp_name']) ? $_FILES['image']['tmp_name'] : 'No hay Imagen';
@@ -94,6 +95,7 @@ function setNew(){
    $articleArray = [
       'titulo' => $title,
       'body' => $body,
+      'preview' => $preview,
       'category' => $category,
       'image' => $image,
       'imageTmp' => $imageTmp,
@@ -103,7 +105,7 @@ function setNew(){
       'user_id' => $user_id,
    ];
 
-   $article->set(null, $title, $body, $category, $image, $imageTmp, $video, $status, $user_id);
+   $article->set(null, $title, $body, $preview, $category, $image, $imageTmp, $video, $status, $user_id);
    $article->create();      
    echo json_encode($article->message);
     
@@ -115,6 +117,7 @@ function setUpdate(){
    $id = isset($_POST['id']) ? $_POST['id'] : 0;
    $title = isset($_POST['title']) ? $_POST['title'] : 'No hay titulo';
    $body = isset($_POST['body']) ? $_POST['body'] : 'No hay Texto';
+   $preview = isset($_POST['preview']) ? $_POST['preview'] : 'No hay Texto';
    $category = isset($_POST['category']) ? $_POST['category'] : 'No hay Categoria';
    $image = isset($_FILES['image']['name']) ? $_FILES['image']['name'] : '';
    $imageTmp = isset($_FILES['image']['tmp_name']) ? $_FILES['image']['tmp_name'] : '';
@@ -127,6 +130,7 @@ function setUpdate(){
       'id' => $id,
       'titulo' => $title,
       'body' => $body,
+      'preview' => $preview,
       'category' => $category,
       'image' => $image,
       'imageTmp' => $imageTmp,
@@ -136,7 +140,7 @@ function setUpdate(){
       'user_id' => $user_id,
    ];
 
-   $article->set($id, $title, $body, $category, $image, $imageTmp, $video, $status, $user_id);
+   $article->set($id, $title, $body, $preview, $category, $image, $imageTmp, $video, $status, $user_id);
    $article->update();
    echo json_encode($article->message);
      

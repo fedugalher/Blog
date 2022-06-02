@@ -29,7 +29,8 @@ document.addEventListener('click', e =>{
       if(categoryLink != false || homeLink != false){
          e.preventDefault();
          const category = categoryLink != false ? categoryLink : homeLink;
-         category != 'home' ? location.href = `../public/index.php?category=${category}` : location.href = '../public/index.php';     
+         console.log(category)
+         category != 'home' && category != 'Inicio' ? location.href = `../public/index.php?category=${category}` : location.href = '../public/index.php';     
       }else if(logoutLink != false){
          e.preventDefault();
          closeSession();
@@ -66,7 +67,12 @@ let navbarCategories = async () =>{
    const category = urlParams.get('category');
    const categorySelected = document.getElementById(`${category}`);
    const home = document.getElementById('Inicio');
-   categorySelected !== null ? categorySelected.classList.add('active') : home.classList.add('active');
+
+   if(categorySelected !== null){
+      categorySelected.classList.add('active')
+   }else if(home !== null){
+      home.classList.add('active');
+   }
 }
 
 let closeSession = async () =>{

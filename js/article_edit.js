@@ -9,6 +9,7 @@ const articleImg = document.querySelector('.article-img');
 const articleImage = document.createElement('img');
 const title = document.getElementById('title');
 const body = document.getElementById('body');
+const preview = document.getElementById('preview');
 const categorySelect = document.getElementById('category');
 const image = document.getElementById('img-file');
 const articleStatus = document.getElementById('status');
@@ -31,6 +32,7 @@ btnPublish.addEventListener('click', e =>{
 
    data.append('title', title.value);
    data.append('body', body.value);
+   data.append('preview', preview.value);
    data.append('category', categorySelect.value);
    data.append('image', image.files[0]);
    data.append('status', articleStatus.checked);
@@ -52,6 +54,7 @@ const getArticle = async () =>{
    title.value = resultado.title;
    categorySelect.value = resultado.category;
    body.value = resultado.body;
+   preview.value = resultado.preview;
    articleStatus.checked = resultado.status === 'published' ? true : false;
    console.log(resultado)
 }

@@ -25,6 +25,12 @@ article h3{
   font-family: 'Dancing Script', cursive;
   font-size: 36px;
 }
+#article-title{
+  font-style: italic;
+  text-align: center;
+  font-family: 'Comfortaa', cursive;
+  font-size: 36px;
+}
 article h1{
   font-size: 60px;
   text-align: center;
@@ -96,7 +102,10 @@ article, aside{
   height: 150px;
 }
 .aside-text-box .article-text{
-  text-align:left;
+  text-align:center;
+}
+.article-text h5{
+  margin-bottom: 5px;
 }
 aside h4{
   font-size: 30px;

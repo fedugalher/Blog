@@ -14,6 +14,7 @@ btnPublish.addEventListener('click', e =>{
    const data = new FormData();
    const title = document.getElementById('title').value;
    const body = document.getElementById('body').value;
+   const preview = document.getElementById('preview').value;
    const category = document.getElementById('category').value;
    const image = document.getElementById('img-file');
    const status = document.getElementById('status').checked;
@@ -21,6 +22,7 @@ btnPublish.addEventListener('click', e =>{
 
    data.append('title', title);
    data.append('body', body);
+   data.append('preview', preview);
    data.append('category', category);
    data.append('image', image.files[0]);
    data.append('status', status);

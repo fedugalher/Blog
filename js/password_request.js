@@ -2,9 +2,7 @@
 
 const btnSubmit = document.getElementById('login-btn');
 const loginMsg = document.querySelector('.login-msg');
-
-
-
+const loader = document.querySelector('.loader');
 
 btnSubmit.addEventListener('click', e =>{
    e.preventDefault();
@@ -21,6 +19,15 @@ btnSubmit.addEventListener('click', e =>{
       data.append('username', username);
       data.append('email', email);
       data.append('method', method);
+
+      btnSubmit.setAttribute('disabled', '')
+      loginMsg.textContent = '';
+      loader.innerHTML = `
+         <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+         </div>	
+      `;
+
       passwordRequest(data);
    }
    
@@ -35,9 +42,12 @@ let passwordRequest = async (data) =>{
    console.log(resultado)
 
    if(resultado[2].msg === 'El mensaje ha sido enviado'){
+      loader.innerHTML = '';
       loginMsg.textContent = 'Listo, por favor revisa tu correo y sigue las indicaciones.'
       loginMsg.classList.add('msg-succes');
    }else{
+      loader.innerHTML = '';
+      btnSubmit.removeAttribute('disabled');
       loginMsg.textContent = 'Los datos que ingresaste son incorrectos, favor de verificarlos.';
       loginMsg.classList.add('msg-error');
    }

@@ -27,6 +27,10 @@ html body{
 .login-form #login-btn:hover{
    background-color: #003a58;
  }
+ .login-form #login-btn:disabled{
+   background-color:#c5c5c5;
+   color: #757575;
+}
  .login-img{
     display: block;
     text-align: center;

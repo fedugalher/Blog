@@ -33,7 +33,7 @@
                   y en breve recibiras un enlace en tu correo electrónico.
                 </span>
                 <div class="login-msg"></div>
-               
+                <div class="loader text-center"></div>
                 <div id="userData-container">                  
                   <form action="" method="post" class="login-form" id="passwordRequest-form">                                          
                       <input type="text" id="username" class="input-login" placeholder="Nombre de Usuario" name="username">

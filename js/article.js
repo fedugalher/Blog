@@ -45,8 +45,8 @@ let getArticles = async () =>{
             <div class="col-lg-12 col-md-9 aside-text-box">
                <div class="article-text">
                   <h5>${resultado.data[article].title}</h5>
-                  ${resultado.data[article].body.substring(0,99)}                  
-                  <span class="article-date">Publicado el ${formatDate(date)}</span>
+                  ${resultado.data[article].preview}                 
+                  <span class="article-date">${formatDate(date)}</span>
                </div>
             </div>             
          </div>

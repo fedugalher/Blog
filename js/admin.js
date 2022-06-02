@@ -33,7 +33,7 @@ let getArticles = async () =>{
                <div class="article-img" id="article-img-${resultado.data[article].id}"></div>
                <div class="article-text">
                   <h5>${resultado.data[article].title}</h5>
-                 
+                  ${resultado.data[article].preview}
                   <span class="article-date">
                      <a href="article_edit.php?id=${resultado.data[article].id}" class="edit-icon"><i class="fa-solid fa-pen-to-square"></i></a>
                      <a href="#" class="delete-icon"><i class="fa-solid fa-trash-can" id="delete-${resultado.data[article].id}"></i></a>

@@ -6,6 +6,7 @@ class Article extends Database{
    public $id;
    public $title;
    public $body;
+   public $preview;
    public $category;
    public $image;
    public $imageTmp;
@@ -17,6 +18,7 @@ class Article extends Database{
    public $isSucces;
    public $arrayPrueba = [1,2,3,4,5,6];
 
+   // Ejemplo de constructor
    // public function __construct($title, $body, $category){
    //    $this->title = $title;
    //    $this->body = $body;
@@ -25,10 +27,11 @@ class Article extends Database{
    //    $this->date = date('Y-m-d H:i:s');
    // }
 
-   public function set($id, $title, $body, $category, $image, $imageTmp, $video, $status, $user_id){   
+   public function set($id, $title, $body, $preview, $category, $image, $imageTmp, $video, $status, $user_id){   
       $this->id = $id != null ? $id : null;   
       $this->title = $title;
       $this->body = $body;
+      $this->preview = $preview;
       $this->category = $category;    
       $this->image = $image;
       $this->imageTmp = $imageTmp;
@@ -51,6 +54,7 @@ class Article extends Database{
             `id` INT(11) NOT NULL AUTO_INCREMENT , 
             `title` VARCHAR(100) NOT NULL , 
             `body` VARCHAR(1000) NOT NULL ,
+            `preview` VARCHAR(100) NOT NULL ,
             `category` VARCHAR(1000) NOT NULL ,
             `image` VARCHAR(100) ,
             `video` VARCHAR(100) ,
@@ -109,6 +113,7 @@ class Article extends Database{
             'id' => $row['id'], 
             'title' => $row['title'], 
             'body' => $row['body'], 
+            'preview' => $row['preview'], 
             'category' => $row['category'], 
             'image' => $row['image'],
             'video' => $row['video'],
@@ -143,6 +148,7 @@ class Article extends Database{
             'id' => $row['id'], 
             'title' => $row['title'], 
             'body' => $row['body'], 
+            'preview' => $row['preview'], 
             'category' => $row['category'], 
             'image' => $row['image'],
             'video' => $row['video'],
@@ -177,6 +183,7 @@ class Article extends Database{
             'id' => $row['id'], 
             'title' => $row['title'], 
             'body' => $row['body'], 
+            'preview' => $row['preview'], 
             'category' => $row['category'], 
             'image' => $row['image'],
             'video' => $row['video'],
@@ -207,6 +214,7 @@ class Article extends Database{
             'id' => $row['id'], 
             'title' => $row['title'], 
             'body' => $row['body'], 
+            'preview' => $row['preview'], 
             'category' => $row['category'], 
             'image' => $row['image'],
             'video' => $row['video'],
@@ -230,8 +238,8 @@ class Article extends Database{
       $this->image = $this->image != '' ? $articleName : "no-image.png";
       $this->video = $this->video != '' ? "{$this->video}" : null;
 
-      $query = "INSERT INTO `articles` (`id`, `title`, `body`, `category`, `image`, `video`, `status`, `created_at`, `updated_at`, `user_id`) 
-         VALUES (NULL, '{$this->title}', '{$this->body}', '{$this->category}', '{$this->image}',  '{$this->video}', '{$this->status}', '{$this->created_at}', '{$this->updated_at}', '{$this->user_id}')";
+      $query = "INSERT INTO `articles` (`id`, `title`, `body`, `preview`, `category`, `image`, `video`, `status`, `created_at`, `updated_at`, `user_id`) 
+         VALUES (NULL, '{$this->title}', '{$this->body}', '{$this->preview}', '{$this->category}', '{$this->image}',  '{$this->video}', '{$this->status}', '{$this->created_at}', '{$this->updated_at}', '{$this->user_id}')";
       $this->connect();
       $this->executeQuery($query, 'Articulo agregado correctamente', 'Error al agregar el articulo');
       $this->disconnect();
@@ -292,7 +300,8 @@ class Article extends Database{
          $this->video = $this->video != '' ? "{$this->video}" : null;
          $query = "UPDATE `articles` SET 
          `title` = '{$this->title}', 
-         `body` = '{$this->body}', 
+         `body` = '{$this->body}',
+         `preview` = '{$this->preview}', 
          `category` = '{$this->category}', 
          `image` = '{$this->image}', 
          `video` = '{$this->video}',
@@ -303,7 +312,8 @@ class Article extends Database{
      }else{
          $query = "UPDATE `articles` SET 
          `title` = '{$this->title}', 
-         `body` = '{$this->body}', 
+         `body` = '{$this->body}',
+         `preview` = '{$this->preview}', 
          `category` = '{$this->category}',      
          `status` = '{$this->status}', 
          `updated_at` = '{$this->updated_at}',
@@ -361,6 +371,7 @@ class Article extends Database{
             'id' => $row['id'], 
             'title' => $row['title'], 
             'body' => $row['body'], 
+            'preview' => $row['preview'], 
             'category' => $row['category'], 
             'image' => $row['image'],
             'video' => $row['video'],

@@ -10,6 +10,7 @@ const password = document.getElementById('password');
 const image = document.getElementById('userImg');
 const msgBox = document.querySelector('.msg-box');
 const saveBtn = document.getElementById('btn-user');
+const loader = document.querySelector('.loader');
 
 window.addEventListener('load', ()=>{
    showUser();   
@@ -80,6 +81,14 @@ saveBtn.addEventListener('click', e =>{
       data.append('password', password.value);
       data.append('image', image.files[0]);
       data.append('method', 'update');
+
+      saveBtn.setAttribute('disabled', '')
+      msgBox.innerHTML = '';
+      loader.innerHTML = `
+         <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+         </div>	
+      `;
       sendUser(data);
    }
   
@@ -97,7 +106,8 @@ let sendUser = async (data) =>{
    if(resultado[resultado.length-1]['user-msg'] == 'Usuario actualizado'){
       if(currentURL === 'http://localhost/FedugalherBlog/public/users.php'){
          location.href = 'users.php';
-      }else{   
+      }else{  
+         loader.innerHTML = ''; 
          msgBox.innerHTML+=`<p class="msg-succes">
             * Tus datos han sido actualizados, por favor inicia sesión nuevamente para ver los cambios.
          </p>`;                   
@@ -112,7 +122,8 @@ let sendUser = async (data) =>{
          }
          setTimeout('closeSession()', 10000);    
       }
-   }else{      
+   }else{ 
+      loader.innerHTML = '';     
       for (const msg in resultado) {
          if(resultado[msg]['user-msg'] && resultado[msg]['msgType'] === 'error'){
             msgBox.innerHTML+=`<p class="msg-error">* ${resultado[msg]['user-msg']}</p>`;
