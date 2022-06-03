@@ -27,7 +27,7 @@ let getUsers = async () =>{
          <tr id="trUser-${userId}" class="disabled">
             <th scope="row">${count++}</th>
             <td>
-               <img src="../images/users/${userImage}" id="userImg-${userId}"  class="user-img">
+               <img src="../images/users/${userId}/${userImage}" id="userImg-${userId}"  class="user-img">
                <label id="userImgLabel-${userId}" for="userImgInput-${userId}" class="userInputLabel unset"></label>               
                <input id="userImgInput-${userId}" class="unset" type="file" name="image">
             </td>            

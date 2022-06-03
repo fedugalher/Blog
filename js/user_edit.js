@@ -90,7 +90,7 @@ let updateUser = async id =>{
       }); 
       const resultado = await peticion.json();
       console.log(resultado)
-      if(resultado['user-msg'] == 'Usuario actualizado'){
+      if(resultado[resultado.length - 1]['user-msg'] == 'Usuario actualizado'){
          location.reload();
       }
    }

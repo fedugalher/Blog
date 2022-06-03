@@ -45,7 +45,7 @@
               <?php if($username){ ?>
                 <form id="comment-form" action="" method="post">
                   <div class="userData">  
-                      <img src="../images/users/<?php echo $image; ?>" class="userImg">                 
+                      <img src="../images/users/<?php echo $userId.'/'.$image; ?>" class="userImg">                 
                       <span id="username"><?php echo $username; ?></span>
                   </div>
                   <textarea id="comment" class="coment-input" name="comment" placeholder="Escribe tu mensaje"></textarea>

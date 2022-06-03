@@ -9,18 +9,20 @@
       public $passwordNew;
       public $role;
       public $image;
+      public $imageTmp;
       public $status;
       public $token;
       public $regDate;
       public $updated_at;
 
-      public function set($id, $email, $username, $passwordUser, $role, $image, $status, $token){
+      public function set($id, $email, $username, $passwordUser, $role, $image, $imageTmp, $status, $token){
          $this->id = $id;
          $this->email = $email;
          $this->username = $username;
          $this->passwordUser = $passwordUser;
          $this->role = $role;
          $this->image = $image;
+         $this->imageTmp = $imageTmp;
          $this->status = $status;
          $this->token = $token;
          date_default_timezone_set('America/Chihuahua');
@@ -128,6 +130,11 @@
 
       public function create(){         
          if(!$this->emailExists() && !$this->usernameExists()){
+            $nextId = $this->nextId()['next_id'];
+            $userImg = str_replace(" ","_",$this->regDate);
+            $userImg = str_replace(":","",$userImg);
+            $this->image = $userImg."_".$nextId.".jpg";
+
             $query = "INSERT INTO `users` 
                (`id`, `email`, `username`, `password`, `role`, `image`, `status`, `token`, `reg_date`, `updated_at`) 
                VALUES (
@@ -148,19 +155,32 @@
             $this->disconnect();
    
             if($this->message[1]['msgType'] == 'succes'){    
-               require_once('mailer/email.php');        
-               return true;
+               require_once('mailer/email.php');
+
+               if(!file_exists("../images/users/$nextId")){
+                  mkdir("../images/users/$nextId",0777);
+               }
+               if (move_uploaded_file($this->imageTmp, "../images/users/$nextId/".$this->image)) {
+                  array_push($this->message, ['user-msg'=>"Se guardó la imagen", 'msgType'=>'succes']);
+               }else {
+                  array_push($this->message, ['user-msg'=>"Error al guardar imagen", 'msgType'=>'error']);
+               } 
+               array_push($this->message, ['user-msg'=>"Usuario registrado", 'msgType'=>'succes']);        
+              
             }else{
-               return false;
+               array_push($this->message, ['user-msg'=>"Error al registrar usuario", 'msgType'=>'error']);
             }
          }else{
-            return false;
+            array_push($this->message, ['user-msg'=>"El nombre de usuario o correo electrónico ya habian sido registrados", 'msgType'=>'error']);
          }
       }
 
 
       public function updateAdmin(){         
          $query = "UPDATE `users` SET ";
+         $userImg = str_replace(" ","_",$this->regDate);
+         $userImg = str_replace(":","",$userImg);
+         $this->image = $this->image !== '' ? $userImg."_".$this->id.".jpg" : '';
          $userParams = [
             'id' => $this->id,
             'email' => $this->email,
@@ -172,6 +192,7 @@
             'token' => $this->token,
             'updated_at' => $this->updated_at
          ];
+
          foreach ($userParams as $key => $value) {
             if($key != 'id' && $value != ''){
                if($key != 'password'){
@@ -188,10 +209,18 @@
          $this->executeQuery($query, 'Datos de usuario actualizados', 'No se puede actualizar el usuario');
          $this->disconnect();
          
-         if($this->message[1]['msgType'] == 'succes'){            
-            return true;
+         if($this->message[1]['msgType'] == 'succes'){   
+            if ($this->image != '') {  
+               if (move_uploaded_file($this->imageTmp, "../images/users/{$this->id}/{$this->image}")) {
+                  array_push($this->message, ['user-msg'=>"Se actualizó la imagen", 'msgType'=>'succes']);
+                  $_SESSION['image'] = $this->image;
+               }else {
+                  array_push($this->message, ['user-msg'=>"No se pudo actualizar la imagen", 'msgType'=>'succes']);
+               }
+            }         
+            array_push($this->message, ['user-msg'=>"Usuario actualizado", 'msgType'=>'succes']);
          }else{
-            return false;
+            array_push($this->message, ['user-msg'=>"Error al actualizar datos de usuario", 'msgType'=>'error']);
          }         
       }
 
@@ -245,6 +274,10 @@
                array_push($this->message, ['user-msg'=>'Tu nueva contraseña no puede ser igual a la actual', 'msgType'=>'error']); 
                return false;
             }
+            
+            $userImg = str_replace(" ","_",$this->regDate);
+            $userImg = str_replace(":","",$userImg);
+            $this->image = $this->image !== '' ? $userImg."_".$this->id.".jpg" : '';
 
             if($userData[0]['image'] !== $this->image && $this->image !== ''){
                $userParams['image'] = $this->image;
@@ -285,22 +318,28 @@
                }
 
                if($userUpdated){
+                  if (array_key_exists('image', $userParams)) {
+                     if (move_uploaded_file($this->imageTmp, "../images/users/{$this->id}/".$userParams['image'])) {
+                        array_push($this->message, ['user-msg'=>'Se cargó la nueva imagen', 'msgType'=>'succes']); 
+                     }else {
+                        array_push($this->message, ['user-msg'=>'Error al cargar la nueva imagen', 'msgType'=>'error']); 
+                     }
+                  }    
+
                   if(array_key_exists('email', $userParams)){
                      require_once('mailer/email.php'); 
                   }
-                  return true;
+                  array_push($this->message, ['user-msg'=>'Usuario actualizado', 'msgType'=>'succes']); 
                }else{
-                  return false;
+                  array_push($this->message, ['user-msg'=>'Error al actualizar usuario', 'msgType'=>'error']); 
                }             
                
             }else{
                array_push($this->message, ['user-msg'=>'No hay datos a actualizar', 'msgType'=>'error']);
-               return false;
             }
                   
          }else{
-            array_push($this->message, ['user-msg'=>'Contraseña incorrecta', 'msgType'=>'error']);            
-            return false;
+            array_push($this->message, ['user-msg'=>'Contraseña incorrecta', 'msgType'=>'error']);
          }
          
       }
@@ -400,6 +439,24 @@
          }else{
             return false;
          } 
+      }
+
+
+      public function nextId(){
+         $articleData = array();
+         $query = "SELECT `AUTO_INCREMENT`
+                     FROM  INFORMATION_SCHEMA.TABLES
+                     WHERE TABLE_SCHEMA = 'fedugalher_blog'
+                     AND   TABLE_NAME   = 'users'";
+         $this->connect();
+         $select = $this->mysqli->query($query);     
+         $this->disconnect(); 
+   
+         while($row = $select->fetch_assoc()){
+            $articleData['next_id'] = $row['AUTO_INCREMENT'];
+         }
+   
+         return $articleData; //Retorna arreglo
       }
 
 

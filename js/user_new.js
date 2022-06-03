@@ -70,8 +70,8 @@ let sendUser = async (data) =>{
       body: data
    }); 
    const resultado = await peticion.json();   
-   
-   if(resultado['user-msg'] == 'Usuario Registrado'){      
+   console.log(resultado)
+   if(resultado[resultado.length - 1]['user-msg'] == 'Usuario registrado'){      
       if(currentURL === 'http://localhost/FedugalherBlog/public/users.php'){
          location.href = 'users.php';
       }else{
@@ -113,7 +113,10 @@ document.getElementById("userImg").onchange = function(e) {
    let reader = new FileReader();
  
    // Leemos el archivo subido y se lo pasamos a nuestro fileReader
-   reader.readAsDataURL(e.target.files[0]);
+   if(e.target.files[0]){
+      reader.readAsDataURL(e.target.files[0]);
+   }
+  
  
    // Le decimos que cuando este listo ejecute el código interno
    reader.onload = function(){

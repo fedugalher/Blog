@@ -180,6 +180,11 @@ footer p{
   color: #005076;
 }
 
+/* Dates */
+.date-icons{
+  margin-left: 20px;
+}
+
 @media screen and (max-width:991px) and (min-width:768px){
   .aside-text-box{
     height: 150px;

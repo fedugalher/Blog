@@ -237,7 +237,7 @@ class Article extends Database{
 
       $this->image = $this->image != '' ? $articleName : "no-image.png";
       $this->video = $this->video != '' ? "{$this->video}" : null;
-
+      
       $query = "INSERT INTO `articles` (`id`, `title`, `body`, `preview`, `category`, `image`, `video`, `status`, `created_at`, `updated_at`, `user_id`) 
          VALUES (NULL, '{$this->title}', '{$this->body}', '{$this->preview}', '{$this->category}', '{$this->image}',  '{$this->video}', '{$this->status}', '{$this->created_at}', '{$this->updated_at}', '{$this->user_id}')";
       $this->connect();

@@ -29,7 +29,7 @@
          </ul>
          <span class="navbar-text navbar-right">
             <?php if($username){ ?>
-               <img src="../images/users/<?php echo $image ?>" class="userImg">
+               <img src="../images/users/<?php echo $userId.'/'.$image ?>" class="userImg">
 
                <div class="user-name dropdown">
                   <a class=" btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">

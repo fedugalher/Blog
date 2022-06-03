@@ -34,6 +34,7 @@
 						<form class="user-form" action="" method="post" enctype="multipart/form-data">
 							<label for="userImg" class="userImgLabel"></label>
 							<div class="msg-box"></div>
+							<div class="loader text-center"></div>
 							<input id="userImg" class="user-input unset" type="file" name="image">
 							<input id="email" class="user-input" type="email" placeholder="Correo Electrónico" name="email">
 							<input id="username" class="user-input" type="text" placeholder="Nombre de Usuario" name="username">

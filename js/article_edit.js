@@ -17,9 +17,8 @@ const btnPublish = document.getElementById('btn-publish');
 const data = new FormData();
 
 
-window.onload = e =>{
-   getCategories();
-   getArticle();   
+window.onload = e =>{   
+   getCategories();     
 }
 
 sesionClose.addEventListener('click', e => {
@@ -36,7 +35,6 @@ btnPublish.addEventListener('click', e =>{
    data.append('category', categorySelect.value);
    data.append('image', image.files[0]);
    data.append('status', articleStatus.checked);
-   data.append('user_id', 1); //esto es temporal igual que en el metodo new
    data.append('method', 'update');
    data.append('id', id);
 
@@ -44,14 +42,16 @@ btnPublish.addEventListener('click', e =>{
 });
 
 const getArticle = async () =>{   
-   const peticion = await fetch(`../php/articles_controller.php?method=edit&id=${id}`); 
-   const resultado = await peticion.json(); 
    
+   const peticion = await fetch(`../php/articles_controller.php?method=edit&id=${id}`); 
+   const resultado = await peticion.json();
+
    articleImage.src = `../images/articles/${id}/${resultado.image}`;
    articleImage.id = 'article-image'; 
    articleImg.innerHTML = '';
    articleImg.append(articleImage);
-   title.value = resultado.title;
+   title.value = resultado.title;  
+   
    categorySelect.value = resultado.category;
    body.value = resultado.body;
    preview.value = resultado.preview;
@@ -102,6 +102,7 @@ const getCategories = async () =>{
      option.value = categories[category].name;
      option.text = categories[category].name;
      categorySelect.add(option);
-   }   
+   } 
+   getArticle();
 }
 

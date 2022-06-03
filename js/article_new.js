@@ -26,7 +26,6 @@ btnPublish.addEventListener('click', e =>{
    data.append('category', category);
    data.append('image', image.files[0]);
    data.append('status', status);
-   data.append('user_id', 1); //Esto es temporal, se cambiara para seleccionar al usuario en un select list
    data.append('method', method);
    sendArticle(data); //llama a la funcion send article y le pasa los datos del formulario
    console.log(status)

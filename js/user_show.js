@@ -23,7 +23,7 @@ let showUser = async () =>{
 
    username.value = resultado.username;
    email.value = resultado.email;
-   userImg.style.backgroundImage = `url(../images/users/${resultado.image})`;
+   userImg.style.backgroundImage = `url(../images/users/${resultado.id}/${resultado.image})`;
    userImg.style.borderStyle = 'solid';      
 }
 
@@ -82,7 +82,7 @@ saveBtn.addEventListener('click', e =>{
       data.append('image', image.files[0]);
       data.append('method', 'update');
 
-      saveBtn.setAttribute('disabled', '')
+      saveBtn.setAttribute('disabled', '');
       msgBox.innerHTML = '';
       loader.innerHTML = `
          <div class="spinner-border" role="status">
@@ -123,6 +123,7 @@ let sendUser = async (data) =>{
          setTimeout('closeSession()', 10000);    
       }
    }else{ 
+      saveBtn.removeAttribute('disabled');
       loader.innerHTML = '';     
       for (const msg in resultado) {
          if(resultado[msg]['user-msg'] && resultado[msg]['msgType'] === 'error'){

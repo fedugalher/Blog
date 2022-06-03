@@ -51,10 +51,13 @@ let getArticles = async () =>{
    
 }
 
+//Formatear fecha
 let formatDate = date =>{
-   let day = [ 'Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+   let calendarIcon = '<i class="fa-solid fa-calendar-days date-icons"></i>';
+   let clockIcon = '<i class="fa-solid fa-clock date-icons"></i>';
+   let day = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
    let month = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
-   let fullDate = `${day[date.getDay()]}, ${date.getDate()} de ${month[date.getMonth()]} de ${date.getFullYear()}`;
+   let fullDate = `${calendarIcon} ${day[date.getDay()]}, ${date.getDate()} de ${month[date.getMonth()]} de ${date.getFullYear()} ${clockIcon} ${date.getHours()}:${date.getMinutes()}`;
    // console.log(fullDate);
    return fullDate;
 }

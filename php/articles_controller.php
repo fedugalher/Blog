@@ -90,7 +90,7 @@ function setNew(){
    $imgPath = '../images/articles/';
    $video = '';
    $status = isset($_POST['status']) &&  $_POST['status'] == 'true' ? 'published' : 'unpublished';
-   $user_id = isset($_POST['user_id']) ? $_POST['user_id'] : 0;
+   $user_id = isset($_SESSION['id']) ? $_SESSION['id'] : 0;
 
    $articleArray = [
       'titulo' => $title,
@@ -124,7 +124,7 @@ function setUpdate(){
    $imgPath = '../images/articles/';
    $video = '';
    $status = isset($_POST['status']) &&  $_POST['status'] == 'true' ? 'published' : 'unpublished';
-   $user_id = isset($_POST['user_id']) ? $_POST['user_id'] : 0;   
+   $user_id = isset($_SESSION['id']) ? $_SESSION['id'] : 0;   
 
    $articleArray = [
       'id' => $id,

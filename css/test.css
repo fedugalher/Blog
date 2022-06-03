@@ -1,0 +1,17 @@
+ul.nav{
+   background-color: whitesmoke;
+}
+.nav-item{
+   padding: 20px;
+   cursor: pointer;
+}
+
+.textarea{
+   padding: 20px;
+   height: fit-content;
+   min-height: 150px;
+   width: 100%;   
+}
+/* .body-text::selection{
+   color: red;
+} */
