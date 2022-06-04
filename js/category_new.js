@@ -37,7 +37,7 @@ btnCategory.addEventListener('click', e =>{
 });
 
 let sendCategory = async (data) =>{   
-   const peticion = await fetch('../php/categories_controller.php', {
+   const peticion = await fetch(`${host_dir}/php/categories_controller.php`, {
       method: 'POST',
       body: data
    }); 

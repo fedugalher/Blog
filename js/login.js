@@ -18,7 +18,7 @@ btnSesion.addEventListener('click', e =>{
 });
 
 let startSesion = async (data) =>{   
-   const peticion = await fetch('../php/sesions_controller.php', {
+   const peticion = await fetch(`${host_dir}/php/sesions_controller.php`, {
       method: 'POST',
       body: data
    }); 

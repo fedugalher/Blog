@@ -8,7 +8,7 @@ window.addEventListener('load', ()=>{
 
 let getUsers = async () =>{
    
-   const peticion = await fetch('../php/users_controller.php?method=selectAll'); 
+   const peticion = await fetch(`${host_dir}/php/users_controller.php?method=selectAll`); 
    const resultado = await peticion.json();
   
    let count = 1;

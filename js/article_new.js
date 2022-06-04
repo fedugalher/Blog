@@ -32,7 +32,7 @@ btnPublish.addEventListener('click', e =>{
 });
 
 let sendArticle = async (data) =>{   
-   const peticion = await fetch('../php/articles_controller.php', {
+   const peticion = await fetch(`${host_dir}/php/articles_controller.php`, {
       method: 'POST',
       body: data
    }); 
@@ -71,7 +71,7 @@ document.getElementById("img-file").onchange = function(e) {
  });
 
 let getCategories = async () =>{   
-   const peticion = await fetch('../php/categories_controller.php?method=selectAll'); 
+   const peticion = await fetch(`${host_dir}/php/categories_controller.php?method=selectAll`); 
    const resultado = await peticion.json();
    const categories = resultado.data;
    const categorySelect = document.getElementById('category');

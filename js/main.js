@@ -1,7 +1,7 @@
 'use strict';
 
+const host_dir = 'http://localhost/FedugalherBlog';
 const currentURL = window.location.href;
-
 
 
 // ------------------------- Eventos -------------------------
@@ -30,13 +30,13 @@ document.addEventListener('click', e =>{
          e.preventDefault();
          const category = categoryLink != false ? categoryLink : homeLink;
          console.log(category)
-         category != 'home' && category != 'Inicio' ? location.href = `../public/index.php?category=${category}` : location.href = '../public/index.php';     
+         category != 'home' && category != 'Inicio' ? location.href = `${host_dir}/public_html/index.php?category=${category}` : location.href = `${host_dir}/public_html/index.php`;     
       }else if(logoutLink != false){
          e.preventDefault();
          closeSession();
       }else if(userProfile){
          e.preventDefault();
-         location.href = '../public/user_show.php';
+         location.href = `${host_dir}/public_html/user_show.php`;
       }
    }
 });
@@ -46,7 +46,7 @@ window.addEventListener('load', ()=>{
 });
 
 let navbarCategories = async () =>{   
-   const peticion = await fetch('../php/categories_controller.php?method=selectAll'); 
+   const peticion = await fetch(`${host_dir}/php/categories_controller.php?method=selectAll`); 
    const resultado = await peticion.json();   
 
    const categories = resultado.data;
@@ -76,7 +76,7 @@ let navbarCategories = async () =>{
 }
 
 let closeSession = async () =>{
-   const peticion = await fetch('../php/sesions_controller.php?method=closeSesion'); 
+   const peticion = await fetch(`${host_dir}/php/sesions_controller.php?method=closeSesion`); 
    const resultado = await peticion.json();
    
    if (resultado[0].msgType === 'succes') {

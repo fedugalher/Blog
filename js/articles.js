@@ -1,10 +1,10 @@
 'use_strict';
 
 let articleRow = document.querySelector('.article-row');
-
+console.log(host_dir)
 window.addEventListener('load', e =>{
-   if(currentURL == 'http://localhost/FedugalherBlog/public/index.php' || 
-      currentURL == 'http://localhost/FedugalherBlog/public/'){
+   if(currentURL == `${host_dir}/public_html/index.php` || 
+      currentURL == `${host_dir}/public_html/`){
       getArticles();
    }else{
       //Obtener parametros de la URL para filtrar articulos segun la categoria seleccionada
@@ -26,7 +26,7 @@ window.addEventListener('load', e =>{
 
 let getArticles = async () =>{
    
-   const peticion = await fetch('../php/articles_controller.php?method=selectAll'); 
+   const peticion = await fetch(`${host_dir}/php/articles_controller.php?method=selectAll`); 
    const resultado = await peticion.json();
    let currentCategory; //Para imprimir los titulos de la categoria
    let pastCategory = '';
@@ -56,14 +56,14 @@ let getArticles = async () =>{
       `;
       //Agregar imagen personalizada a cada articulo
       const articleImage = document.getElementById(`article-img-${resultado.data[article].id}`);
-      articleImage.style.backgroundImage = `url('../images/articles/${resultado.data[article].id}/${resultado.data[article].image}')`;
+      articleImage.style.backgroundImage = `url('${host_dir}/images/articles/${resultado.data[article].id}/${resultado.data[article].image}')`;
    }
    
 }
 
 let getArticlesByCategory = async category =>{
    
-   const peticion = await fetch(`../php/articles_controller.php?method=selectCategory&category=${category}`); 
+   const peticion = await fetch(`${host_dir}/php/articles_controller.php?method=selectCategory&category=${category}`); 
    const resultado = await peticion.json();
    let currentCategory; //Para imprimir los titulos de la categoria
    let pastCategory = '';
@@ -93,7 +93,7 @@ let getArticlesByCategory = async category =>{
       `;
       //Agregar imagen personalizada a cada articulo
       const articleImage = document.getElementById(`article-img-${resultado.data[article].id}`);
-      articleImage.style.backgroundImage = `url('../images/articles/${resultado.data[article].id}/${resultado.data[article].image}')`;
+      articleImage.style.backgroundImage = `url('${host_dir}/images/articles/${resultado.data[article].id}/${resultado.data[article].image}')`;
    }
    
 }

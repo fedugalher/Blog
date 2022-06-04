@@ -1,4 +1,6 @@
 <?php
+//importar rutas, ahi se guarda la ruta del localhost
+require('../routes.php');
 //Import PHPMailer classes into the global namespace
 //These must be at the top of your script, not inside a function
 use PHPMailer\PHPMailer\PHPMailer;
@@ -6,7 +8,7 @@ use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 //Load Composer's autoloader
-require 'vendor/autoload.php';
+require('vendor/autoload.php');
 
 //Requerir la libreria Dotenv instalada con composer para usar variables de entorno de archivo .env
 require('../vendor/autoload.php');
@@ -42,9 +44,8 @@ try {
     //Content
     $mail->isHTML(true);                                  //Set email format to HTML
     $mail->Subject = 'Activa tu cuenta';
-    $mail->Body    = "
-                    Para activar tu cuenta ingresa al siguiente enlace: <br>
-                    <a href='http://localhost/FedugalherBlog/public/user_validation.php?method=activate&email={$this->email}&token={$this->token}'>Activar Cuenta</a>";
+    $mail->Body    = "Para activar tu cuenta ingresa al siguiente enlace: <br>
+                    <a href='{$host_dir}/public_html/user_validation.php?method=activate&email={$this->email}&token={$this->token}'>Activar Cuenta</a>";
     $mail->AltBody = 'Activa tu cuenta ingresando a este enlace';
 
     $mail->CharSet = 'UTF-8';

@@ -1,14 +1,15 @@
 <?php
 session_start();
-$userRole = isset($_SESSION['role']) ? $_SESSION['role'] : '';
+
+//importar rutas, ahi se guarda la ruta del localhost
+require('../routes.php');
 require('article.php');
 
 $article = new Article();
-
 $id = isset($_GET['id']) ? $_GET['id'] : 0;
 $limit = isset($_GET['limit']) ? $_GET['limit'] : 0;
 $category = isset($_GET['category']) ? $_GET['category'] : 'none';
-
+$userRole = isset($_SESSION['role']) ? $_SESSION['role'] : '';
 
 
 if(isset($_GET['method'])){
@@ -54,7 +55,7 @@ if($userRole === 'admin'){
          echo $article->delete($id);
          break;      
       default:
-         header("location: http://localhost/FedugalherBlog/public/index.php");
+         header("location: $host_dir/public_html/index.php");
          break;
    }
 }else{
@@ -72,7 +73,7 @@ if($userRole === 'admin'){
          echo $article->selectLimit($limit);
          break;      
       default:
-         header("location: http://localhost/FedugalherBlog/public/index.php");
+         header("location: $host_dir/public_html/index.php");
          break;
    }
 }

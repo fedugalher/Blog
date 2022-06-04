@@ -28,7 +28,7 @@ if(commentBtn !== null){
 }
 
 let sendComment = async (data) =>{   
-   const peticion = await fetch('../php/comments_controller.php', {
+   const peticion = await fetch(`${host_dir}/php/comments_controller.php`, {
       method: 'POST',
       body: data
    }); 
@@ -40,7 +40,7 @@ let sendComment = async (data) =>{
 }
 
 const getComments = async ()=>{
-   const peticion = await fetch(`../php/comments_controller.php?method=selectAll&id=${id}`); 
+   const peticion = await fetch(`${host_dir}/php/comments_controller.php?method=selectAll&id=${id}`); 
    const resultado = await peticion.json();
    const userName = document.getElementById('username'); 
    
@@ -50,7 +50,7 @@ const getComments = async ()=>{
       commentsContainer.innerHTML+= `
          <div class="col-lg-11 coment">
             <p class="coment-name" id="${resultado[comment].id}">
-               <img src="../images/users/${resultado[comment].user_id}/${resultado[comment].image}" class="userImg">               
+               <img src="${host_dir}/images/users/${resultado[comment].user_id}/${resultado[comment].image}" class="userImg">               
                ${resultado[comment].username}
             </p>
             <hr>

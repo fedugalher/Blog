@@ -35,7 +35,7 @@ btnSubmit.addEventListener('click', e =>{
 });
 
 let passwordReset = async (data) =>{   
-   const peticion = await fetch('../php/users_controller.php', {
+   const peticion = await fetch(`${host_dir}/php/users_controller.php`, {
       method: 'POST',
       body: data
    }); 

@@ -10,7 +10,7 @@ window.addEventListener('load', ()=>{
 // Functions
 let getArticles = async () =>{
    
-   const peticion = await fetch('../php/articles_controller.php?method=all'); 
+   const peticion = await fetch(`${host_dir}/php/articles_controller.php?method=all`); 
    const resultado = await peticion.json();
    // console.log(resultado.data);
    // console.log(resultado.messages);   
@@ -46,7 +46,7 @@ let getArticles = async () =>{
       `;
       //Agregar imagen personalizada a cada articulo
       const articleImage = document.getElementById(`article-img-${resultado.data[article].id}`);
-      articleImage.style.backgroundImage = `url('../images/articles/${resultado.data[article].id}/${resultado.data[article].image}')`;
+      articleImage.style.backgroundImage = `url('${host_dir}/images/articles/${resultado.data[article].id}/${resultado.data[article].image}')`;
    }
    
 }

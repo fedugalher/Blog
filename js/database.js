@@ -39,37 +39,37 @@ btnCategories.addEventListener('click', e =>{
 });
 
 let createDb = async () =>{   
-   const peticion = await fetch('../php/database_controller.php?method=createDB'); 
+   const peticion = await fetch(`${host_dir}/php/database_controller.php?method=createDB`); 
    const resultado = await peticion.json();
    console.log(resultado);
 }
 
 let dropDb = async () =>{   
-   const peticion = await fetch('../php/database_controller.php?method=dropDB'); 
+   const peticion = await fetch(`${host_dir}/php/database_controller.php?method=dropDB`); 
    const resultado = await peticion.json();
    console.log(resultado);
 }
 
 let usersTable = async () =>{   
-   const peticion = await fetch('../php/users_controller.php?method=usersTable'); 
+   const peticion = await fetch(`${host_dir}/php/users_controller.php?method=usersTable`); 
    const resultado = await peticion.json();
    console.log(resultado);
 }
 
 let articlesTable = async () =>{   
-   const peticion = await fetch('../php/articles_controller.php?method=articlesTable'); 
+   const peticion = await fetch(`${host_dir}/php/articles_controller.php?method=articlesTable`); 
    const resultado = await peticion.json();
    console.log(resultado);
 }
 
 let commentsTable = async () =>{   
-   const peticion = await fetch('../php/comments_controller.php?method=commentsTable'); 
+   const peticion = await fetch(`${host_dir}/php/comments_controller.php?method=commentsTable`); 
    const resultado = await peticion.json();
    console.log(resultado);
 }
 
 let categoriesTable = async () =>{   
-   const peticion = await fetch('../php/categories_controller.php?method=categoriesTable'); 
+   const peticion = await fetch(`${host_dir}/php/categories_controller.php?method=categoriesTable`); 
    const resultado = await peticion.json();
    console.log(resultado);
 }

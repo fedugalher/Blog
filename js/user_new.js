@@ -20,7 +20,7 @@ btnUser.addEventListener('click', e =>{
    const username = document.getElementById('username').value;
    const password = document.getElementById('password').value;
    const passwordConfirm = document.getElementById('password-confirm').value;
-   const userRole = currentURL === 'http://localhost/FedugalherBlog/public/users.php' ? document.getElementById('user-role').value : 'usuario';
+   const userRole = currentURL === `${host_dir}/public/users.php` ? document.getElementById('user-role').value : 'usuario';
    const image = document.getElementById('userImg');
    const method = 'new';   
    const messages = [];
@@ -65,14 +65,14 @@ btnUser.addEventListener('click', e =>{
 });
 
 let sendUser = async (data) =>{   
-   const peticion = await fetch('../php/users_controller.php', {
+   const peticion = await fetch(`${host_dir}/php/users_controller.php`, {
       method: 'POST',
       body: data
    }); 
    const resultado = await peticion.json();   
    console.log(resultado)
    if(resultado[resultado.length - 1]['user-msg'] == 'Usuario registrado'){      
-      if(currentURL === 'http://localhost/FedugalherBlog/public/users.php'){
+      if(currentURL === `${host_dir}/public/users.php`){
          location.href = 'users.php';
       }else{
          msgBox.innerHTML += `

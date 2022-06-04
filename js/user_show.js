@@ -17,13 +17,13 @@ window.addEventListener('load', ()=>{
 });
 
 let showUser = async () =>{
-   const peticion = await fetch('../php/users_controller.php?method=show'); 
+   const peticion = await fetch(`${host_dir}/php/users_controller.php?method=show`); 
    const resultado = await peticion.json();
    console.log(resultado)
 
    username.value = resultado.username;
    email.value = resultado.email;
-   userImg.style.backgroundImage = `url(../images/users/${resultado.id}/${resultado.image})`;
+   userImg.style.backgroundImage = `url(${host_dir}/images/users/${resultado.id}/${resultado.image})`;
    userImg.style.borderStyle = 'solid';      
 }
 
@@ -95,7 +95,7 @@ saveBtn.addEventListener('click', e =>{
 });
 
 let sendUser = async (data) =>{   
-   const peticion = await fetch('../php/users_controller.php', {
+   const peticion = await fetch(`${host_dir}/php/users_controller.php`, {
       method: 'POST',
       body: data
    }); 
@@ -104,7 +104,7 @@ let sendUser = async (data) =>{
    msgBox.innerHTML = '';
 
    if(resultado[resultado.length-1]['user-msg'] == 'Usuario actualizado'){
-      if(currentURL === 'http://localhost/FedugalherBlog/public/users.php'){
+      if(currentURL === `${host_dir}/public_html/users.php`){
          location.href = 'users.php';
       }else{  
          loader.innerHTML = ''; 

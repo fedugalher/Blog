@@ -84,7 +84,7 @@ let updateUser = async id =>{
       
       // sendUser(data); //llama a la funcion send article y le pasa los datos del formulario
 
-      const peticion = await fetch(`../php/users_controller.php`, {
+      const peticion = await fetch(`${host_dir}/php/users_controller.php`, {
          method: 'POST',
          body: data
       }); 

@@ -8,7 +8,7 @@ window.addEventListener('load', ()=>{
 
 let getCategories = async () =>{
    
-   const peticion = await fetch('../php/categories_controller.php?method=selectAll'); 
+   const peticion = await fetch(`${host_dir}/php/categories_controller.php?method=selectAll`); 
    const resultado = await peticion.json();
   
    let count = 1;

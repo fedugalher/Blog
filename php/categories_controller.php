@@ -1,9 +1,13 @@
 <?php
 session_start();
-$userRole = isset($_SESSION['role']) ? $_SESSION['role'] : '';
-$category_id = isset($_GET['id']) ? $_GET['id'] : '';
+
+//importar rutas, ahi se guarda la ruta del localhost
+require('../routes.php');
 
 require('category.php');
+
+$userRole = isset($_SESSION['role']) ? $_SESSION['role'] : '';
+$category_id = isset($_GET['id']) ? $_GET['id'] : '';
 
 $category = new Category();
 
@@ -30,7 +34,7 @@ if($userRole === 'admin'){
          echo $category->delete($category_id);
          break;      
       default:
-         header('location: http://localhost/FedugalherBlog/public/index.php');
+         header("location: $host_dir/public/index.php");
          break;
    }
 }else{
@@ -39,7 +43,7 @@ if($userRole === 'admin'){
          echo $category->selectAll();
          break;
       default:
-         header('location: http://localhost/FedugalherBlog/public/index.php');
+         header("location: $host_dir/public/index.php");
          break;
    }
 }

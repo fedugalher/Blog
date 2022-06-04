@@ -1,4 +1,6 @@
 <?php
+//importar rutas, ahi se guarda la ruta del localhost
+require('../routes.php');
 //Import PHPMailer classes into the global namespace
 //These must be at the top of your script, not inside a function
 use PHPMailer\PHPMailer\PHPMailer;
@@ -46,7 +48,7 @@ try {
                      Hola {$username}: <br><br>
                      Estás recibiendo este mensaje porque solicitaste cambiar tu contraseña,
                      si deseas hacerlo por favor da clic en 
-                    <a href='http://localhost/FedugalherBlog/public/user_passwordReset.php?&email={$email}&token={$token}'>Restablecer Contraseña</a>.";
+                    <a href='{$host_dir}/public/user_passwordReset.php?&email={$email}&token={$token}'>Restablecer Contraseña</a>.";
     $mail->AltBody = 'Restablecer Contraseña';
 
     $mail->CharSet = 'UTF-8';

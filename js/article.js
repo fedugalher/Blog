@@ -20,11 +20,11 @@ window.addEventListener('load', ()=>{
 
 //Funcion asincrona para obtener el articulo, pasando como parametros el metodo shoe y el id que seran consultados en el articles_controller.php
 let getArticle = async () =>{   
-   const peticion = await fetch(`../php/articles_controller.php?method=show&id=${id}`); 
+   const peticion = await fetch(`${host_dir}/php/articles_controller.php?method=show&id=${id}`); 
    const resultado = await peticion.json();
    const date = new Date(resultado['created_at']); //para poder formatear la hora con la funcion formatDate()
    console.log(resultado)
-   articleImage.setAttribute('src', `../images/articles/${resultado.id}/${resultado.image}`);
+   articleImage.setAttribute('src', `${host_dir}/images/articles/${resultado.id}/${resultado.image}`);
    articleTitle.textContent = resultado.title;
    articleText.innerHTML = resultado.body;
    articleDate.innerHTML = `${formatDate(date)}`;
@@ -32,7 +32,7 @@ let getArticle = async () =>{
 
 // Funcion para obtener todos los articulos y colocarlso en el aside
 let getArticles = async () =>{   
-   const peticion = await fetch('../php/articles_controller.php?method=selectLimit&limit=5'); 
+   const peticion = await fetch(`${host_dir}/php/articles_controller.php?method=selectLimit&limit=5`); 
    const resultado = await peticion.json();
 
    for (const article in resultado.data) {
@@ -53,7 +53,7 @@ let getArticles = async () =>{
       `;
       //Agregar imagen personalizada a cada articulo
       const articleImage = document.getElementById(`article-img-${resultado.data[article].id}`);
-      articleImage.style.backgroundImage = `url('../images/articles/${resultado.data[article].id}/${resultado.data[article].image}')`;
+      articleImage.style.backgroundImage = `url('${host_dir}/images/articles/${resultado.data[article].id}/${resultado.data[article].image}')`;
    }   
 }
 

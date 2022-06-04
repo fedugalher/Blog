@@ -21,7 +21,7 @@ document.addEventListener('click', e => {
 });
 
 let deleteUser = async id =>{
-   const peticion = await fetch(`../php/users_controller.php?method=delete&id=${id}`); 
+   const peticion = await fetch(`${host_dir}/php/users_controller.php?method=delete&id=${id}`); 
    const resultado = await peticion.json();
    console.log(resultado)
    if(resultado[1]['db-msg'] == 'Usuario eliminado'){

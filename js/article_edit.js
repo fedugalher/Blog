@@ -43,10 +43,10 @@ btnPublish.addEventListener('click', e =>{
 
 const getArticle = async () =>{   
    
-   const peticion = await fetch(`../php/articles_controller.php?method=edit&id=${id}`); 
+   const peticion = await fetch(`${host_dir}/php/articles_controller.php?method=edit&id=${id}`); 
    const resultado = await peticion.json();
 
-   articleImage.src = `../images/articles/${id}/${resultado.image}`;
+   articleImage.src = `${host_dir}/images/articles/${id}/${resultado.image}`;
    articleImage.id = 'article-image'; 
    articleImg.innerHTML = '';
    articleImg.append(articleImage);
@@ -60,7 +60,7 @@ const getArticle = async () =>{
 }
 
 const sendArticle = async (data) =>{   
-   const peticion = await fetch('../php/articles_controller.php', {
+   const peticion = await fetch(`${host_dir}/php/articles_controller.php`, {
       method: 'POST',
       body: data
    }); 
@@ -93,7 +93,7 @@ document.getElementById("img-file").onchange = function(e) {
  //Obtener categorias para llenar el select
 
 const getCategories = async () =>{   
-   const peticion = await fetch('../php/categories_controller.php?method=selectAll'); 
+   const peticion = await fetch(`${host_dir}/php/categories_controller.php?method=selectAll`); 
    const resultado = await peticion.json();
    const categories = resultado.data;   
 

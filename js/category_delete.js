@@ -20,7 +20,7 @@ document.addEventListener('click', e => {
 });
 
 let deleteCategory = async id =>{
-   const peticion = await fetch(`../php/categories_controller.php?method=delete&id=${id}`); 
+   const peticion = await fetch(`${host_dir}/php/categories_controller.php?method=delete&id=${id}`); 
    const resultado = await peticion.json();
    console.log(resultado)
    if(resultado[1]['db-msg'] == 'Categoría eliminada'){
