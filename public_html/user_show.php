@@ -5,7 +5,7 @@
    }else{
       $sessionStarted = true;
    }
-	require('../routes.php');
+	require('routes.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,9 +13,9 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="<?php echo $host_dir ?>/css/index.css">
-  <link rel="stylesheet" href="<?php echo $host_dir ?>/css/navbar.css">
-  <link rel="stylesheet" href="<?php echo $host_dir ?>/css/users.css">
+  <link rel="stylesheet" href="css/index.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/users.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">  
   <script src="https://kit.fontawesome.com/2c08c695f8.js" crossorigin="anonymous"></script>
   <title>Fedugalher Blog</title>
@@ -34,7 +34,16 @@
 						<form id="userForm" class="user-form" action="../php/users_controller.php" method="post" enctype="multipart/form-data">								
 							<label for="userImg" class="userImgLabel"></label>
 							<input id="userImg" class="user-input unset" type="file" name="image">
-							<div class="msg-box"></div>
+							<div class="msg-box">
+								<p>
+									En tu perfil se muestran tus datos de registro, puedes cambiarlos si así lo deseas. Para ello:
+									<ul>
+										<li>Escribe los datos que quieras cambiar.</li>
+										<li>Ingresa tu contraseña actual.</li>
+										<li>Presiona el boton guardar, y listo.</li>
+									</ul>
+								</p>
+							</div>
 							<div class="loader text-center"></div>														
 							<input id="username" class="user-input" type="text" placeholder="Nombre de Usuario" name="username">
                      <input id="email" class="user-input" type="email" placeholder="Correo Electrónico" name="email">
@@ -52,8 +61,8 @@
 	<?php require_once('templates/footer.php') ?>  
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-  <script src="<?php echo $host_dir ?>/js/main.js"></script> 
-  <script src="<?php echo $host_dir ?>/js/user_show.js"></script>
+  <script src="js/main.js"></script> 
+  <script src="js/user_show.js"></script>
   
 </body>
 </html>
