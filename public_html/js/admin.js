@@ -44,7 +44,8 @@ let getArticles = async () =>{
       `;
       //Agregar imagen personalizada a cada articulo
       const articleImage = document.getElementById(`article-img-${resultado.data[article].id}`);
-      articleImage.style.backgroundImage = `url('./images/articles/${resultado.data[article].id}/${resultado.data[article].image}')`;
+      const imgSrc = resultado.data[article].image === 'no-image.png' ? './images/articles/' : `./images/articles/${resultado.data[article].id}/`;
+      articleImage.style.backgroundImage = `url('${imgSrc + resultado.data[article].image}')`;
    }
    
 }
