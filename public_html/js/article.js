@@ -23,7 +23,7 @@ let getArticle = async () =>{
    const peticion = await fetch(`./php/articles_controller.php?method=show&id=${id}`); 
    const resultado = await peticion.json();
    const date = new Date(resultado['created_at']); //para poder formatear la hora con la funcion formatDate()
-   console.log(resultado)
+   
    articleImage.setAttribute('src', `./images/articles/${resultado.id}/${resultado.image}`);
    articleTitle.textContent = resultado.title;
    articleText.innerHTML = resultado.body;
@@ -65,7 +65,7 @@ let formatDate = date =>{
    let day = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
    let month = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
    let fullDate = `${calendarIcon} ${day[date.getDay()]}, ${date.getDate()} de ${month[date.getMonth()]} de ${date.getFullYear()} ${clockIcon} ${date.getHours()}:${date.getMinutes()}`;
-   // console.log(fullDate);
+   
    return fullDate;
 }
 

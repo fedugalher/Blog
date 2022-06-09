@@ -1,11 +1,12 @@
 <?php
 session_start();
-$userRole = isset($_SESSION['role']) ? $_SESSION['role'] : '';
-$user_id = isset($_SESSION['id']) ? $_SESSION['id'] : 0;
+
 require('user.php');
 
 $user = new User();
 
+$userRole = isset($_SESSION['role']) ? $_SESSION['role'] : '';
+$user_id = isset($_SESSION['id']) ? $_SESSION['id'] : 0;
 $id = isset($_GET['id']) ? $_GET['id'] : 0;
 $limit = isset($_GET['limit']) ? $_GET['limit'] : 0;
 

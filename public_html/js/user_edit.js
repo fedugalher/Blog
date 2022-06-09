@@ -11,7 +11,7 @@ document.addEventListener('click', e => {
       
       if(editIcon){
          e.preventDefault();
-         console.log('edit user')      
+               
          //Obtenr el id del usuraio cortando el contenido del tag id del elemento a
          let elementId = e.target.parentElement.id;
          let dash = elementId.indexOf('-');
@@ -20,7 +20,7 @@ document.addEventListener('click', e => {
       }
       
       if(updateBtn){
-         console.log('vas a actualizar')
+         
          //Obtenr el id del usuraio cortando el contenido del tag id del elemento a
          let elementId = e.target.id;
          let dash = elementId.indexOf('-');
@@ -89,7 +89,7 @@ let updateUser = async id =>{
          body: data
       }); 
       const resultado = await peticion.json();
-      console.log(resultado)
+      
       if(resultado[resultado.length - 1]['user-msg'] == 'Usuario actualizado'){
          location.reload();
       }

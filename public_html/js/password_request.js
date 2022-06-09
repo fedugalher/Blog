@@ -39,7 +39,7 @@ let passwordRequest = async (data) =>{
       body: data
    }); 
    const resultado = await peticion.json();
-   console.log(resultado)
+   
 
    if(resultado[2].msg === 'El mensaje ha sido enviado'){
       loader.innerHTML = '';

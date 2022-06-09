@@ -1,11 +1,9 @@
 'use_strict';
 
 let articleRow = document.querySelector('.article-row');
-console.log(host_dir)
-console.log(currentURL)
+
 window.addEventListener('load', e =>{
-   if(currentURL == `${host_dir}/public_html/index.php` ||
-      currentURL == `${host_dir}/index.php` || 
+   if(currentURL == `${host_dir}/index.php` || 
       currentURL == `${host_dir}`){
       getArticles();
    }else{
@@ -109,6 +107,6 @@ let formatDate = date =>{
    let day = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
    let month = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
    let fullDate = `${calendarIcon} ${day[date.getDay()]}, ${date.getDate()} de ${month[date.getMonth()]} de ${date.getFullYear()} ${clockIcon} ${date.getHours()}:${date.getMinutes()}`;
-   // console.log(fullDate);
+   
    return fullDate;
 }

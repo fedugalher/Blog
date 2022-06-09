@@ -1,5 +1,5 @@
 <?php
-   include('database.php');
+   require('database.php');
 
    class Category extends Database{
       public $id;

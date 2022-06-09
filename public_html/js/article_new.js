@@ -28,7 +28,7 @@ btnPublish.addEventListener('click', e =>{
    data.append('status', status);
    data.append('method', method);
    sendArticle(data); //llama a la funcion send article y le pasa los datos del formulario
-   console.log(status)
+   
 });
 
 let sendArticle = async (data) =>{   
@@ -37,7 +37,7 @@ let sendArticle = async (data) =>{
       body: data
    }); 
    const resultado = await peticion.json();
-   console.log(resultado)
+  
    if(resultado[6]['article-msg'] == 'Artículo guardado'){
       location.href = 'index.php';
    }

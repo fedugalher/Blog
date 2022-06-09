@@ -1,6 +1,5 @@
 <?php
 
-
 class Database{
    public $host;
    public $user;
@@ -10,15 +9,11 @@ class Database{
    public $message = array();
 
    public function __construct(){
-      //Local
-      require('C:\xampp\htdocs\FedugalherBlog/vendor/autoload.php');
-      $dotenv = Dotenv\Dotenv::createImmutable('C:\xampp\htdocs\FedugalherBlog');
-
-      //Production
-      // require('/home2/fedugalh/vendor/autoload.php');
-      // $dotenv = Dotenv\Dotenv::createImmutable('/home2/fedugalh/');
-
+      require('routes.php');
+      require($host_root.'vendor/autoload.php');
+      $dotenv = Dotenv\Dotenv::createImmutable($host_root);
       $dotenv->load();
+
       $this->host     = $_ENV['DB_HOST'];
       $this->user     = $_ENV['DB_USER'];
       $this->password = $_ENV['DB_PASSWORD'];

@@ -20,7 +20,7 @@ btnUser.addEventListener('click', e =>{
    const username = document.getElementById('username').value;
    const password = document.getElementById('password').value;
    const passwordConfirm = document.getElementById('password-confirm').value;
-   const userRole = currentURL === `${host_dir}/public/users.php` ? document.getElementById('user-role').value : 'usuario';
+   const userRole = currentURL === `${host_dir}/users.php` ? document.getElementById('user-role').value : 'usuario';
    const image = document.getElementById('userImg');
    const method = 'new';   
    const messages = [];
@@ -88,8 +88,7 @@ let sendUser = async (data) =>{
       msgBox.innerHTML = '';
       loader.innerHTML = '';
       for (const msg in resultado) {
-         if(resultado[msg]['user-msg']){
-            console.log(resultado[msg]['user-msg'])
+         if(resultado[msg]['user-msg']){            
             msgBox.innerHTML+=`
             <p class="msg-error">* ${resultado[msg]['user-msg']}</p>         
          `;

@@ -56,7 +56,6 @@ const getArticle = async () =>{
    body.value = resultado.body;
    preview.value = resultado.preview;
    articleStatus.checked = resultado.status === 'published' ? true : false;
-   console.log(resultado)
 }
 
 const sendArticle = async (data) =>{   

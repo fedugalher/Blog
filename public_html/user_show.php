@@ -5,7 +5,6 @@
    }else{
       $sessionStarted = true;
    }
-	require('routes.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,6 +17,7 @@
   <link rel="stylesheet" href="css/users.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">  
   <script src="https://kit.fontawesome.com/2c08c695f8.js" crossorigin="anonymous"></script>
+  <link rel="icon" href="images/icons-img/F-char.png">
   <title>Fedugalher Blog</title>
 </head>
 <body>

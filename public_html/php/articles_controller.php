@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-
 require('article.php');
 
 $article = new Article();

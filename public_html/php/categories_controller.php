@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-
 require('category.php');
 
 $userRole = isset($_SESSION['role']) ? $_SESSION['role'] : '';

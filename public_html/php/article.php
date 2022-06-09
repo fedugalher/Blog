@@ -341,16 +341,7 @@ class Article extends Database{
 
 
    //Funciones de ayuda
-   public function nextId(){
-       //Local
-      // require('C:\xampp\htdocs\FedugalherBlog/vendor/autoload.php');
-      // $dotenv = Dotenv\Dotenv::createImmutable('C:\xampp\htdocs\FedugalherBlog');
-
-      //Production
-      require('/home2/fedugalh/vendor/autoload.php');
-      $dotenv = Dotenv\Dotenv::createImmutable('/home2/fedugalh/');
-      $dotenv->load();
-
+   public function nextId(){   
       $articleData = array();
       $query = "SELECT `AUTO_INCREMENT`
                   FROM  INFORMATION_SCHEMA.TABLES

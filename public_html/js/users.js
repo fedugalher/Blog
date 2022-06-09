@@ -20,14 +20,16 @@ let getUsers = async () =>{
       const userImage = resultado.data[user].image
       const userName = resultado.data[user].username;
       const userRole = resultado.data[user].role;
-      const userPass = resultado.data[user].password;      
+      const userPass = resultado.data[user].password;        
+      
+      const imageSrc = userImage === 'no-image.png' ? 'images/users' : `images/users/${userId}`;
 
     
       usersTableBody.innerHTML += `
          <tr id="trUser-${userId}" class="disabled">
             <th scope="row">${count++}</th>
             <td>
-               <img src="images/users/${userId}/${userImage}" id="userImg-${userId}"  class="user-img">
+               <img src="${imageSrc}/${userImage}" id="userImg-${userId}"  class="user-img">
                <label id="userImgLabel-${userId}" for="userImgInput-${userId}" class="userInputLabel unset"></label>               
                <input id="userImgInput-${userId}" class="unset" type="file" name="image">
             </td>            
@@ -76,6 +78,6 @@ let formatDate = date =>{
    let day = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
    let month = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
    let fullDate = `${day[date.getDay()]}, ${date.getDate()} de ${month[date.getMonth()]} de ${date.getFullYear()}`;
-   // console.log(fullDate);
+  
    return fullDate;
 }

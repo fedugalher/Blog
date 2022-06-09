@@ -131,9 +131,11 @@
       public function create(){         
          if(!$this->emailExists() && !$this->usernameExists()){
             $nextId = $this->nextId()['next_id'];
-            $userImg = str_replace(" ","_",$this->regDate);
-            $userImg = str_replace(":","",$userImg);
-            $this->image = $userImg."_".$nextId.".jpg";
+            if($this->image !== 'no-image.png'){              
+               $userImg = str_replace(" ","_",$this->regDate);
+               $userImg = str_replace(":","",$userImg);
+               $this->image = $userImg."_".$nextId.".jpg";
+            }           
 
             $query = "INSERT INTO `users` 
                (`id`, `email`, `username`, `password`, `role`, `image`, `status`, `token`, `reg_date`, `updated_at`) 
@@ -211,6 +213,16 @@
          
          if($this->message[1]['msgType'] == 'succes'){   
             if ($this->image != '') {  
+
+               $files = scandir("../images/users/{$this->id}");
+
+               foreach ($files as $file) {
+                  if(!is_dir($file) && $file !== $this->image){
+                     unlink("../images/users/{$this->id}/".$file);
+                     array_push($this->message, ['article-msg'=>"Se eliminó la imagen anterior", 'msgType'=>'succes']);                           
+                  }        
+               }
+
                if (move_uploaded_file($this->imageTmp, "../images/users/{$this->id}/{$this->image}")) {
                   array_push($this->message, ['user-msg'=>"Se actualizó la imagen", 'msgType'=>'succes']);
                   $_SESSION['image'] = $this->image;
@@ -319,6 +331,16 @@
 
                if($userUpdated){
                   if (array_key_exists('image', $userParams)) {
+                     
+                     $files = scandir("../images/users/{$this->id}");
+
+                     foreach ($files as $file) {
+                        if(!is_dir($file) && $file !== $this->image){
+                           unlink("../images/users/{$this->id}/".$file);
+                           array_push($this->message, ['article-msg'=>"Se eliminó la imagen anterior", 'msgType'=>'succes']);                           
+                        }        
+                     }
+
                      if (move_uploaded_file($this->imageTmp, "../images/users/{$this->id}/".$userParams['image'])) {
                         array_push($this->message, ['user-msg'=>'Se cargó la nueva imagen', 'msgType'=>'succes']); 
                      }else {

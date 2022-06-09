@@ -1,4 +1,4 @@
-<?php	
+<?php	  
 	if(isset($_SESSION['started'])){  
       $userId   = $_SESSION['id'];
       $username = $_SESSION['username'];
@@ -11,7 +11,7 @@
       $email    = '';
       $image    = '';
       $role    = '';
-   }
+   }   
 ?>
 <header>
    <div class="container-header"></div>
@@ -29,7 +29,11 @@
          </ul>
          <span class="navbar-text navbar-right">
             <?php if($username){ ?>
-               <img src="./images/users/<?php echo $userId.'/'.$image ?>" class="userImg">
+               <?php if($image !== 'no-image.png'){ ?>
+                  <img src="./images/users/<?php echo $userId.'/'.$image ?>" class="userImg">
+               <?php }else{ ?>
+                  <img src="./images/users/<?php echo $image ?>" class="userImg">
+               <?php } ?>
 
                <div class="user-name dropdown">
                   <a class=" btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
@@ -50,7 +54,7 @@
                         <?php } ?> 
                      </li>
                      <li>
-                        <a class="dropdown-item" href="<?php echo $host_dir ?>/php/sesions_controller.php?method=sesionClose" id='sesionClose'>
+                        <a class="dropdown-item" href="./php/sesions_controller.php?method=sesionClose" id='sesionClose'>
                            <i class='fa-solid fa-right-from-bracket login-icons'></i>
                            Cerrar Sesión                           
                         </a>

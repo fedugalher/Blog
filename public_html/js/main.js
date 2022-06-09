@@ -1,10 +1,11 @@
 'use strict';
 
 //Local
-const host_dir = 'http://localhost/FedugalherBlog';
+const host_dir = 'http://localhost/FedugalherBlog/public_html';
 
 //Production
 // const host_dir = 'https://fedugalher.com';
+
 const currentURL = window.location.href;
 
 
@@ -33,7 +34,7 @@ document.addEventListener('click', e =>{
       if(categoryLink != false || homeLink != false){
          e.preventDefault();
          const category = categoryLink != false ? categoryLink : homeLink;
-         console.log(category)
+        
          category != 'home' && category != 'Inicio' ? location.href = `./index.php?category=${category}` : location.href = `./index.php`;     
       }else if(logoutLink != false){
          e.preventDefault();

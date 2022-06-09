@@ -49,8 +49,7 @@ let sendCategory = async (data) =>{
       location.href = 'categories.php';    
    }else{      
       for (const msg in resultado) {
-         if(resultado[msg]['category-msg']){
-            console.log(resultado[msg]['category-msg'])
+         if(resultado[msg]['category-msg']){            
             msgBox.innerHTML+=`
             <p class="msg-error">* ${resultado[msg]['category-msg']}</p>         
          `;

@@ -23,8 +23,7 @@ let startSesion = async (data) =>{
       body: data
    }); 
    const resultado = await peticion.json();
-   console.log(resultado['messages'][1]['session-msg'])
-
+  
    if(resultado['messages'][1]['session-msg'] === 'Datos Correctos'){
       location.href = './admin.php';
    }else{

@@ -35,18 +35,23 @@ btnSubmit.addEventListener('click', e =>{
 });
 
 let passwordReset = async (data) =>{   
-   const peticion = await fetch(`${host_dir}/php/users_controller.php`, {
+   const peticion = await fetch(`./php/users_controller.php`, {
       method: 'POST',
       body: data
    }); 
    const resultado = await peticion.json();
    console.log(resultado)
-
+   loginMsg.innerHTML = '';
    if(resultado[1]['db-msg'] === 'El password ha sido cambiado correctamente'){
+      btnSubmit.setAttribute('disabled', '');
       loginMsg.textContent = 'Tu password ha sido cambiado, ya puedes iniciar sesión.'
       loginMsg.classList.add('msg-succes');
    }else{
-      loginMsg.textContent = resultado[1]['db-msg'];
+      for (const error in resultado) {
+         if(resultado[error]['msgType'] === 'error'){
+            loginMsg.innerHTML += resultado[error]['user-msg'];
+         }
+      }      
       loginMsg.classList.add('msg-error');
    }
 }

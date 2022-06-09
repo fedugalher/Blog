@@ -19,11 +19,10 @@ window.addEventListener('load', ()=>{
 let showUser = async () =>{
    const peticion = await fetch(`./php/users_controller.php?method=show`); 
    const resultado = await peticion.json();
-   console.log(resultado)
-
+   
    username.value = resultado.username;
    email.value = resultado.email;
-   userImg.style.backgroundImage = `url(./images/users/${resultado.id}/${resultado.image})`;
+   userImg.style.backgroundImage = resultado.image === 'no-image.png' ? `url(./images/users/${resultado.image})` : `url(./images/users/${resultado.id}/${resultado.image})`;
    userImg.style.borderStyle = 'solid';      
 }
 
@@ -104,7 +103,7 @@ let sendUser = async (data) =>{
    msgBox.innerHTML = '';
 
    if(resultado[resultado.length-1]['user-msg'] == 'Usuario actualizado'){
-      if(currentURL === `${host_dir}/public_html/users.php`){
+      if(currentURL === `${host_dir}/users.php`){
          location.href = 'users.php';
       }else{  
          loader.innerHTML = ''; 
@@ -143,7 +142,7 @@ document.getElementById("userImg").onchange = function(e) {
  
    // Le decimos que cuando este listo ejecute el código interno
    reader.onload = function(){
-      console.log(reader.result)
+      
       let image = document.createElement('img'); 
       image.classList.add('imgLabel');
  

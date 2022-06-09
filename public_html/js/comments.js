@@ -128,17 +128,7 @@ document.addEventListener('click', e =>{
    }
 
    if(cancelBtn){
-      location.reload();
-      // const id = element.id.slice(7, element.id.length);
-      // const userActions = element.parentElement;
-      // const buttons = userActions.getElementsByTagName('BUTTON');
-      // const commentText = document.getElementById(`comment-${id}`);
-     
-      // console.log(commentText)
-      // commentText.removeAttribute('contenteditable');
-      // commentText.classList.remove('comment-edit');     
-      // userActions.removeChild(buttons[0]);
-      // userActions.removeChild(buttons[0]);     
+      location.reload();      
    }  
 });
 
@@ -149,7 +139,7 @@ let updateComment = async id => {
    data.append('id', id);
    data.append('comment', commentText.textContent);
    data.append('method', method);
-   const peticion = await fetch('../php/comments_controller.php', {
+   const peticion = await fetch('./php/comments_controller.php', {
       method: 'POST',
       body: data
    }); 
@@ -166,14 +156,14 @@ let deleteComment = async id => {
    data.append('id', id);
    data.append('method', method);
 
-   const peticion = await fetch('../php/comments_controller.php', {
+   const peticion = await fetch('./php/comments_controller.php', {
       method: 'POST',
       body: data
    }); 
 
    const resultado = await peticion.json();
-
-   if(resultado[1].msg === 'Comentario eliminado'){
+   console.log(resultado)
+   if(resultado[1]['db-msg'] === 'Comentario eliminado'){
       location.reload();
    }else{
       console.log('Error al eliminar el comentario');
