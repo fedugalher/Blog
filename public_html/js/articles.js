@@ -106,7 +106,9 @@ let formatDate = date =>{
    let clockIcon = '<i class="fa-solid fa-clock date-icons"></i>';
    let day = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
    let month = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
-   let fullDate = `${calendarIcon} ${day[date.getDay()]}, ${date.getDate()} de ${month[date.getMonth()]} de ${date.getFullYear()} ${clockIcon} ${date.getHours()}:${date.getMinutes()}`;
-   
+   let hours = date.getHours().toString().length === 1 ? '0'+ date.getHours() : date.getHours();
+   let minutes = date.getMinutes().toString().length === 1 ? '0'+ date.getMinutes() : date.getMinutes();   
+   let fullDate = `${calendarIcon} ${day[date.getDay()]}, ${date.getDate()} de ${month[date.getMonth()]} de ${date.getFullYear()} ${clockIcon} ${hours}:${minutes}`;
+
    return fullDate;
 }
