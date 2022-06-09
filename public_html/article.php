@@ -52,6 +52,7 @@
                     <?php } ?>  
                       <span id="username"><?php echo $username; ?></span>
                   </div>
+                  <div class="char-count">0/500</div>
                   <textarea id="comment" class="coment-input" name="comment" placeholder="Escribe tu mensaje"></textarea>
                   <input id="coment-btn" class="coment-input btn-send" type="submit" value="Comentar">
                 </form>

@@ -25,7 +25,7 @@ let getArticle = async () =>{
    const date = new Date(resultado['created_at']); //para poder formatear la hora con la funcion formatDate()
    const imgSrc = resultado.image === 'no-image.png' ? './images/articles/' : `./images/articles/${resultado.id}/`;
    
-   articleImage.setAttribute('src', ) `url('${imgSrc + resultado.image}')`;
+   articleImage.setAttribute('src', `${imgSrc + resultado.image}`);
    articleTitle.textContent = resultado.title;
    articleText.innerHTML = resultado.body;
    articleDate.innerHTML = `${formatDate(date)}`;

@@ -2,18 +2,21 @@
 
 const commentBtn = document.getElementById('coment-btn');
 
+
 window.addEventListener('load', ()=>{
    getComments();
 });
 
 if(commentBtn !== null){
+   const commentText = document.getElementById('comment');
+   const charCount = document.querySelector('.char-count');
+   const totalChars = 500;
+
    commentBtn.addEventListener('click', e =>{
       e.preventDefault(); //Evita que se recargue la pagina al dar click en el boton submit
 
       const data = new FormData();
-      // const commentName = document.getElementById('name');
-      // const userId = document.getElementById('user-id');
-      const commentText = document.getElementById('comment');
+      
       const method = 'new';
 
       // data.append('name', commentName.value);
@@ -25,7 +28,22 @@ if(commentBtn !== null){
       // commentName.value = '';
       commentText.value = '';
    });
+
+   commentText.addEventListener('keyup', ()=>{
+      if(commentText.value.length <= 500){
+         charCount.textContent = commentText.value.length + '/' + totalChars.toString();
+         if(commentText.value.length >= 450){
+            charCount.style.color = '#720d0d';
+         }else{
+            charCount.style.color = '#9b9b9b';
+         }
+      }else{
+         commentText.value = commentText.value.slice(0, totalChars);
+      }
+   });
+
 }
+
 
 let sendComment = async (data) =>{   
    const peticion = await fetch(`./php/comments_controller.php`, {
@@ -54,8 +72,9 @@ const getComments = async ()=>{
                <img src="${imgSrc + resultado[comment].image}" class="userImg">               
                ${resultado[comment].username}
             </p>
-            <hr>
-            <p id="comment-${resultado[comment].id}">${resultado[comment].comment}</p>            
+            <hr>            
+            <p id="comment-${resultado[comment].id}">${resultado[comment].comment}</p> 
+            <div class="charCount-edit"></div>           
             <span class="article-date">
                <span class="userActions"></span>               
                ${formatDate(date)}
@@ -110,7 +129,25 @@ document.addEventListener('click', e =>{
          userActions.insertBefore(cancelBtn, userActions.firstChild);      
          commentText.setAttribute('contenteditable', true);
          commentText.classList.add('comment-edit');
-      }      
+      } 
+
+      const commentEdit = document.querySelector('.comment-edit');
+      const charCount = document.querySelector('.charCount-edit');
+
+      commentEdit.addEventListener('keyup', () =>{
+         if(commentEdit.textContent.length <= 500){
+            charCount.textContent = commentEdit.textContent.length + '/' + 500;
+            if(commentEdit.textContent.length >= 450){
+               charCount.style.color = '#720d0d';
+            }else{
+               charCount.style.color = '#9b9b9b';
+            }
+         }else{
+            commentEdit.textContent = commentEdit.textContent.slice(0, 500);            
+         }
+      });
+      
+      
       
    }
 
