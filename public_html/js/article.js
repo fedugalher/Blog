@@ -23,8 +23,9 @@ let getArticle = async () =>{
    const peticion = await fetch(`./php/articles_controller.php?method=show&id=${id}`); 
    const resultado = await peticion.json();
    const date = new Date(resultado['created_at']); //para poder formatear la hora con la funcion formatDate()
+   const imgSrc = resultado.image === 'no-image.png' ? './images/articles/' : `./images/articles/${resultado.id}/`;
    
-   articleImage.setAttribute('src', `./images/articles/${resultado.id}/${resultado.image}`);
+   articleImage.setAttribute('src', ) `url('${imgSrc + resultado.image}')`;
    articleTitle.textContent = resultado.title;
    articleText.innerHTML = resultado.body;
    articleDate.innerHTML = `${formatDate(date)}`;
@@ -53,7 +54,9 @@ let getArticles = async () =>{
       `;
       //Agregar imagen personalizada a cada articulo
       const articleImage = document.getElementById(`article-img-${resultado.data[article].id}`);
-      articleImage.style.backgroundImage = `url('./images/articles/${resultado.data[article].id}/${resultado.data[article].image}')`;
+      const imgSrc = resultado.data[article].image === 'no-image.png' ? './images/articles/' : `./images/articles/${resultado.data[article].id}/`;
+      articleImage.style.backgroundImage = `url('${imgSrc + resultado.data[article].image}')`;
+      
    }   
 }
 

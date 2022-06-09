@@ -44,8 +44,12 @@
               <hr>           
               <?php if($username){ ?>
                 <form id="comment-form" action="" method="post">
-                  <div class="userData">  
-                      <img src="images/users/<?php echo $userId.'/'.$image; ?>" class="userImg">                 
+                  <div class="userData"> 
+                    <?php if($image === 'no-image.png'){ ?> 
+                      <img src="images/users/<?php echo $image; ?>" class="userImg">  
+                    <?php }else{ ?>    
+                      <img src="images/users/<?php echo $userId.'/'.$image; ?>" class="userImg">
+                    <?php } ?>  
                       <span id="username"><?php echo $username; ?></span>
                   </div>
                   <textarea id="comment" class="coment-input" name="comment" placeholder="Escribe tu mensaje"></textarea>

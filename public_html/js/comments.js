@@ -43,14 +43,15 @@ const getComments = async ()=>{
    const peticion = await fetch(`./php/comments_controller.php?method=selectAll&id=${id}`); 
    const resultado = await peticion.json();
    const userName = document.getElementById('username'); 
-   
+      
    commentsContainer.innerHTML = '';
    for (const comment in resultado) {
       const date = new Date(resultado[comment].date); //para poder formatear la hora con la funcion formatDate()
+      const imgSrc = resultado[comment].image === 'no-image.png' ? './images/users/' : `./images/users/${resultado[comment].user_id}/`;
       commentsContainer.innerHTML+= `
          <div class="col-lg-11 coment">
             <p class="coment-name" id="${resultado[comment].id}">
-               <img src="./images/users/${resultado[comment].user_id}/${resultado[comment].image}" class="userImg">               
+               <img src="${imgSrc + resultado[comment].image}" class="userImg">               
                ${resultado[comment].username}
             </p>
             <hr>

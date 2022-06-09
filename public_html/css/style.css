@@ -100,7 +100,7 @@ article, aside{
   height: 150px;
 }
 .aside-text-box .article-text{
-  text-align:center;
+  text-align:left;
 }
 .article-text h5{
   margin-bottom: 5px;
