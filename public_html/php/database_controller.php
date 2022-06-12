@@ -2,7 +2,6 @@
 
 require('database.php');
 
-
 if(isset($_GET['method'])){
    $method = $_GET['method'];
 }elseif (isset($_POST['method'])) {

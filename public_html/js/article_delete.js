@@ -16,7 +16,7 @@ document.addEventListener('click', e =>{
 const deleteArticle = async (id) => {
    const peticion = await fetch(`./php/articles_controller.php?method=delete&id=${id}`); 
    const resultado = await peticion.json();
-   console.log(resultado[1].msg);
+   
    if(resultado[1]['db-msg'] == 'Articulo eliminado'){
          location.reload();
    }else{
