@@ -26,11 +26,12 @@
           <div class="row article-row">
             <div class="col-12">
               <div class="article-content">
-                <h3 id="article-title"></h3>                
+                <!-- <h3 id="article-title"></h3>                 -->
                 <div class="article-img">
                   <div class="article-img text-center">
                     <img src="images/articles/no-image.png" alt="" id="article-img">
-                  </div>                  
+                  </div>      
+                  <h3 id="article-title"></h3>               
                   <div class="article-text"></div>
                   <span class="article-date" id="article-date"></span>
                 </div>

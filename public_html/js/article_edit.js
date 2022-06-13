@@ -14,12 +14,45 @@ const categorySelect = document.getElementById('category');
 const image = document.getElementById('img-file');
 const articleStatus = document.getElementById('status');
 const btnPublish = document.getElementById('btn-publish');
+const articleBody = document.getElementById('body');
+const articlePreview = document.getElementById('preview');
+const charCount = document.getElementById('counter1');
+const charCountPreview = document.getElementById('counter2');
+const articleText = document.querySelector('.article-text');
+const articleTitle = document.getElementById('article-title');
 const data = new FormData();
 
 
 window.onload = e =>{   
    getCategories();     
 }
+
+articleBody.addEventListener('keyup', () =>{
+   if(articleBody.value.length <= 3000){
+      charCount.textContent = articleBody.value.length + '/' + 3000;
+      if(articleBody.value.length >= 2950){
+         charCount.style.color = '#720d0d';
+      }else{
+         charCount.style.color = '#9b9b9b';
+      }
+      articleText.innerHTML = articleBody.value;
+   }else{
+      articleBody.value = articleBody.value.slice(0, 3000);            
+   }
+});
+
+articlePreview.addEventListener('keyup', () =>{
+   if(articlePreview.value.length <= 100){
+      charCountPreview.textContent = articlePreview.value.length + '/' + 100;
+      if(articlePreview.value.length >= 90){
+         charCountPreview.style.color = '#720d0d';
+      }else{
+         charCountPreview.style.color = '#9b9b9b';
+      }
+   }else{
+      articlePreview.value = articlePreview.value.slice(0, 100);            
+   }
+});
 
 sesionClose.addEventListener('click', e => {
    e.preventDefault();
@@ -46,10 +79,13 @@ const getArticle = async () =>{
    const peticion = await fetch(`./php/articles_controller.php?method=edit&id=${id}`); 
    const resultado = await peticion.json();
 
-   articleImage.src = `./images/articles/${id}/${resultado.image}`;
+   const imgSrc = resultado.image === 'no-image.png' ? './images/articles/' : `./images/articles/${resultado.id}/`;   
+   articleImage.src = `${imgSrc + resultado.image}`;
    articleImage.id = 'article-image'; 
    articleImg.innerHTML = '';
    articleImg.append(articleImage);
+   articleText.innerHTML = resultado.body;
+   articleTitle.textContent = resultado.title;
    title.value = resultado.title;  
    
    categorySelect.value = resultado.category;

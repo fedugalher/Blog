@@ -27,7 +27,8 @@ article h3{
 }
 #article-title{
   font-style: italic;
-  text-align: center;
+  text-align: left;
+  margin-top: 15px;
   font-family: 'Comfortaa', cursive;
   font-size: 36px;
 }

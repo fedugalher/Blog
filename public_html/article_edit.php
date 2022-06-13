@@ -37,17 +37,22 @@
                   <div class="article-img">
                      <div class="article-img text-center">
                         <!-- <img src="images/no-image.png" alt="" id="article-img"> -->
-                     </div>                  
-                     <p class="article-text"></p>
-                     <span class="article-date" id="article-date">dd/mm/aaaa</span>
-                   </div>       
+                     </div>                     
+                  </div>  
+
+                  <h3 id="article-title"></h3>
+                  <div class="article-text"></div>
+                  <span class="article-date" id="article-date">dd/mm/aaaa</span>   
+
                   <form id="article-form" action="php/article_new.php" method="post" enctype="multipart/form-data">
                      <input id="img-file" class="article-input" type="file" name="image">
                      <input id="title" class="coment-input" type="text" placeholder="Título" name="title">
                      <select id="category" class="form-select coment-input" aria-label="Default select example" name="category">
                         <option>Selecciona una categoría</option>
-                      </select>
+                     </select>
+                     <div class="char-count" id="counter1">0/3000</div>
                      <textarea id="body" class="coment-input" name="body" placeholder="Escribe el cuerpo del artículo"></textarea>
+                     <div class="char-count" id="counter2">0/100</div>
                      <textarea id="preview" class="coment-input" name="preview" placeholder="Escribe un resumen del artículo"></textarea>
                      <input type="checkbox" name="status" id="status" value="published"> <label for="status">Publicar</label>
                      <input id="btn-publish" class="coment-input btn-send" type="submit" value="Publicar">

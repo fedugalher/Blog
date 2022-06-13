@@ -171,7 +171,7 @@ class Article extends Database{
    public function all(){
       $data;
       $articleData = array();      
-      $query = "SELECT * FROM `articles` ORDER BY category";
+      $query = "SELECT * FROM `articles` ORDER BY category, created_at DESC";
       
       $this->connect();
       $select = $this->mysqli->query($query);      
